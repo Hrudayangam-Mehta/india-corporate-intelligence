@@ -81,6 +81,7 @@ const ROUTES = [
   ['/watchlist', 'watchlist'],
   ['/motifs', 'motifs'],
   ['/prospector', 'prospector'],
+  ['/desk', 'desk'],
   ['/interlocks', 'interlocks'],
   ['/conglomerates/reliance', 'deepdive-reliance'],
   ['/conglomerates/adani', 'deepdive-adani'],

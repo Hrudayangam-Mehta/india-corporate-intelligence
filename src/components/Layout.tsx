@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   Gavel,
   Telescope,
+  Notebook,
 } from 'lucide-react';
 import { COMPANIES, COMPANIES_AS_OF } from '../data/companies';
 import { MINISTERS } from '../data/politics';
@@ -56,6 +57,7 @@ const navGroups: { label: string; items: { path: string; label: string; icon: ty
       { path: '/patterns', label: 'Pattern discipline', icon: Ruler },
       { path: '/motifs', label: 'Motif engine', icon: Waypoints },
       { path: '/prospector', label: 'Prospector', icon: Telescope },
+      { path: '/desk', label: 'Investigative desk', icon: Notebook },
       { path: '/evidence', label: 'Evidence audit', icon: Scale },
       { path: '/base-rates', label: 'Base rates', icon: BookOpen },
       { path: '/provenance', label: 'Provenance ledger', icon: ShieldCheck },
