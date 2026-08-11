@@ -1,238 +1,206 @@
-import { useEffect, useRef, useState } from 'react';
-import { useData } from '../context/DataContext';
+import { useState, useMemo } from 'react';
 import { MapPin, Building2, TrendingUp, Filter } from 'lucide-react';
+import { IndiaMap } from '../components/IndiaMap';
+import { ALL_EXCHANGE_COMPANIES, SECTOR_COLORS } from '../data/exchangeData';
 
-// India state boundaries simplified GeoJSON
-const indiaStatesGeoJSON = {
-  type: "FeatureCollection",
-  features: [
-    { type: "Feature", properties: { name: "Maharashtra", code: "MH" }, geometry: { type: "Polygon", coordinates: [[[72.8, 16.0], [80.9, 16.0], [80.9, 22.0], [72.8, 22.0], [72.8, 16.0]]] } },
-    { type: "Feature", properties: { name: "Karnataka", code: "KA" }, geometry: { type: "Polygon", coordinates: [[[74.0, 11.5], [78.5, 11.5], [78.5, 18.5], [74.0, 18.5], [74.0, 11.5]]] } },
-    { type: "Feature", properties: { name: "Tamil Nadu", code: "TN" }, geometry: { type: "Polygon", coordinates: [[[76.5, 8.0], [80.3, 8.0], [80.3, 13.5], [76.5, 13.5], [76.5, 8.0]]] } },
-    { type: "Feature", properties: { name: "Gujarat", code: "GJ" }, geometry: { type: "Polygon", coordinates: [[[68.1, 20.0], [74.5, 20.0], [74.5, 24.7], [68.1, 24.7], [68.1, 20.0]]] } },
-    { type: "Feature", properties: { name: "Telangana", code: "TG" }, geometry: { type: "Polygon", coordinates: [[[77.0, 15.5], [81.5, 15.5], [81.5, 19.5], [77.0, 19.5], [77.0, 15.5]]] } },
-    { type: "Feature", properties: { name: "Uttarakhand", code: "UK" }, geometry: { type: "Polygon", coordinates: [[[77.5, 28.5], [81.0, 28.5], [81.0, 31.5], [77.5, 31.5], [77.5, 28.5]]] } },
-    { type: "Feature", properties: { name: "Delhi", code: "DL" }, geometry: { type: "Polygon", coordinates: [[[76.8, 28.4], [77.4, 28.4], [77.4, 28.9], [76.8, 28.9], [76.8, 28.4]]] } },
-    { type: "Feature", properties: { name: "West Bengal", code: "WB" }, geometry: { type: "Polygon", coordinates: [[[85.8, 21.5], [89.9, 21.5], [89.9, 27.2], [85.8, 27.2], [85.8, 21.5]]] } },
-    { type: "Feature", properties: { name: "Rajasthan", code: "RJ" }, geometry: { type: "Polygon", coordinates: [[[69.5, 23.0], [78.0, 23.0], [78.0, 30.2], [69.5, 30.2], [69.5, 23.0]]] } },
-    { type: "Feature", properties: { name: "Andhra Pradesh", code: "AP" }, geometry: { type: "Polygon", coordinates: [[[76.7, 12.5], [84.8, 12.5], [84.8, 19.9], [76.7, 19.9], [76.7, 12.5]]] } },
-  ]
-};
+type ExchangeFilter = 'all' | 'nse' | 'bse';
 
 export default function MapExplorer() {
-  const { companies } = useData();
-  const svgRef = useRef<SVGSVGElement>(null);
   const [selectedState, setSelectedState] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'india' | 'world'>('india');
+  const [exchangeFilter, setExchangeFilter] = useState<ExchangeFilter>('all');
+  const [sectorFilter, setSectorFilter] = useState<string>('all');
 
-  // Calculate company counts by state
-  const stateCounts = companies.reduce((acc, company) => {
-    const state = company.hqLocation.state;
-    acc[state] = (acc[state] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const companies = ALL_EXCHANGE_COMPANIES;
 
-  const maxCount = Math.max(...Object.values(stateCounts), 1);
+  const filteredByExchange = useMemo(() => {
+    switch (exchangeFilter) {
+      case 'nse':
+        return companies.filter(c => c.exchanges?.includes('NSE'));
+      case 'bse':
+        return companies.filter(c => c.exchanges?.includes('BSE'));
+      default:
+        return companies;
+    }
+  }, [companies, exchangeFilter]);
 
-  useEffect(() => {
-    if (!svgRef.current || viewMode !== 'india') return;
-    
-    const svg = svgRef.current;
-    const width = svg.clientWidth;
-    const height = svg.clientHeight;
-    
-    // Clear previous
-    while (svg.firstChild) svg.removeChild(svg.firstChild);
-    
-    // Create projection (simplified mercator for India)
-    const projection = (lng: number, lat: number): [number, number] => {
-      const x = ((lng - 68) / (97 - 68)) * width;
-      const y = height - ((lat - 8) / (37 - 8)) * height;
-      return [x, y];
-    };
+  const sectors = useMemo(() => {
+    const s = new Set(filteredByExchange.map(c => c.sector));
+    return ['all', ...Array.from(s).sort()];
+  }, [filteredByExchange]);
 
-    // Draw states
-    indiaStatesGeoJSON.features.forEach((feature: any) => {
-      const coords = feature.geometry.coordinates[0];
-      const pathData = coords.map((coord: number[], i: number) => {
-        const [x, y] = projection(coord[0], coord[1]);
-        return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
-      }).join(' ') + ' Z';
+  const displayCompanies = useMemo(() => {
+    if (sectorFilter === 'all') return filteredByExchange;
+    return filteredByExchange.filter(c => c.sector === sectorFilter);
+  }, [filteredByExchange, sectorFilter]);
 
-      const stateName = feature.properties.name;
-      const count = stateCounts[stateName] || 0;
-      const intensity = count / maxCount;
+  // State counts
+  const stateCounts = useMemo(() => {
+    return displayCompanies.reduce((acc, company) => {
+      const state = company.hqLocation.state;
+      acc[state] = (acc[state] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+  }, [displayCompanies]);
 
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', pathData);
-      path.setAttribute('fill', intensity > 0 
-        ? `rgba(201, 168, 108, ${0.1 + intensity * 0.7})` 
-        : '#1a1a1e');
-      path.setAttribute('stroke', 'rgba(244, 240, 232, 0.1)');
-      path.setAttribute('stroke-width', '1');
-      path.setAttribute('class', 'transition-all duration-300 hover:stroke-accent cursor-pointer');
-      path.addEventListener('click', () => setSelectedState(stateName));
-      svg.appendChild(path);
+  const sidebarCompanies = selectedState
+    ? displayCompanies.filter(c => c.hqLocation.state === selectedState)
+    : displayCompanies;
 
-      // Add label if has companies
-      if (count > 0) {
-        const centroid = coords.reduce((sum: number[], coord: number[]) => [sum[0] + coord[0], sum[1] + coord[1]], [0, 0]);
-        const [cx, cy] = projection(centroid[0] / coords.length, centroid[1] / coords.length);
-        
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', cx.toString());
-        text.setAttribute('y', cy.toString());
-        text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('fill', '#c9a86c');
-        text.setAttribute('font-size', '10');
-        text.setAttribute('font-weight', '600');
-        text.textContent = count.toString();
-        svg.appendChild(text);
-      }
-    });
-
-    // Draw company markers
-    companies.forEach(company => {
-      const [x, y] = projection(company.hqLocation.lng, company.hqLocation.lat);
-      
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('cx', x.toString());
-      circle.setAttribute('cy', y.toString());
-      circle.setAttribute('r', '6');
-      circle.setAttribute('fill', '#c9a86c');
-      circle.setAttribute('stroke', '#0a0a0c');
-      circle.setAttribute('stroke-width', '2');
-      circle.setAttribute('class', 'cursor-pointer hover:r-8 transition-all');
-      
-      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      title.textContent = company.name;
-      circle.appendChild(title);
-      
-      svg.appendChild(circle);
-    });
-  }, [companies, viewMode, maxCount, stateCounts]);
-
-  const filteredCompanies = selectedState 
-    ? companies.filter(c => c.hqLocation.state === selectedState)
-    : companies;
+  const totalMarketCap = displayCompanies.reduce((s, c) => s + (c.marketCap || 0), 0);
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
           <h1 className="heading-editorial text-3xl font-bold">Map Explorer</h1>
-          <p className="text-text-secondary mt-1">Geographic distribution of Indian companies</p>
+          <p className="text-text-secondary mt-1">
+            {displayCompanies.length} companies mapped across India
+            {exchangeFilter !== 'all' && ` • ${exchangeFilter.toUpperCase()} only`}
+            {sectorFilter !== 'all' && ` • ${sectorFilter}`}
+          </p>
         </div>
-        <div className="flex gap-2">
-          <button 
-            onClick={() => setViewMode('india')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              viewMode === 'india' ? 'bg-accent text-bg' : 'bg-bg-card text-text-secondary border border-border'
-            }`}
-          >
-            India
-          </button>
-          <button 
-            onClick={() => setViewMode('world')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              viewMode === 'world' ? 'bg-accent text-bg' : 'bg-bg-card text-text-secondary border border-border'
-            }`}
-          >
-            World
-          </button>
+        <div className="text-right">
+          <div className="text-2xl font-bold text-[#c9a86c]">
+            ₹{(totalMarketCap / 100000).toFixed(1)}T
+          </div>
+          <div className="text-sm text-[#7a7569]">Total Market Cap</div>
         </div>
       </div>
 
-      {viewMode === 'india' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Map */}
-          <div className="lg:col-span-2 card-surface p-4">
-            <svg 
-              ref={svgRef} 
-              className="w-full h-[500px]"
-              viewBox="0 0 800 600"
-              preserveAspectRatio="xMidYMid meet"
-            />
-            <div className="flex items-center gap-4 mt-4 text-xs text-text-muted">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-accent/20" />
-                <span>Low</span>
-              </div>
-              <div className="flex-1 h-2 rounded-full bg-gradient-to-r from-accent/20 to-accent" />
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-accent" />
-                <span>High</span>
-              </div>
-            </div>
+      {/* Filters */}
+      <div className="bg-[#161618] border border-[#f4f0e8]/10 rounded-lg p-4">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* Exchange Filter */}
+          <div className="flex items-center gap-2">
+            <span className="text-[#7a7569] text-sm">Exchange:</span>
+            {(['all', 'nse', 'bse'] as ExchangeFilter[]).map(ex => (
+              <button
+                key={ex}
+                onClick={() => { setExchangeFilter(ex); setSectorFilter('all'); }}
+                className={`px-3 py-1.5 rounded text-sm transition-colors ${
+                  exchangeFilter === ex
+                    ? 'bg-[#c9a86c] text-[#0c0c0e] font-medium'
+                    : 'bg-[#0c0c0e] text-[#9c9588] hover:text-[#f0e6d8] border border-[#f4f0e8]/10'
+                }`}
+              >
+                {ex === 'all' ? 'All' : ex.toUpperCase()}
+              </button>
+            ))}
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-4">
-            <div className="card-surface p-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Filter className="w-4 h-4 text-accent" />
-                <h3 className="font-semibold">Companies</h3>
-                {selectedState && (
-                  <button 
-                    onClick={() => setSelectedState(null)}
-                    className="ml-auto text-xs text-accent hover:underline"
-                  >
-                    Clear filter
-                  </button>
-                )}
-              </div>
-              <div className="space-y-2 max-h-[400px] overflow-y-auto">
-                {filteredCompanies.map(company => (
-                  <div key={company.id} className="p-3 bg-bg-elevated rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3 h-3 text-accent" />
-                      <span className="font-medium text-sm">{company.name}</span>
-                    </div>
-                    <div className="text-xs text-text-muted mt-1 flex items-center gap-2">
-                      <Building2 className="w-3 h-3" />
-                      {company.hqLocation.city}, {company.hqLocation.state}
-                    </div>
-                    {company.marketCap && (
-                      <div className="text-xs text-accent mt-1 flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3" />
-                        ₹{(company.marketCap / 1000).toFixed(0)}K Cr
-                      </div>
+          {/* Sector Filter */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <Filter className="w-4 h-4 text-[#7a7569]" />
+            {sectors.map(sector => (
+              <button
+                key={sector}
+                onClick={() => setSectorFilter(sector)}
+                className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
+                  sectorFilter === sector
+                    ? 'bg-[#c9a86c] text-[#0c0c0e] font-medium'
+                    : 'bg-[#0c0c0e] text-[#9c9588] hover:text-[#f0e6d8] border border-[#f4f0e8]/10'
+                }`}
+              >
+                {sector === 'all' ? 'All Sectors' : sector}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Map */}
+        <div className="lg:col-span-2 bg-[#161618] border border-[#f4f0e8]/10 rounded-lg p-6">
+          <h2 className="text-lg font-semibold text-[#f0e6d8] mb-4 flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-[#c9a86c]" />
+            Geographic Distribution
+          </h2>
+          <IndiaMap
+            companies={displayCompanies}
+            selectedState={selectedState}
+            onStateClick={setSelectedState}
+          />
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* Companies List */}
+          <div className="bg-[#161618] border border-[#f4f0e8]/10 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <Filter className="w-4 h-4 text-[#c9a86c]" />
+              <h3 className="font-semibold text-[#f0e6d8]">
+                {selectedState ? `${selectedState} Companies` : 'All Companies'}
+              </h3>
+              {selectedState && (
+                <button
+                  onClick={() => setSelectedState(null)}
+                  className="ml-auto text-xs text-[#c9a86c] hover:underline"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+              {sidebarCompanies.slice(0, 20).map(company => (
+                <div key={company.id} className="p-3 bg-[#0c0c0e] rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-2 h-2 rounded-full"
+                      style={{ backgroundColor: SECTOR_COLORS[company.sector] || '#c9a86c' }}
+                    />
+                    <span className="font-medium text-sm text-[#f0e6d8]">{company.name}</span>
+                  </div>
+                  <div className="text-xs text-[#7a7569] mt-1 flex items-center gap-2">
+                    <Building2 className="w-3 h-3" />
+                    {company.hqLocation.city}, {company.hqLocation.state}
+                    {company.exchanges && (
+                      <span className="text-[#c9a86c]">
+                        {company.exchanges.join('/')}
+                      </span>
                     )}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* State Summary */}
-            <div className="card-surface p-4">
-              <h3 className="font-semibold mb-3">State Summary</h3>
-              <div className="space-y-2">
-                {Object.entries(stateCounts)
-                  .sort((a, b) => b[1] - a[1])
-                  .map(([state, count]) => (
-                    <div 
-                      key={state} 
-                      className={`flex items-center justify-between p-2 rounded cursor-pointer transition-all ${
-                        selectedState === state ? 'bg-accent/10 border border-accent/20' : 'hover:bg-bg-elevated'
-                      }`}
-                      onClick={() => setSelectedState(selectedState === state ? null : state)}
-                    >
-                      <span className="text-sm">{state}</span>
-                      <span className="text-xs bg-bg-elevated px-2 py-1 rounded">{count}</span>
+                  {company.marketCap && (
+                    <div className="text-xs text-[#c9a86c] mt-1 flex items-center gap-1">
+                      <TrendingUp className="w-3 h-3" />
+                      ₹{(company.marketCap / 1000).toFixed(0)}K Cr
                     </div>
-                  ))}
-              </div>
+                  )}
+                </div>
+              ))}
+              {sidebarCompanies.length > 20 && (
+                <div className="text-center text-[#7a7569] text-sm py-2">
+                  +{sidebarCompanies.length - 20} more
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* State Summary */}
+          <div className="bg-[#161618] border border-[#f4f0e8]/10 rounded-lg p-4">
+            <h3 className="font-semibold text-[#f0e6d8] mb-3">State Summary</h3>
+            <div className="space-y-2 max-h-[300px] overflow-y-auto">
+              {Object.entries(stateCounts)
+                .sort((a, b) => b[1] - a[1])
+                .map(([state, count]) => (
+                  <div
+                    key={state}
+                    className={`flex items-center justify-between p-2 rounded cursor-pointer transition-all ${
+                      selectedState === state
+                        ? 'bg-[#c9a86c]/10 border border-[#c9a86c]/20'
+                        : 'hover:bg-[#1c1c1f]'
+                    }`}
+                    onClick={() => setSelectedState(selectedState === state ? null : state)}
+                  >
+                    <span className="text-sm text-[#f0e6d8]">{state}</span>
+                    <span className="text-xs bg-[#0c0c0e] px-2 py-1 rounded text-[#9c9588]">{count}</span>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
-      ) : (
-        <div className="card-surface p-8 text-center">
-          <h2 className="text-xl font-semibold mb-4">World Map Coming Soon</h2>
-          <p className="text-text-secondary">
-            Global FDI flows, port connections, and foreign subsidiary mapping will be available in the next phase.
-          </p>
-        </div>
-      )}
+      </div>
     </div>
   );
 }
