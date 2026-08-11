@@ -12,6 +12,8 @@ import Watchlist from './pages/Watchlist';
 import NSEMap from './pages/NSEMap';
 import BSEMap from './pages/BSEMap';
 import Nifty50 from './pages/Nifty50';
+import RelianceDeepDive from './pages/RelianceDeepDive';
+import AdaniDeepDive from './pages/AdaniDeepDive';
 import { DataProvider } from './context/DataContext';
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
             <Route path="/nse-map" element={<NSEMap />} />
             <Route path="/bse-map" element={<BSEMap />} />
             <Route path="/nifty50" element={<Nifty50 />} />
+            <Route path="/company/adani" element={<AdaniDeepDive />} />
+            <Route path="/company/reliance" element={<RelianceDeepDive />} />
             <Route path="/company/:id" element={<CompanyProfile />} />
             <Route path="/network" element={<NetworkView />} />
             <Route path="/industries" element={<IndustryView />} />

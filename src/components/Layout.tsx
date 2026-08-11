@@ -14,7 +14,9 @@ import {
   Globe,
   TrendingUp,
   TrendingDown,
-  Activity
+  Activity,
+  Building2,
+  Anchor
 } from 'lucide-react';
 
 const navItems = [
@@ -29,6 +31,11 @@ const navItems = [
   { path: '/media', label: 'Media', icon: Newspaper },
   { path: '/search', label: 'Search', icon: Search },
   { path: '/watchlist', label: 'Watchlist', icon: Bookmark },
+];
+
+const deepDiveItems = [
+  { path: '/company/reliance', label: 'Reliance', icon: Building2 },
+  { path: '/company/adani', label: 'Adani Group', icon: Anchor },
 ];
 
 export default function Layout() {
@@ -72,6 +79,29 @@ export default function Layout() {
               </NavLink>
             );
           })}
+          
+          {/* Deep Dive Section */}
+          <div className="pt-4 mt-4 border-t border-[#f4f0e8]/10">
+            <div className="px-4 py-2 text-[10px] text-[#7a7569] uppercase tracking-wider">Deep Dive</div>
+            {deepDiveItems.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.path);
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                    active 
+                      ? 'bg-accent/10 text-accent border border-accent/20' 
+                      : 'text-text-secondary hover:text-text hover:bg-bg-card'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.label}
+                </NavLink>
+              );
+            })}
+          </div>
         </nav>
         
         <div className="p-4 border-t border-border">
@@ -119,6 +149,28 @@ export default function Layout() {
                 </NavLink>
               );
             })}
+            <div className="pt-4 mt-4 border-t border-[#f4f0e8]/10">
+              <div className="px-4 py-2 text-[10px] text-[#7a7569] uppercase tracking-wider">Deep Dive</div>
+              {deepDiveItems.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.path);
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                      active 
+                        ? 'bg-accent/10 text-accent' 
+                        : 'text-text-secondary hover:text-text hover:bg-bg-card'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {item.label}
+                  </NavLink>
+                );
+              })}
+            </div>
           </nav>
         )}
       </div>
