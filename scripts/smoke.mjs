@@ -82,6 +82,7 @@ const ROUTES = [
   ['/motifs', 'motifs'],
   ['/interlocks', 'interlocks'],
   ['/conglomerates/reliance', 'deepdive-reliance'],
+  ['/conglomerates/adani', 'deepdive-adani'],
   ['/conglomerates/tata', 'deepdive-nodata'],
   ['/provenance', 'provenance'],
   ['/geograph', 'geograph'],

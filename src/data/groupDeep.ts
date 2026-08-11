@@ -12,6 +12,7 @@
  */
 
 import relianceRaw from '../../research/raw/reliance-deep.json';
+import adaniRaw from '../../research/raw/adani-deep.json';
 import type { Tier, StateCode } from '../graph/schema';
 
 export type EntityKind = 'listed' | 'unlisted' | 'subsidiary' | 'jv' | 'trust' | 'spv';
@@ -124,6 +125,7 @@ export interface GroupDeep {
 
 /** Add a group here as its deep file lands. Absence is a coverage gap, not an error. */
 const DEEP: Record<string, GroupDeep> = {
+  adani: adaniRaw as unknown as GroupDeep,
   reliance: relianceRaw as unknown as GroupDeep,
 };
 
