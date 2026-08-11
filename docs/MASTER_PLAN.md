@@ -325,7 +325,8 @@ TOOLS        Search · Donations · Watchlist
 | 2026-08-11 | `a34b086` | — | Government award register: ledger, transparency map, award network | ✅ all four |
 | 2026-08-11 | `eb3a481` | P0 | Pattern prospector: exhaustive generation, ranked questions | ✅ all four |
 | 2026-08-11 | `fa26fa1` | P0 | Investigative desk: skill, agent, page; sequenced research plan | ✅ all four |
-| 2026-08-11 | *pending* | P0/P1 | BY correction + stratified null; designer & developer roles; this plan | — |
+| 2026-08-11 | `32e6859` | P0/P1/P2 | BY correction + stratified null; designer & developer roles; this plan; shared domain chrome | ✅ all four |
+| 2026-08-11 | *pending* | P5/P6 | Competitive tension on `/tenders`; ownership tree replaces force layout on group deep-dives | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
@@ -339,6 +340,30 @@ thing that gets forgotten:
 The triangle result is the Artzy-Randrup effect appearing in real Indian corporate data:
 significant against a degree-preserving null, not significant once sector and state are
 held fixed. **Co-location explained it.** That is now rendered on the shape.
+
+**What P5 established, which changed the plan.** The single-bidder rate was scoped as
+the headline statistic for the awards domain. It cannot be computed. Bid counts are
+published for 16 of 125 awards, and bid *position* is recoverable for only 38 — but the
+missingness is **structured, not random**:
+
+| Sector | Awards | Bid position disclosed |
+|---|---|---|
+| Coal | 34 | **0** |
+| Roads and highways | 13 | 1 |
+| Renewables manufacturing | 14 | 14 |
+| Telecom spectrum | 7 | 7 |
+| Airports | 6 | 6 |
+
+Disclosure tracks whether a regulator publishes a round-result document. The Ministry of
+Coal publishes reserve price, final offer and winner for every one of its 34 blocks, and
+the number of bids for none of them. So the most basic measure of whether an auction was
+competitive is unavailable for the largest allocation programme in the register.
+
+The domain therefore ships **the coverage as the finding**, and reports the 0%
+sole-bidder rate among disclosed awards as a **floor on competition with a known bias
+direction** — a round that drew one bidder has every reason not to advertise it — rather
+than as a measurement. This is the P4 template too: the shape of what is missing is
+usually more informative than what is present.
 
 ---
 

@@ -302,25 +302,30 @@ export function ConcentrationCurve({
   label: string;
   height?: number;
 }) {
-  const { pts, total, n, topShare, singletons, hhi } = useMemo(() => {
+  const { pts, n, topShare, halfAt, hhi } = useMemo(() => {
     const sorted = [...values].sort((a, b) => b - a);
     const tot = sorted.reduce((a, b) => a + b, 0);
     const points: [number, number][] = [[0, 0]];
     let run = 0;
+    // How many winners it takes to reach half the value. This is the readable
+    // concentration statistic — "3 of 31 winners hold half the value" needs no
+    // training to interpret, where an HHI does.
+    let half = 0;
     sorted.forEach((v, i) => {
       run += v;
+      if (!half && tot > 0 && run >= tot / 2) half = i + 1;
       points.push([(i + 1) / sorted.length, tot > 0 ? run / tot : 0]);
     });
     const topN = Math.max(1, Math.ceil(sorted.length * 0.1));
     const top = sorted.slice(0, topN).reduce((a, b) => a + b, 0);
-    // HHI over shares, on the 0–10,000 convention used by competition authorities.
+    // HHI over percentage shares, on the 0–10,000 convention competition
+    // authorities use — so the number is comparable to published thresholds.
     const h = tot > 0 ? sorted.reduce((a, v) => a + ((v / tot) * 100) ** 2, 0) : 0;
     return {
       pts: points,
-      total: tot,
       n: sorted.length,
       topShare: tot > 0 ? top / tot : 0,
-      singletons: sorted.filter((v) => v === sorted[sorted.length - 1]).length,
+      halfAt: half,
       hhi: h,
     };
   }, [values]);
@@ -339,14 +344,17 @@ export function ConcentrationCurve({
       </svg>
       <p className="font-mono text-[11px] text-text-muted mt-2 leading-relaxed">
         {n.toLocaleString('en-IN')} distinct winners · top decile takes{' '}
-        <span className="text-text">{(topShare * 100).toFixed(1)}%</span> · HHI{' '}
-        <span className="text-text">{Math.round(hhi).toLocaleString('en-IN')}</span>
-        {total > 0 && (
+        <span className="text-text">{(topShare * 100).toFixed(1)}%</span>
+        {halfAt > 0 && (
           <>
-            {' '}· {singletons.toLocaleString('en-IN')} winner{singletons === 1 ? '' : 's'} at the
-            smallest value in the set
+            {' '}·{' '}
+            <span className="text-text">
+              {halfAt} of {n}
+            </span>{' '}
+            hold half the value
           </>
-        )}
+        )}{' '}
+        · HHI <span className="text-text">{Math.round(hhi).toLocaleString('en-IN')}</span>
       </p>
     </div>
   );
