@@ -326,7 +326,7 @@ TOOLS        Search · Donations · Watchlist
 | 2026-08-11 | `eb3a481` | P0 | Pattern prospector: exhaustive generation, ranked questions | ✅ all four |
 | 2026-08-11 | `fa26fa1` | P0 | Investigative desk: skill, agent, page; sequenced research plan | ✅ all four |
 | 2026-08-11 | `32e6859` | P0/P1/P2 | BY correction + stratified null; designer & developer roles; this plan; shared domain chrome | ✅ all four |
-| 2026-08-11 | *pending* | P5/P6 | Competitive tension on `/tenders`; ownership tree replaces force layout on group deep-dives | ✅ all four |
+| 2026-08-11 | `2c880e6` | P5/P6 | Competitive tension on `/tenders`; ownership tree replaces force layout on group deep-dives | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
