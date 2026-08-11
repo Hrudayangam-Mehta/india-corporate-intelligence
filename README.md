@@ -56,16 +56,51 @@ Line style in every graph carries the tier. It is semantic and is never restyled
 
 ## Pages
 
-**Markets** — `/` dashboard · `/map` the NSE/BSE map · `/industries` sector concentration ·
-`/conglomerates` the ten largest groups · `/interlocks` who sits on more than one board ·
-`/states/:code` per-state drill-down · `/company/:id`
+Full file-by-file index: [`docs/INDEX.md`](docs/INDEX.md). Picking this up cold:
+[`HANDOFF.md`](HANDOFF.md).
+
+**Markets** — `/` dashboard · `/map` the NSE/BSE map · `/geograph` the geographic network ·
+`/industries` sector concentration · `/conglomerates` the ten largest groups · `/interlocks` who
+sits on more than one board · `/states/:code` per-state drill-down · `/company/:id`
 
 **Power** — `/cabinet` the Union Council of Ministers · `/network` the merged connection graph ·
-`/atlas` the Money-Trail case study · `/political` money to parties · `/media` ownership
+`/atlas` the Money-Trail case study · `/political` money to parties, with the flow diagram ·
+`/media` ownership
 
 **Method** — `/patterns` why every large network looks like a conspiracy · `/motifs` the computed
 motif engine · `/evidence` the tiering procedure applied claim by claim · `/base-rates` compared to
-what? · `/method` how this is built, with a live integrity check
+what? · `/provenance` the ingestion ledger · `/method` how this is built, with a live integrity check
+
+### The geographic network
+
+`/geograph` draws the graph in place rather than making the reader join a map and a
+force-directed layout in their head. Two modes: entities placed in their registered state and
+connected by arcs, or relationships aggregated into arcs between states.
+
+Three things it cannot honestly show, all surfaced rather than quietly handled:
+
+- **Nothing is geocoded.** A mark sits on a golden-angle spiral inside its state; its position
+  there carries no information.
+- **Most of the graph has no place.** People, rules, parties and sectors are not geographic.
+  Dropping them would silently delete most of the network; scattering them over the map would
+  invent locations. They sit in a labelled side column.
+- **Registered ≠ operational.** An arc records where two registered offices are.
+
+Arc curvature is jittered deterministically per pair — Delhi originates most arcs in every view, and
+one fixed curvature bundles them into an unreadable blob. Same pair, same curve, so the picture is
+reproducible.
+
+### Ingestion
+
+`research/raw/` is a quarantine zone. `npm run promote` runs extraction → resolution → grounding →
+assembly with a run id derived from a hash of the inputs, not a clock, so it is reproducible.
+
+On the current data it resolves **515 canonical entities** from 561 records, merges **46 on strong
+keys only** (ticker, scrip code, state code, exact corroborated name), and refuses **218 collision
+candidates** — including "Reliance Group (Anil Dhirubhai Ambani Group)" against "Reliance Industries
+Group (Mukesh Ambani)". Fusing those two is a structural guard that fails the build. 100
+weakly-identified records are quarantined as `resolved: false` and take no edges; that is the gate
+working, so it does not fail the build. The ledger is at `/provenance`.
 
 ### The motif engine
 
@@ -152,15 +187,16 @@ corporate maps.
 ```bash
 npm install
 npm run dev        # vite dev server
+npm run promote    # research/raw → resolution + grounding report
 npm run validate   # data-integrity gate — the four invariants
 npm run build      # tsc -b && vite build
-npm run smoke      # headless render of all 17 routes (needs a preview server)
-npm run check      # validate + build + smoke
+npm run smoke      # headless render of all 21 routes; serves dist itself
+npm run check      # promote + validate + build + smoke
 ```
 
-`npm run smoke` expects a server at `http://127.0.0.1:4173` — run `npx vite preview` first, or pass a
-base URL as the first argument. It uses the environment's pinned Chromium; override with
-`PLAYWRIGHT_CHROMIUM_PATH`.
+`npm run smoke` serves `dist` on an ephemeral port itself — there is no preview server to start or
+wait on. Pass a base URL as the first argument to point it somewhere else. It uses the environment's
+pinned Chromium; override with `PLAYWRIGHT_CHROMIUM_PATH`, or `npx playwright install chromium`.
 
 ### Stack
 
