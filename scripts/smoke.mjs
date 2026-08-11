@@ -81,6 +81,8 @@ const ROUTES = [
   ['/watchlist', 'watchlist'],
   ['/motifs', 'motifs'],
   ['/interlocks', 'interlocks'],
+  ['/conglomerates/reliance', 'deepdive-reliance'],
+  ['/conglomerates/tata', 'deepdive-nodata'],
   ['/provenance', 'provenance'],
   ['/geograph', 'geograph'],
   ['/geograph?mode=state-flows&layer=all', 'geograph-flows'],

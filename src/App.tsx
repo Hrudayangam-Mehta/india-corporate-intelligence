@@ -24,6 +24,7 @@ const NetworkView = lazy(() => import('./pages/NetworkView'));
 const GeoGraph = lazy(() => import('./pages/GeoGraph'));
 const Cabinet = lazy(() => import('./pages/Cabinet'));
 const Conglomerates = lazy(() => import('./pages/Conglomerates'));
+const GroupDeepDive = lazy(() => import('./pages/GroupDeepDive'));
 const Atlas = lazy(() => import('./pages/Atlas'));
 const Patterns = lazy(() => import('./pages/Patterns'));
 const EvidenceAudit = lazy(() => import('./pages/EvidenceAudit'));
@@ -70,6 +71,7 @@ function App() {
                     <Route path="/geograph" element={<GeoGraph />} />
                     <Route path="/cabinet" element={<Cabinet />} />
                     <Route path="/conglomerates" element={<Conglomerates />} />
+                    <Route path="/conglomerates/:id" element={<GroupDeepDive />} />
                     <Route path="/atlas" element={<Atlas />} />
                     <Route path="/patterns" element={<Patterns />} />
                     <Route path="/evidence" element={<EvidenceAudit />} />
