@@ -57,14 +57,35 @@ Line style in every graph carries the tier. It is semantic and is never restyled
 ## Pages
 
 **Markets** — `/` dashboard · `/map` the NSE/BSE map · `/industries` sector concentration ·
-`/conglomerates` the ten largest groups · `/states/:code` per-state drill-down · `/company/:id`
+`/conglomerates` the ten largest groups · `/interlocks` who sits on more than one board ·
+`/states/:code` per-state drill-down · `/company/:id`
 
 **Power** — `/cabinet` the Union Council of Ministers · `/network` the merged connection graph ·
 `/atlas` the Money-Trail case study · `/political` money to parties · `/media` ownership
 
-**Method** — `/patterns` why every large network looks like a conspiracy · `/evidence` the tiering
-procedure applied claim by claim · `/base-rates` compared to what? · `/method` how this is built,
-with a live integrity check
+**Method** — `/patterns` why every large network looks like a conspiracy · `/motifs` the computed
+motif engine · `/evidence` the tiering procedure applied claim by claim · `/base-rates` compared to
+what? · `/method` how this is built, with a live integrity check
+
+### The motif engine
+
+Motifs are **computed from declarative templates** at load time, not hand-tagged on edges. A
+hand-tagged motif is an assertion wearing the costume of a query — the analyst decides which edges
+belong to the pattern, so the pattern can never fail to be found. These can, and several do.
+
+Templates support chained steps, **star** steps (both legs departing from the same entity), and
+**negation** — which is how the documented void became a query rather than a curated list. Every result
+is scored against a predicate-preserving Maslov–Sneppen rewiring.
+
+The engine's most useful output so far is about itself: **4 of 5 templates are untestable** on the
+case-study subgraph. It is star-shaped — nearly every award edge shares one ministry as its source — so
+a degree-preserving swap between two award edges returns the same edge set, the null model has zero
+variance, and any z-score against it is meaningless. The engine reports *null model degenerate* and
+says why, rather than printing a confident-looking `z = 0.00`.
+
+The **symmetry check** runs the identical templates against the national layer, which contains no
+award, donation or enforcement edges at all. A template that fires there anyway is matching on
+something structural rather than on the substance it claims to detect.
 
 ---
 

@@ -151,25 +151,35 @@ means a hallucinating researcher cannot corrupt the graph without passing a gate
 
 ## 6. Phases and acceptance criteria
 
-### Phase A — Foundation *(this pass)*
+### Phase A — Foundation ✅
 - [x] Real 36-state geometry with computed pole-of-inaccessibility anchors
 - [x] Agent roster + skills, with refusal surfaces
-- [ ] `src/graph/schema.ts` + `scripts/validate.mjs` enforcing the invariant
-- [ ] Rebuilt India map (NSE/BSE, choropleth, drill-down)
-- [ ] Graph engine with the filter rail
-- [ ] `/patterns`, `/evidence`, `/base-rates`, `/cabinet`, `/conglomerates`, `/states/:code`
+- [x] `src/graph/schema.ts` + `scripts/validate.mjs` enforcing the invariant
+- [x] Rebuilt India map (NSE/BSE, choropleth, drill-down, keyboard navigation)
+- [x] Graph engine with the filter rail and the table twin
+- [x] `/patterns`, `/evidence`, `/base-rates`, `/cabinet`, `/conglomerates`, `/states/:code`
+- [x] CI: validate → typecheck → build → headless render of every route
 
-**Acceptance:** `npm run build` and `npm run validate` both pass. No edge violates
-the provenance invariant. No state renders as a rectangle. Every tier appears in
-the legend.
+**Acceptance met.** `npm run validate`, `npm run build` and `npm run smoke` all pass.
+No edge violates the provenance invariant. No state renders as a rectangle. Every
+tier appears in the legend.
 
-### Phase B — Population and denominators
-- Companies dataset to 250+ with per-state coverage; state economy layer
-- Base-rate engine: any edge type can report its rate against the population
-- Motif engine: declarative patterns computed at build, with census + z-score
+### Phase B — Population and denominators ✅ *(partly)*
+- [x] Companies dataset at 259 with per-state coverage; state economy layer for all 36
+- [x] Base-rate engine with published denominators; the live rate computed from the dataset
+- [x] Motif engine: declarative templates with chained steps, star steps and negation,
+      computed at load, each with census + null-model score
+- [ ] Motif templates extended beyond the initial five
+- [ ] Base rates computed for every edge type rather than the six published
 
-**Acceptance:** every motif in the UI shows numerator, denominator and z-score
-against a degree-preserving null model. No hand-tagged motifs remain.
+**Acceptance met for the engine:** every motif shows numerator, denominator and a
+null-model verdict. No hand-tagged motifs remain in the computed view.
+
+**Finding from this phase, worth carrying forward:** the case-study subgraph is
+star-shaped, so degree-preserving rewiring cannot vary it and 4 of 5 templates come
+back *untestable*. Testing them properly needs the full award population, which is
+on the watchlist as computable-from-public-data-today. The engine surfacing its own
+limit is the intended behaviour.
 
 ### Phase C — Ingestion
 - Extractor → resolver → grounder → assembler pipeline over `research/raw/`
@@ -178,10 +188,16 @@ against a degree-preserving null model. No hand-tagged motifs remain.
 
 **Acceptance:** every published claim traces to a source **and** a run id.
 
+*Currently the promotion from `research/raw/` into `src/data/` is manual and typed
+rather than pipelined. The quarantine boundary exists; the automation does not.*
+
 ### Phase D — Depth and breadth
-- Director-interlock graph; promoter-holding layer; media ownership
-- Time-range filter across all views; flow-direction (Sankey) mode
-- URL-hash state for share/export; the WCAG-clean table twin of every graphic
+- [x] Interlocks analysis, with the false-positive demonstration and the family-control frame
+- [x] Time-range filter over edge windows, never hiding undated edges
+- [x] URL state for share/export; the WCAG-clean table twin of every graphic
+- [ ] Director interlocks keyed on DIN rather than declared key people
+- [ ] Promoter-holding time series; flow-direction (Sankey) mode
+- [ ] Media-ownership register
 
 ### Phase E — The investigative watchlist
 Carried from the Atlas analysis, as dated, checkable actions:
