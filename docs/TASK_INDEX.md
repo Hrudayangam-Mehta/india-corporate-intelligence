@@ -155,6 +155,13 @@ and did not survive it — see `docs/RECONCILIATION.md` for the reasoning on eac
 | H004 | Owner political affiliations | P2 | [ ] | |
 | H005 | Ad spend data | P2 | [b] | Not public. Likely a permanent gap — better said than filled with inference |
 | H006 | Ad spend ↔ coverage sentiment | P3 | [b] | Blocked on H005 **and** a control group of non-owned outlets |
+| H007 | Establish whether citable lean ratings exist for Indian outlets | P0 | [~] | **Gates the whole coverage-distribution UI.** "None exists" is an acceptable answer — see PLATFORM_PLAN §8b |
+| H008 | Per-company citation and article index | P1 | [ ] | Extends the existing `srcs` into a deduplicated per-company index |
+| H009 | Wire-copy and syndication deduplication | P0 | [ ] | **Prerequisite, not a refinement.** PTI/ANI copy under 15 mastheads is not 15 articles |
+| H010 | Coverage-tone double-difference measure | P1 | [ ] | Outlet house style AND company newsworthiness both controlled — PLATFORM_PLAN §8b.1 |
+| H011 | Sentiment classifier validated on Indian financial news | P1 | [ ] | A model validated on product reviews is not validated here |
+| H012 | Byline concentration per company, desk-level | P2 | [ ] | Aggregate only. Named-journalist tone is not rendered per person absent a documented conflict |
+| H013 | Coverage distribution UI (Ground News-style bar) | P1 | [b] | Blocked on H007. Falls back to **ownership** distribution, which may be the better metric |
 
 ## Section I: Document Analysis
 

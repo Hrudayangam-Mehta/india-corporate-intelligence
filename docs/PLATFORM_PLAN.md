@@ -302,6 +302,160 @@ never as a standalone graph of "who donated" — which would be a graph of "who 
 
 ---
 
+## 8b. News, citations, and the coverage-distribution UI
+
+**The requirement:** track every news item and source per company, and render a
+Ground News-style distribution of the outlets covering it — right / left / independent.
+
+**The citation half is straightforward and is being built.** Every claim on the
+platform already carries `srcs`. Extending that into a per-company citation index —
+every article, filing and report the dataset draws on, deduplicated, dated, and
+grouped by what it supports — is ordinary work and is section 10 of the company page.
+
+**The lean-classification half has a real problem, and it needs saying before it is
+built rather than after.**
+
+Ground News can render a left/centre/right distribution because it aggregates
+*published third-party ratings* — AllSides, Media Bias/Fact Check — and attributes
+every badge to the rater. It is not asserting the lean itself; it is reporting what
+named rating systems say, with their methodologies public.
+
+For Indian outlets, it is not obvious an equivalent exists. If it does not, then a
+left/right/independent badge on an Indian outlet would be **this platform asserting
+a contested political classification with no source** — the precise thing it refuses
+to do everywhere else. A page that carefully publishes the denominator behind every
+corporate claim, and then labels *The Hindu* "left" on nobody's authority, has given
+away the thing that makes it worth reading.
+
+**So the sequence is: establish the basis first, then build the UI.** A research
+sweep is queued to answer one question — *does a published, methodologically
+documented lean rating covering Indian outlets exist, and whose is it?* Candidates
+include the Reuters Institute Digital News Report India chapter, CSDS/Lokniti, the
+RSF/DataLEADS Media Ownership Monitor for India, AllSides and MBFC coverage of Indian
+titles, and peer-reviewed content analyses. "No adequate source exists" is a
+perfectly good answer and more useful than a fabricated scale.
+
+**What gets built in each case:**
+
+| If lean ratings… | The coverage bar shows |
+|---|---|
+| **exist and are citable** | Lean distribution, every segment attributed to the named rater with its `asOf` and a link to the methodology. Never "left" — always "rated left-of-centre by AllSides, Jan 2026" |
+| **exist only partially** | Rated outlets in the bar; unrated outlets in an explicit "no published rating" segment that is never silently dropped |
+| **do not exist** | **Ownership distribution instead** — which is fully documentable |
+
+**The ownership fallback is not a consolation prize; it may be the better metric.**
+For a page about corporate power, "who owns the outlets covering this company" is a
+sharper question than where they sit on a left-right axis. It is documentable from
+filings, it does not require anyone to adjudicate ideology, and it surfaces the thing
+that actually matters here — for example that NDTV's ownership changed to the Adani
+group in 2022-23, which is a fact with a date, not a label.
+
+**Coverage volume needs its own denominator.** "40 articles about company X" is
+meaningless without "out of N articles that outlet published in the period" and
+"against a median of M articles about comparable companies". Otherwise the bar
+measures outlet size, exactly as raw degree measures entity size in the graph.
+
+**Data acquisition.** Live news needs an API (paid) or a static snapshot. Static-first
+means a curated, sourced article index in `research/raw/`, promoted like everything
+else. A live feed is the same trigger as any other runtime fetch in §1 and is costed
+there.
+
+### 8b.1 Coverage tone — and the only way to measure it that means anything
+
+**The hypothesis, stated plainly:** an outlet that is captured — by ownership, by
+advertising revenue, or by payment — will publish disproportionately favourable
+coverage of the company capturing it.
+
+That is a real, testable claim. It is also one that a naive implementation gets
+wrong in a way that produces confident nonsense, so the method matters more than the
+classifier.
+
+**Why raw sentiment fails.** "Reliance posts record quarterly profit" scores
+positive on every sentiment model in existence. It is also just the news. A company
+having a good year generates favourable coverage everywhere, and a company in crisis
+generates hostile coverage everywhere. Absolute tone measures *the company's year*,
+not the outlet's independence.
+
+**The measurement that works is a double difference.** For outlet *O* and company *C*:
+
+```
+signal(O,C) =  [ tone(O,C)      − tone(O, peer companies) ]      ← O's house style removed
+             − [ tone(all,C)    − tone(all, peer companies) ]    ← C's newsworthiness removed
+```
+
+The first bracket controls for outlets that are simply upbeat about everything. The
+second controls for companies that are genuinely doing well. What survives is the
+part that is specific to *this outlet writing about this company* — which is the only
+part capable of indicating anything.
+
+**What each control kills, and it should kill a lot:**
+
+| Naive claim | What the control does to it |
+|---|---|
+| "Outlet O is positive about C" | Dies if O is positive about all 50 large caps — that is a house style |
+| "Coverage of C is favourable" | Dies if every outlet is favourable — C had a good year |
+| "O ran 12 positive pieces on C" | Dies without O's total volume and its rate for peer companies |
+| "O turned positive after the ad deal" | Needs a shuffled control on dates; two continuous streams produce apparent turns |
+
+**Required alongside every tone figure:** the article count, the peer baseline, the
+period, the classifier used and its measured accuracy on a hand-labelled Indian
+financial-news sample. A sentiment model validated on English product reviews is not
+validated on Indian business journalism, and shipping one as if it were would be the
+same error as the fabricated sparklines.
+
+### 8b.2 Journalists — what is publishable and what is not
+
+**The ask:** track journalists across the top 50 NSE/BSE companies and find
+commonalities.
+
+**The legitimate version:** byline data is public, and mapping which desks and
+reporters cover which sectors is ordinary media research. Aggregate patterns — this
+outlet's business desk is four people covering 200 companies; coverage of company C
+is concentrated in one byline while peers are spread across six — are real,
+checkable, and interesting.
+
+**The version this platform will not build:** a graph implying a named journalist is
+compromised. Three reasons, and they are not squeamishness:
+
+1. **Beat reporting is the job.** A reporter on the energy desk covering Reliance
+   constantly is doing exactly what they are employed to do. Frequency is the single
+   worst possible indicator here — it measures the beat, not the relationship.
+2. **The base rate destroys the naive version.** Before "journalist J writes
+   favourably about C" means anything, you need J's tone toward comparable companies,
+   J's total output, and the desk's distribution. Almost every apparent pattern
+   dissolves at that step — and the platform already has the arithmetic to show it,
+   the same way `/interlocks` shows that 7 surname coincidences is *fewer* than the
+   ~19 chance predicts across 3,795 pairs.
+3. **The refusal is already written.** No allegation about an individual without a
+   public record meeting the evidence tiers. A byline is a public role; an
+   insinuation about someone's integrity is not licensed by it. Where a documented
+   conflict exists — a disclosed payment, an undisclosed shareholding, a
+   documented editorial-interference finding — that is `documented` tier and
+   publishable **with the person's response attached**. Absent that, the analysis
+   stays at desk and outlet level.
+
+**Concretely, per company:** byline concentration (how many distinct reporters, how
+concentrated), desk distribution, and the peer comparison. Named-journalist tone
+scores are computed for the aggregate and **not rendered per person** unless a
+documented conflict exists.
+
+### 8b.3 Commonalities across the top 50
+
+The genuinely interesting sweep, and the one worth doing first because it is
+answerable with public data:
+
+- **Which outlets cover which of the top 50, and which they never cover.** A
+  large-cap with near-zero coverage in a major outlet is as informative as saturation.
+- **Ownership overlap** between covering outlets and covered companies — documented,
+  no ideology required.
+- **Shared bylines across unrelated companies** — a reporter appearing on both is
+  usually a wire pickup or a syndication artefact, and the analysis must identify
+  those before treating any overlap as meaningful.
+- **Syndication and wire detection.** A large share of Indian business "coverage" is
+  PTI/ANI copy republished under multiple mastheads. Counting the same wire story
+  across 15 outlets as 15 independent positive articles would inflate every number on
+  this page. **Deduplicating wire copy is a prerequisite, not a refinement.**
+
 ## 9. UI/UX system
 
 **Density.** These are documents, not dashboards. Prose carries the reasoning;
