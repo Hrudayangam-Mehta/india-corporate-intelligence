@@ -61,7 +61,7 @@
 | C019 | Implement error boundaries | P2 | [ ] | - | india-corporate-intelligence | C001 |
 | C020 | Add keyboard shortcuts | P3 | [ ] | - | india-corporate-intelligence | C004-C012 |
 | C021 | Build NIFTY 50 index page | P1 | [x] | @tryclaw | india-corporate-intelligence | C004 |
-| C022 | Build NIFTY 50 stock cards with sparklines | P1 | [ ] | - | india-corporate-intelligence | C021 |
+| C022 | Build NIFTY 50 stock cards with sparklines | P1 | [x] | @tryclaw | india-corporate-intelligence | C021 |
 | C023 | Add sector allocation pie chart for NIFTY 50 | P2 | [ ] | - | india-corporate-intelligence | C021 |
 
 ## Section D: Frontend - Advanced Maps (D001-D099)
