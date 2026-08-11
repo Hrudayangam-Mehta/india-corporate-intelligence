@@ -32,6 +32,7 @@ const EvidenceAudit = lazy(() => import('./pages/EvidenceAudit'));
 const BaseRates = lazy(() => import('./pages/BaseRates'));
 const Interlocks = lazy(() => import('./pages/Interlocks'));
 const Motifs = lazy(() => import('./pages/Motifs'));
+const Prospector = lazy(() => import('./pages/Prospector'));
 const Provenance = lazy(() => import('./pages/Provenance'));
 const Method = lazy(() => import('./pages/Method'));
 const IndustryView = lazy(() => import('./pages/IndustryView'));
@@ -80,6 +81,7 @@ function App() {
                     <Route path="/base-rates" element={<BaseRates />} />
                     <Route path="/interlocks" element={<Interlocks />} />
                     <Route path="/motifs" element={<Motifs />} />
+                    <Route path="/prospector" element={<Prospector />} />
                     <Route path="/provenance" element={<Provenance />} />
                     <Route path="/method" element={<Method />} />
                     <Route path="/industries" element={<IndustryView />} />
