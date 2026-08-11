@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { TrendingUp, TrendingDown, Activity, PieChart, BarChart3, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
+import { TrendingUp, TrendingDown, Activity, PieChart as PieChartIcon, BarChart3, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 import { Sparkline } from '../components/Sparkline';
+import { PieChart } from '../components/PieChart';
 
 interface NiftyStock {
   rank: number;
@@ -283,10 +284,21 @@ export const Nifty50Page: React.FC = () => {
         {/* Sector Allocation */}
         <div className="bg-[#161618] border border-[#f4f0e8]/10 rounded-lg p-6">
           <h3 className="text-sm font-semibold text-[#f0e6d8] mb-4 flex items-center gap-2">
-            <PieChart className="w-4 h-4 text-[#c9a86c]" />
+            <PieChartIcon className="w-4 h-4 text-[#c9a86c]" />
             Sector Allocation
           </h3>
-          <div className="space-y-3">
+          <PieChart
+            data={sectorAllocation.map(([sector, weight]) => ({
+              label: sector,
+              value: weight,
+              color: SECTOR_COLORS[sector] || '#c9a86c',
+            }))}
+            size={260}
+            donut={true}
+          />
+          
+          {/* Sector bars below */}
+          <div className="space-y-2 mt-4 pt-4 border-t border-[#f4f0e8]/10">
             {sectorAllocation.map(([sector, weight]) => (
               <div key={sector} className="space-y-1">
                 <div className="flex items-center justify-between">
@@ -295,11 +307,11 @@ export const Nifty50Page: React.FC = () => {
                       className="w-3 h-3 rounded-full"
                       style={{ backgroundColor: SECTOR_COLORS[sector] || '#c9a86c' }}
                     />
-                    <span className="text-[#f0e6d8] text-sm">{sector}</span>
+                    <span className="text-[#f0e6d8] text-xs">{sector}</span>
                   </div>
-                  <span className="text-[#9c9588] text-sm">{weight.toFixed(2)}%</span>
+                  <span className="text-[#9c9588] text-xs">{weight.toFixed(2)}%</span>
                 </div>
-                <div className="w-full h-2 bg-[#0c0c0e] rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-[#0c0c0e] rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all"
                     style={{
