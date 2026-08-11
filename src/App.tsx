@@ -19,6 +19,8 @@ import Atlas from './pages/Atlas';
 import Method from './pages/Method';
 import Motifs from './pages/Motifs';
 import Interlocks from './pages/Interlocks';
+import GeoGraph from './pages/GeoGraph';
+import Provenance from './pages/Provenance';
 import { DataProvider } from './context/DataContext';
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
             <Route path="/states/:code" element={<StateProfile />} />
             <Route path="/company/:id" element={<CompanyProfile />} />
             <Route path="/network" element={<NetworkView />} />
+            <Route path="/geograph" element={<GeoGraph />} />
             <Route path="/cabinet" element={<Cabinet />} />
             <Route path="/conglomerates" element={<Conglomerates />} />
             <Route path="/atlas" element={<Atlas />} />
@@ -40,6 +43,7 @@ function App() {
             <Route path="/base-rates" element={<BaseRates />} />
             <Route path="/interlocks" element={<Interlocks />} />
             <Route path="/motifs" element={<Motifs />} />
+            <Route path="/provenance" element={<Provenance />} />
             <Route path="/method" element={<Method />} />
             <Route path="/industries" element={<IndustryView />} />
             <Route path="/political" element={<PoliticalView />} />

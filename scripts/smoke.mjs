@@ -11,9 +11,52 @@
  */
 
 import { chromium } from 'playwright';
-import { mkdirSync, existsSync } from 'node:fs';
+import { mkdirSync, existsSync, readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { join, extname, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const base = process.argv[2]?.startsWith('http') ? process.argv[2] : 'http://127.0.0.1:4173';
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+/**
+ * Serve `dist` ourselves unless a base URL was passed.
+ *
+ * Relying on a separately-started preview server makes this test fail for reasons
+ * that have nothing to do with the app — a reaped background process reads as a
+ * broken build. Owning the server means the only thing that can fail is the thing
+ * under test.
+ */
+const MIME = {
+  '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
+  '.json': 'application/json', '.svg': 'image/svg+xml', '.map': 'application/json',
+  '.png': 'image/png', '.woff2': 'font/woff2',
+};
+
+let server = null;
+let base = process.argv[2]?.startsWith('http') ? process.argv[2] : null;
+
+if (!base) {
+  const dist = join(root, 'dist');
+  if (!existsSync(join(dist, 'index.html'))) {
+    console.error('smoke: dist/index.html missing — run `npm run build` first.\n');
+    process.exit(1);
+  }
+  server = createServer((req, res) => {
+    const url = decodeURIComponent((req.url ?? '/').split('?')[0]);
+    let file = join(dist, url === '/' ? 'index.html' : url);
+    if (!existsSync(file) || extname(file) === '') file = join(dist, 'index.html');
+    try {
+      const body = readFileSync(file);
+      res.writeHead(200, { 'content-type': MIME[extname(file)] ?? 'application/octet-stream' });
+      res.end(body);
+    } catch {
+      res.writeHead(404).end('not found');
+    }
+  });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  base = `http://127.0.0.1:${server.address().port}`;
+  console.log(`  · serving dist on ${base}`);
+}
 const shotsIdx = process.argv.indexOf('--shots');
 const shots = shotsIdx > -1 ? process.argv[shotsIdx + 1] : null;
 if (shots) mkdirSync(shots, { recursive: true });
@@ -38,6 +81,9 @@ const ROUTES = [
   ['/watchlist', 'watchlist'],
   ['/motifs', 'motifs'],
   ['/interlocks', 'interlocks'],
+  ['/provenance', 'provenance'],
+  ['/geograph', 'geograph'],
+  ['/geograph?mode=state-flows&layer=all', 'geograph-flows'],
 ];
 
 const failures = [];
@@ -90,6 +136,7 @@ const focusable = await page.evaluate(() => document.querySelectorAll('svg[tabin
 if (focusable === 0) failures.push('/map: map svg is not keyboard-focusable');
 
 await browser.close();
+server?.close();
 
 if (failures.length) {
   console.error(`\n  ${failures.length} FAILURE(S):`);

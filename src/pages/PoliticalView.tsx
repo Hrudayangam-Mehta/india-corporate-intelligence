@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Kicker, PageTitle, Standfirst, Byline, Section, Callout, StatGrid, DataTable, TierChip, Cite, Footnote } from '../components/Editorial';
+import FlowSankey from '../components/viz/FlowSankey';
 import { NODES, EDGES } from '../graph/data';
 import { BASE_RATES } from '../graph/baseRates';
-import type { Predicate } from '../graph/schema';
+import type { GEdge, Predicate } from '../graph/schema';
 
 /**
  * Money to parties.
@@ -27,6 +28,7 @@ const PRED_LABEL: Record<string, string> = {
 
 export default function PoliticalView() {
   const [pred, setPred] = useState<Predicate | 'all'>('all');
+  const [picked, setPicked] = useState<GEdge[] | null>(null);
 
   const byId = useMemo(() => new Map(NODES.map((n) => [n.id, n])), []);
 
@@ -117,6 +119,55 @@ export default function PoliticalView() {
             ))}
           </ul>
         </Callout>
+      </Section>
+
+      <Section
+        title="Flow direction"
+        note="Money moving left to right. Left-to-right is flow of funds, not influence — and every band is an aggregate, so click one for its underlying relationships."
+      >
+        <div className="card-surface !p-3 overflow-hidden">
+          {/*
+            Money-movement predicates only. Awards are deliberately excluded: a
+            contract value is not a transfer from the ministry to the winner, and
+            putting a ₹20,000 cr contract on the same thickness scale as a ₹25 cr
+            donation would make the donations invisible and imply a transfer that
+            never happened. Awards appear in the ledger below instead.
+          */}
+          <FlowSankey
+            nodes={NODES}
+            edges={EDGES}
+            flowPreds={MONEY_PREDS}
+            height={560}
+            onSelectFlow={setPicked}
+          />
+        </div>
+        {picked && picked.length > 0 && (
+          <div className="card-surface mt-4 p-4">
+            <div className="flex items-baseline justify-between gap-4 mb-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted">
+                {picked.length} underlying relationship{picked.length === 1 ? '' : 's'} in that band
+              </p>
+              <button onClick={() => setPicked(null)} className="btn-ghost !py-1 !px-2 !text-[11px]">
+                close
+              </button>
+            </div>
+            <ul className="space-y-2.5">
+              {picked.map((e, i) => (
+                <li key={i} className="text-[13.5px] leading-snug">
+                  <span className="flex flex-wrap items-baseline gap-2">
+                    <TierChip tier={e.tier} />
+                    <strong className="text-text">{byId.get(e.s)?.label ?? e.s}</strong>
+                    <span className="text-text-muted">→ {byId.get(e.t)?.label ?? e.t}</span>
+                    <span className="text-text-muted">{PRED_LABEL[e.pred] ?? e.pred}</span>
+                    {e.a ? <span className="font-mono text-[11.5px] text-accent">₹{e.a.toLocaleString('en-IN')} cr</span> : null}
+                  </span>
+                  {e.d && <span className="block text-text-muted mt-1">{e.d}</span>}
+                  <Cite srcs={e.srcs} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Section>
 
       <Section title="Traced flows" note="Filter by instrument. Every row carries its tier and its source.">
