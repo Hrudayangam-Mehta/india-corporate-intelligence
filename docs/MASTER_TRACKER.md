@@ -48,6 +48,7 @@
 - [x] C015 - HashRouter for static hosting
 - [x] C021 - NIFTY 50 index page
 - [x] C022 - NIFTY 50 sparkline cards
+- [x] C023 - NIFTY 50 sector allocation pie chart
 
 ### Advanced Maps (D001-D013)
 - [x] D011 - NSE Map page (50 companies)
