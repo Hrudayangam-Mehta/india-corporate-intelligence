@@ -1,242 +1,261 @@
-import { useParams } from 'react-router-dom';
+import { useMemo } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Kicker, PageTitle, Standfirst, Section, Callout, StatGrid, DataTable, Prose, TierChip, Cite } from '../components/Editorial';
 import { useData } from '../context/DataContext';
-import { Building2, MapPin, Users, ExternalLink, Bookmark, BookmarkCheck } from 'lucide-react';
+import { STATE_NAMES, STATE_BY_ID, STATES } from '../data/geo';
+import { ministersByState, RANK_LABEL } from '../data/politics';
+
+const fmtCr = (v: number) => (v >= 100000 ? `₹${(v / 100000).toFixed(2)} lakh cr` : `₹${Math.round(v).toLocaleString('en-IN')} cr`);
 
 export default function CompanyProfile() {
   const { id } = useParams<{ id: string }>();
-  const { companies, addToWatchlist, removeFromWatchlist, watchlist } = useData();
-  
-  const company = companies.find(c => c.id === id);
-  const isWatched = watchlist.includes(id || '');
+  const { companies, groups, nodes, edges, isWatched, toggleWatch, asOf } = useData();
 
-  if (!company) {
+  const c = companies.find((x) => x.id === id);
+  const group = useMemo(() => (c?.group ? groups.find((g) => g.name.toLowerCase().includes(c.group!.toLowerCase()) || g.id === c.group!.toLowerCase()) : null), [c, groups]);
+
+  const peers = useMemo(
+    () =>
+      c
+        ? companies
+            .filter((x) => x.sector === c.sector && x.id !== c.id)
+            .sort((a, b) => (b.marketCapCr ?? 0) - (a.marketCapCr ?? 0))
+            .slice(0, 8)
+        : [],
+    [companies, c],
+  );
+
+  const sectorTotal = useMemo(
+    () => (c ? companies.filter((x) => x.sector === c.sector).reduce((a, x) => a + (x.marketCapCr ?? 0), 0) : 0),
+    [companies, c],
+  );
+
+  // Anything the graph knows about this company, matched on node id or alias.
+  const graphNode = useMemo(() => {
+    if (!c) return null;
+    const needles = [c.name, c.shortName, c.nse ?? ''].filter(Boolean).map((s) => s.toLowerCase());
     return (
-      <div className="card-surface p-8 text-center">
-        <h2 className="text-xl font-semibold">Company not found</h2>
-        <p className="text-text-secondary mt-2">The company you're looking for doesn't exist in our database.</p>
-      </div>
+      nodes.find((n) => n.id === `co:${c.id}`) ??
+      nodes.find((n) => needles.some((needle) => n.label.toLowerCase() === needle || (n.al ?? []).some((a) => a.toLowerCase() === needle))) ??
+      null
+    );
+  }, [c, nodes]);
+
+  const graphEdges = useMemo(
+    () => (graphNode ? edges.filter((e) => e.s === graphNode.id || e.t === graphNode.id) : []),
+    [graphNode, edges],
+  );
+
+  const stateMinisters = useMemo(() => (c ? ministersByState().get(c.stateCode) ?? [] : []), [c]);
+
+  if (!c) {
+    return (
+      <article className="pt-4">
+        <PageTitle>Company not found</PageTitle>
+        <Prose>
+          <p>
+            No company in the dataset has the identifier <code>{id}</code>. The platform currently carries{' '}
+            {companies.length} listed companies — coverage is deliberately incomplete and expanding, and an
+            absent company is a gap in the dataset rather than a statement about the company.
+          </p>
+        </Prose>
+        <Link to="/search" className="btn-ghost mt-4 inline-block">
+          search the dataset →
+        </Link>
+      </article>
     );
   }
 
+  const geo = STATE_BY_ID.get(c.stateCode);
+  const share = sectorTotal && c.marketCapCr ? (c.marketCapCr / sectorTotal) * 100 : 0;
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="card-surface p-6">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-xl bg-accent/10 flex items-center justify-center">
-              <Building2 className="w-8 h-8 text-accent" />
-            </div>
-            <div>
-              <h1 className="heading-editorial text-2xl font-bold">{company.name}</h1>
-              <div className="flex items-center gap-3 mt-1 text-sm text-text-muted">
-                <span>{company.nseSymbol || company.bseCode}</span>
-                <span>•</span>
-                <span>{company.sector}</span>
-                <span>•</span>
-                <span>{company.industry}</span>
-              </div>
-            </div>
+    <article className="pb-20">
+      <header className="pt-2 pb-6 border-b-2 border-border-light">
+        <Kicker>
+          <Link to="/map" className="hover:text-accent">
+            Markets
+          </Link>{' '}
+          /{' '}
+          <Link to={`/states/${c.stateCode}`} className="hover:text-accent">
+            {STATE_NAMES[c.stateCode]}
+          </Link>{' '}
+          / company
+        </Kicker>
+        <div className="flex flex-wrap justify-between gap-4 items-start">
+          <div className="flex-1 min-w-[18rem]">
+            <PageTitle>{c.shortName || c.name}</PageTitle>
+            <Standfirst>
+              {c.name}. {c.industry}, registered in {c.hqCity}, {STATE_NAMES[c.stateCode]}
+              {c.founded ? `, founded ${c.founded}` : ''}.
+              {c.group ? ` Part of the ${c.group} group.` : ''}
+            </Standfirst>
           </div>
-          <button
-            onClick={() => isWatched ? removeFromWatchlist(company.id) : addToWatchlist(company.id)}
-            className="p-2 rounded-lg bg-bg-elevated border border-border hover:border-accent/30 transition-all"
-          >
-            {isWatched ? (
-              <BookmarkCheck className="w-5 h-5 text-accent" />
-            ) : (
-              <Bookmark className="w-5 h-5 text-text-muted" />
-            )}
+          <button onClick={() => toggleWatch(c.id)} className={isWatched(c.id) ? 'btn-primary' : 'btn-ghost'}>
+            {isWatched(c.id) ? 'tracked ✓' : '+ track'}
           </button>
         </div>
+        <p className="font-mono text-[11px] text-text-muted mt-4 tracking-wide">
+          {c.nse ? `NSE ${c.nse}` : ''}
+          {c.nse && c.bse ? ' · ' : ''}
+          {c.bse ? `BSE ${c.bse}` : ''}
+          {c.isin ? ` · ${c.isin}` : ''} · figures as of {asOf}
+        </p>
+      </header>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-          {company.marketCap && (
-            <div className="bg-bg-elevated p-4 rounded-lg">
-              <div className="text-xs text-text-muted mb-1">Market Cap</div>
-              <div className="text-lg font-bold text-accent">₹{(company.marketCap / 1000).toFixed(0)}K Cr</div>
-            </div>
+      <StatGrid
+        items={[
+          { value: c.marketCapCr != null ? fmtCr(c.marketCapCr) : 'not recorded', label: 'market cap — as of the dataset date, not live', tone: c.marketCapCr == null ? 'muted' : 'accent' },
+          { value: `${share.toFixed(1)}%`, label: `of listed ${c.sector} market cap in the dataset`, tone: 'muted' },
+          { value: c.ownership.replace('-', ' '), label: 'ownership class' },
+          { value: c.employees != null ? c.employees.toLocaleString('en-IN') : 'not recorded', label: 'employees', tone: 'muted' },
+        ]}
+      />
+
+      {c.notes && (
+        <Callout label="Note on this record" tone="note">
+          <p>{c.notes}</p>
+        </Callout>
+      )}
+
+      <Callout label="Registered, not operational" tone="note">
+        <p>
+          This company is attributed to <strong>{STATE_NAMES[c.stateCode]}</strong> because that is where its{' '}
+          <em>registered</em> office sits. Registered and operational headquarters diverge frequently in
+          India — several large public-sector companies are Delhi- or Kolkata-registered while operating
+          principally elsewhere, and several well-known private names carry a registered office in a state
+          most people would not associate them with. Conflating the two is the most common error in
+          state-wise corporate maps.
+        </p>
+      </Callout>
+
+      <Section title="Where it sits" note="">
+        <div className="flex flex-wrap gap-6 items-start">
+          {geo && (
+            <svg
+              viewBox={`${geo.bbox[0] - 10} ${geo.bbox[1] - 10} ${geo.bbox[2] - geo.bbox[0] + 20} ${geo.bbox[3] - geo.bbox[1] + 20}`}
+              className="w-40"
+              role="img"
+              aria-label={`Outline of ${geo.name}`}
+            >
+              {STATES.filter((s) => s.id !== geo.id).map((s) => (
+                <path key={s.id} d={s.path} fill="none" stroke="rgba(232,228,220,0.09)" strokeWidth="0.5" />
+              ))}
+              <path d={geo.path} fill="rgba(201,168,108,0.16)" stroke="var(--color-accent,#c9a86c)" strokeWidth="0.9" />
+              <circle cx={geo.cx} cy={geo.cy} r="2" fill="var(--color-accent,#c9a86c)" />
+            </svg>
           )}
-          {company.revenue && (
-            <div className="bg-bg-elevated p-4 rounded-lg">
-              <div className="text-xs text-text-muted mb-1">Revenue</div>
-              <div className="text-lg font-bold">₹{(company.revenue / 1000).toFixed(1)}K Cr</div>
-            </div>
-          )}
-          {company.netProfit && (
-            <div className="bg-bg-elevated p-4 rounded-lg">
-              <div className="text-xs text-text-muted mb-1">Net Profit</div>
-              <div className="text-lg font-bold text-sage">₹{company.netProfit.toFixed(0)} Cr</div>
-            </div>
-          )}
-          {company.employeeCount && (
-            <div className="bg-bg-elevated p-4 rounded-lg">
-              <div className="text-xs text-text-muted mb-1">Employees</div>
-              <div className="text-lg font-bold">{company.employeeCount}</div>
-            </div>
-          )}
+          <dl className="grid grid-cols-2 gap-x-8 gap-y-3 text-[14px]">
+            {[
+              ['Sector', c.sector],
+              ['Industry', c.industry],
+              ['Registered city', c.hqCity],
+              ['State', STATE_NAMES[c.stateCode]],
+              ['Exchanges', [c.nse ? 'NSE' : null, c.bse ? 'BSE' : null].filter(Boolean).join(' + ') || 'not recorded'],
+              ['Promoter group', c.group ?? 'none recorded'],
+            ].map(([k, v]) => (
+              <div key={k}>
+                <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted">{k}</dt>
+                <dd className="text-text-secondary mt-0.5">{v}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-      </div>
+        <Cite srcs={c.srcs} />
+      </Section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* About */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="card-surface p-6">
-            <h2 className="font-semibold text-lg mb-4">About</h2>
-            <p className="text-text-secondary leading-relaxed">{company.about}</p>
-            
-            <div className="grid grid-cols-2 gap-4 mt-6">
-              <div>
-                <div className="text-xs text-text-muted mb-1">Incorporated</div>
-                <div className="text-sm">{company.incorporated}</div>
-              </div>
-              <div>
-                <div className="text-xs text-text-muted mb-1">Listed On</div>
-                <div className="text-sm">{company.exchanges.join(', ')}</div>
-              </div>
-              <div>
-                <div className="text-xs text-text-muted mb-1">ISIN</div>
-                <div className="text-sm">{company.isin}</div>
-              </div>
-              <div>
-                <div className="text-xs text-text-muted mb-1">Face Value</div>
-                <div className="text-sm">₹{company.faceValue}</div>
-              </div>
-            </div>
-          </div>
+      {group && (
+        <Section title={`Group: ${group.name}`} note="Ownership structure — descriptive only">
+          <p className="text-[14.5px] text-text-secondary max-w-[70ch] leading-relaxed">
+            {group.holdingEntity}
+          </p>
+          <DataTable
+            columns={['Sister entity', 'NSE', 'Sector', 'Market cap', 'Promoter %']}
+            rows={group.listedEntities.map((e) => [
+              e.name,
+              <span key="t" className="font-mono text-[11.5px]">
+                {e.nse ?? '—'}
+              </span>,
+              <span key="s" className="text-[12.5px]">
+                {e.sector}
+              </span>,
+              <span key="m" className="font-mono text-[11.5px] whitespace-nowrap">
+                {e.mcapCr != null ? fmtCr(e.mcapCr) : '—'}
+              </span>,
+              <span key="p" className="font-mono text-[11.5px]">
+                {e.promoterHoldingPct != null ? `${e.promoterHoldingPct}%` : '—'}
+              </span>,
+            ])}
+          />
+          <Link to="/conglomerates" className="btn-ghost !text-[12px] inline-block mt-2">
+            full group structure →
+          </Link>
+        </Section>
+      )}
 
-          {/* Shareholding */}
-          {company.promoterHolding && (
-            <div className="card-surface p-6">
-              <h2 className="font-semibold text-lg mb-4">Shareholding Pattern</h2>
-              <div className="space-y-3">
-                {company.promoterHolding && (
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Promoters</span>
-                      <span className="font-medium">{company.promoterHolding}%</span>
-                    </div>
-                    <div className="h-2 bg-bg-elevated rounded-full overflow-hidden">
-                      <div className="h-full bg-accent rounded-full" style={{ width: `${company.promoterHolding}%` }} />
-                    </div>
-                  </div>
-                )}
-                {company.fiiHolding && (
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>FIIs</span>
-                      <span className="font-medium">{company.fiiHolding}%</span>
-                    </div>
-                    <div className="h-2 bg-bg-elevated rounded-full overflow-hidden">
-                      <div className="h-full bg-sage rounded-full" style={{ width: `${company.fiiHolding}%` }} />
-                    </div>
-                  </div>
-                )}
-                {company.diiHolding && (
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>DIIs</span>
-                      <span className="font-medium">{company.diiHolding}%</span>
-                    </div>
-                    <div className="h-2 bg-bg-elevated rounded-full overflow-hidden">
-                      <div className="h-full bg-amber rounded-full" style={{ width: `${company.diiHolding}%` }} />
-                    </div>
-                  </div>
-                )}
-                {company.publicHolding && (
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Public</span>
-                      <span className="font-medium">{company.publicHolding}%</span>
-                    </div>
-                    <div className="h-2 bg-bg-elevated rounded-full overflow-hidden">
-                      <div className="h-full bg-purple rounded-full" style={{ width: `${company.publicHolding}%` }} />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Location */}
-          <div className="card-surface p-6">
-            <h3 className="font-semibold mb-4">Headquarters</h3>
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-accent mt-0.5" />
-              <div>
-                <div className="font-medium">{company.hqLocation.city}</div>
-                <div className="text-sm text-text-muted">{company.hqLocation.state}</div>
-              </div>
-            </div>
-            
-            {company.otherLocations && company.otherLocations.length > 0 && (
-              <div className="mt-4">
-                <h4 className="text-sm font-medium mb-2">Other Locations</h4>
-                <div className="space-y-2">
-                  {company.otherLocations.map((loc, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm">
-                      <MapPin className="w-3 h-3 text-text-muted" />
-                      <span>{loc.city}, {loc.state}</span>
-                      <span className="text-xs text-text-muted capitalize">({loc.type})</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Directors */}
-          {company.directors && company.directors.length > 0 && (
-            <div className="card-surface p-6">
-              <h3 className="font-semibold mb-4">Key People</h3>
-              <div className="space-y-3">
-                {company.directors.map((director, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-sage/10 flex items-center justify-center">
-                      <Users className="w-4 h-4 text-sage" />
-                    </div>
-                    <span className="text-sm">{director}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Tags */}
-          {company.tags && company.tags.length > 0 && (
-            <div className="card-surface p-6">
-              <h3 className="font-semibold mb-4">Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {company.tags.map((tag, i) => (
-                  <span key={i} className="px-3 py-1 bg-bg-elevated rounded-full text-xs text-text-secondary">
-                    {tag}
+      {graphEdges.length > 0 && (
+        <Section title="In the graph" note="Every relationship carries its evidence tier and its source">
+          <ul className="space-y-3">
+            {graphEdges.slice(0, 20).map((e, i) => {
+              const otherId = e.s === graphNode!.id ? e.t : e.s;
+              const other = nodes.find((n) => n.id === otherId);
+              return (
+                <li key={i} className="border-l-2 border-border-light pl-3">
+                  <span className="flex flex-wrap items-baseline gap-2 text-[14px]">
+                    <TierChip tier={e.tier} />
+                    <span className="text-text-muted">{e.s === graphNode!.id ? '→' : '←'}</span>
+                    <strong className="text-text">{other?.label ?? otherId}</strong>
+                    <span className="text-text-muted">{e.pred}</span>
+                    {e.a ? <span className="font-mono text-[12px] text-accent">₹{e.a.toLocaleString('en-IN')} cr</span> : null}
                   </span>
-                ))}
-              </div>
-            </div>
-          )}
+                  {e.d && <p className="text-[13px] text-text-muted mt-1">{e.d}</p>}
+                  {e.innocentReading && (
+                    <p className="text-[12.5px] text-text-muted italic mt-1">Innocent reading: {e.innocentReading}</p>
+                  )}
+                  <Cite srcs={e.srcs} />
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+      )}
 
-          {/* Links */}
-          <div className="card-surface p-6">
-            <h3 className="font-semibold mb-4">Links</h3>
-            {company.website && (
-              <a 
-                href={company.website} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-accent hover:underline"
-              >
-                <ExternalLink className="w-4 h-4" />
-                Official Website
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+      <Section title={`Peers in ${c.sector}`} note="By recorded market cap — the reference class for any claim about this company">
+        <DataTable
+          columns={['Company', 'Ticker', 'Market cap', 'State']}
+          rows={peers.map((p) => [
+            <Link key="n" to={`/company/${p.id}`} className="text-text hover:text-accent">
+              {p.shortName || p.name}
+            </Link>,
+            <span key="t" className="font-mono text-[11.5px]">
+              {p.nse ?? p.bse ?? '—'}
+            </span>,
+            <span key="m" className="font-mono text-[11.5px] whitespace-nowrap">
+              {p.marketCapCr != null ? fmtCr(p.marketCapCr) : '—'}
+            </span>,
+            <Link key="s" to={`/states/${p.stateCode}`} className="text-[12.5px] hover:text-accent">
+              {STATE_NAMES[p.stateCode]}
+            </Link>,
+          ])}
+        />
+      </Section>
+
+      {stateMinisters.length > 0 && (
+        <Section title="Union ministers seated in the same state" note="Context only — never drawn as a relationship">
+          <p className="text-[14px] text-text-secondary max-w-[70ch] leading-relaxed">
+            {stateMinisters.map((m) => `${m.name} (${RANK_LABEL[m.rank]})`).join(', ')}.
+          </p>
+          <Callout label="Why there is no line here" tone="note">
+            <p>
+              {STATE_NAMES[c.stateCode]} has both this company's registered office and{' '}
+              {stateMinisters.length} union minister{stateMinisters.length === 1 ? '' : 's'}. Joining those
+              two facts would create an edge in every large state by construction — Maharashtra alone
+              carries a large plurality of listed headquarters, so co-location there is close to expected.
+              Co-location is shown here as context and is never rendered as a relationship.
+            </p>
+          </Callout>
+        </Section>
+      )}
+    </article>
   );
 }

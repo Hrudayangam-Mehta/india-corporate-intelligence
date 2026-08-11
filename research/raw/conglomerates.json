@@ -1,0 +1,513 @@
+{
+  "asOf": "2026-08-11",
+  "scope": "Descriptive corporate-structure dataset only: ownership, listed entities, apex holding vehicles, key officeholders, notable subsidiaries and foreign partners. Contains no allegations, investigations or wrongdoing claims by design.",
+  "methodology": {
+    "marketCapSource": "Screener.in company pages, read 2026-08-11 (intraday). Figures in Rs crore, rounded as displayed.",
+    "promoterHoldingSource": "Screener.in shareholding-pattern tables, which reproduce SEBI/exchange quarterly shareholding filings. Quarter of each figure noted per entity in 'asOfQuarter'.",
+    "combinedMcapCr": "Computed as the sum of the mcapCr values of the listedEntities present in THIS file for that group. For groups where only a subset of listed entities is covered, this is a partial figure and is flagged in the group 'notes'.",
+    "nullPolicy": "Any shareholding %, subsidiary, stake or figure that could not be verified against a cited source is set to null and the gap is described in 'notes' or in the top-level 'gaps' array. No value in this file is estimated or inferred."
+  },
+  "sources": [
+    ["Screener.in — Reliance Industries", "https://www.screener.in/company/RELIANCE/"],
+    ["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"],
+    ["RIL — Shareholding pattern", "https://www.ril.com/investors/shareholders-information/shareholding-pattern"],
+    ["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"],
+    ["Adani Enterprises — SBAFT exchange filing", "https://www.adanienterprises.com/-/media/Project/Enterprises/Investors/corporate-governance/Others-Dynamic/AEL_Reasons_26-08-2020_SBAFT.pdf"],
+    ["Business Standard — Vinod Adani part of promoter group", "https://www.business-standard.com/article/current-affairs/vinod-adani-is-part-of-promoter-group-of-listed-entities-adani-group-123031601267_1.html"],
+    ["Adani newsroom — QIA investment in Adani Electricity Mumbai", "https://www.adani.com/newsroom/media-releases/qatar-investment-authority-to-invest-inr-3200-crore-in-adani-electricity-mumbai-limited"],
+    ["Adani newsroom — IHC INR 15,400 cr primary equity transaction", "https://www.adani.com/newsroom/media-releases/adani-portfolio-companies-complete-inr-15400-cr-primary-equity-transaction-with-ihc"],
+    ["Adani newsroom — Renew Exim concludes ITD Cementation acquisition", "https://www.adani.com/newsroom/media-releases/renew-exim-successfully-achieves-the-key-milestone-to-conclude-the-acquisition-of-itd-cementation"],
+    ["Business Standard — Adani to sell entire AWL Agri stake to Wilmar", "https://www.business-standard.com/companies/news/adani-to-sell-entire-awl-agri-stake-to-wilmar-others-for-10-874-crore-125071700758_1.html"],
+    ["Angel One — Ambuja/Sanghi merger effective after NCLT approval", "https://www.angelone.in/news/stocks/ambuja-cements-merger-with-sanghi-industries-becomes-effective-after-nclt-approval"],
+    ["Business Today — Vedanta demerger listing date for four entities", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"],
+    ["Business Standard — Gopichand Hinduja dies at 85", "https://www.business-standard.com/india-news/gopichand-hinduja-passes-away-hinduja-group-chairman-london-125110401793_1.html"],
+    ["JioStar — Reliance and Disney complete JV transaction", "https://www.jiostar.com/news/reliance-and-disney-announce-completion-of-transaction-to-form-joint-venture-to-bring-together-the-most-iconic-and-engaging-entertainment-brands-in-india/"],
+    ["Outlook Business — Jio Platforms global investor list", "https://www.outlookbusiness.com/corporate/jios-global-investor-list-meta-google-saudi-pif-among-shareholders-as-filing-goes-live"],
+    ["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"],
+    ["Wikipedia — Aditya Birla Group", "https://en.wikipedia.org/wiki/Aditya_Birla_Group"],
+    ["Wikipedia — JSW Group", "https://en.wikipedia.org/wiki/JSW_Group"],
+    ["Wikipedia — Mahindra Group", "https://en.wikipedia.org/wiki/Mahindra_Group"],
+    ["L&T — Leadership: S. N. Subrahmanyan", "https://www.larsentoubro.com/leadership/s-n-subrahmanyan"],
+    ["Vedanta Resources — Leadership", "https://www.vedantaresources.com/who-we-are-leadership.php"],
+    ["Hinduja Group — corporate site", "https://www.hindujagroup.com/"]
+  ],
+  "disambiguation": {
+    "twoAmbaniGroups": "There are two entirely separate 'Reliance' groups descended from Dhirubhai Ambani's businesses, split in 2005. (1) Reliance Industries Limited group — controlled by MUKESH Ambani; flagship RIL (NSE: RELIANCE), plus Jio Financial Services, Network18, and unlisted Jio Platforms and Reliance Retail Ventures. This is group id 'reliance' in this file. (2) Reliance Group (ADAG) — controlled by ANIL Ambani; includes Reliance Power (NSE: RPOWER) and Reliance Infrastructure (NSE: RELINFRA). Anil Ambani's companies are NOT part of Mukesh Ambani's Reliance Industries group and share no common promoter entity. They are recorded in this file under groups[0].separateAnilAmbaniGroup, deliberately NOT inside groups[0].listedEntities, so that any downstream aggregation of the 'Reliance' group does not conflate them."
+  },
+  "groups": [
+    {
+      "id": "reliance",
+      "name": "Reliance Industries Group (Mukesh Ambani)",
+      "promoterFamily": "Mukesh D. Ambani family",
+      "holdingEntity": "No single apex trust or holding company. Control is held through a promoter group of ~60+ individuals and closely held entities that jointly hold the promoter stake in RIL; principal promoter-group corporate holders include Devarshi Commercials LLP, Karuna Commercials LLP, Tattvam Enterprises LLP, Srichakra Commercials LLP, Svar Enterprises LLP, Vasuprada Enterprises LLP, Shreeji Comtrade LLP and Shrikrishna Tradecom LLP.",
+      "foundedYear": "1966",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Oil to Chemicals", "Refining", "Petrochemicals", "Oil & Gas E&P", "Telecom", "Digital Services", "Retail", "Financial Services", "Media", "New Energy"],
+      "combinedMcapCr": 1965412,
+      "listedEntities": [
+        {
+          "name": "Reliance Industries Ltd",
+          "nse": "RELIANCE",
+          "bse": "500325",
+          "sector": "Oil to Chemicals / Diversified",
+          "mcapCr": 1793940,
+          "promoterHoldingPct": 50.48,
+          "asOfQuarter": "Jun 2026",
+          "hqState": "mh",
+          "listedYear": null,
+          "notes": "Group flagship. Promoter stake rose to 50.48% in the June 2026 quarter from 50.00% in the March 2026 quarter.",
+          "srcs": [["Screener.in — RELIANCE", "https://www.screener.in/company/RELIANCE/"]]
+        },
+        {
+          "name": "Jio Financial Services Ltd",
+          "nse": "JIOFIN",
+          "bse": "543940",
+          "sector": "Financial Services (NBFC / holding company)",
+          "mcapCr": 166960,
+          "promoterHoldingPct": 49.13,
+          "asOfQuarter": "Jun 2026",
+          "hqState": "mh",
+          "listedYear": "2023",
+          "notes": "Created by demerger of RIL's financial services undertaking; listed August 2023. Holding company for Jio Finance Ltd, Jio Insurance Broking Ltd and Jio Payment Solutions Ltd.",
+          "srcs": [["Screener.in — JIOFIN", "https://www.screener.in/company/JIOFIN/"]]
+        },
+        {
+          "name": "Network18 Media & Investments Ltd",
+          "nse": "NETWORK18",
+          "bse": "532798",
+          "sector": "Media & Entertainment",
+          "mcapCr": 4512,
+          "promoterHoldingPct": 56.89,
+          "asOfQuarter": "Jun 2026",
+          "hqState": "mh",
+          "listedYear": null,
+          "notes": "Listed media arm of the group. Screener's page does not name the promoter entity; the promoter chain is publicly reported to run through Independent Media Trust, of which RIL is the sole beneficiary — NOT independently verified for this file, so the promoter entity is left unstated.",
+          "srcs": [["Screener.in — NETWORK18", "https://www.screener.in/company/NETWORK18/"]]
+        }
+      ],
+      "separateAnilAmbaniGroup": {
+        "name": "Reliance Group (Anil Dhirubhai Ambani Group / ADAG)",
+        "promoterFamily": "Anil D. Ambani family",
+        "relationship": "Separate group. Dhirubhai Ambani's business was divided between his two sons in 2005; Anil Ambani's Reliance Group has no promoter or shareholding overlap with Mukesh Ambani's Reliance Industries group.",
+        "listedEntities": [
+          {
+            "name": "Reliance Power Ltd",
+            "nse": "RPOWER",
+            "bse": "532939",
+            "sector": "Power Generation",
+            "mcapCr": 9822,
+            "promoterHoldingPct": 24.98,
+            "asOfQuarter": "Jun 2026",
+            "hqState": "mh",
+            "srcs": [["Screener.in — RPOWER", "https://www.screener.in/company/RPOWER/"]]
+          },
+          {
+            "name": "Reliance Infrastructure Ltd",
+            "nse": "RELINFRA",
+            "bse": "500390",
+            "sector": "Infrastructure / EPC",
+            "mcapCr": 2902,
+            "promoterHoldingPct": 19.05,
+            "asOfQuarter": "Jun 2026",
+            "hqState": "mh",
+            "srcs": [["Screener.in — RELINFRA", "https://www.screener.in/company/RELINFRA/"]]
+          }
+        ],
+        "srcs": [["Screener.in — RPOWER (describes company as part of the Reliance Group promoted by Anil D Ambani)", "https://www.screener.in/company/RPOWER/"]]
+      },
+      "keyPeople": [
+        { "name": "Mukesh D. Ambani", "role": "Chairman & Managing Director", "entity": "Reliance Industries Ltd", "since": null, "family": true, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Anant M. Ambani", "role": "Executive Director (Whole-Time Director)", "entity": "Reliance Industries Ltd", "since": "2025", "family": true, "notes": "Appointed whole-time executive director with effect from 1 May 2025 for a five-year term.", "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"], ["MarketScreener — RIL appoints Anant M. Ambani as Whole-Time Executive Director", "https://www.marketscreener.com/news/reliance-industries-limited-appoints-anant-m-ambani-as-whole-time-executive-director-ce7f5dd2dc88f225"]] },
+        { "name": "Akash M. Ambani", "role": "Non-Executive Director", "entity": "Reliance Industries Ltd", "since": null, "family": true, "notes": "Also Chairman of Reliance Jio Infocomm Ltd.", "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Isha M. Ambani", "role": "Non-Executive Director", "entity": "Reliance Industries Ltd", "since": null, "family": true, "notes": "Also Executive Director of Reliance Retail Ventures Ltd.", "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Nita M. Ambani", "role": "Chairperson, Reliance Foundation", "entity": "Reliance Foundation", "since": null, "family": true, "notes": "Stepped down from the RIL board; attends RIL board meetings as a permanent invitee. Not currently a director of RIL — she does not appear on RIL's board list.", "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"], ["Deccan Herald — Reliance appoints Isha, Akash and Anant Ambani to its board", "https://www.deccanherald.com/business/companies/reliance-appoints-isha-akash-and-anant-ambani-to-its-board-of-directors-2663405"]] },
+        { "name": "Nikhil R. Meswani", "role": "Executive Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "notes": "Meswani family are cousins of the Ambanis; classified here as professional executive directors, not as promoters.", "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Hital R. Meswani", "role": "Executive Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "P. M. S. Prasad", "role": "Executive Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "K. V. Kamath", "role": "Independent Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "notes": "Also Chairman of Jio Financial Services Ltd (widely reported; not verified from a primary filing for this file).", "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Yasir Othman H. Al Rumayyan", "role": "Independent Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "notes": "Governor of Saudi Arabia's Public Investment Fund.", "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Arundhati Bhattacharya", "role": "Independent Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Shumeet Banerji", "role": "Independent Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "K. V. Chowdary", "role": "Independent Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Haigreve Khaitan", "role": "Independent Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] },
+        { "name": "Dinesh Kanabar", "role": "Independent Director", "entity": "Reliance Industries Ltd", "since": null, "family": false, "srcs": [["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Jio Platforms Ltd", "parent": "Reliance Industries Ltd", "activity": "Unlisted digital-services holding company; holds Reliance Jio Infocomm and the group's digital assets. RIL holds 66.43% per reported cap-table disclosures.", "listed": false, "srcs": [["Outlook Business — Jio's global investor list", "https://www.outlookbusiness.com/corporate/jios-global-investor-list-meta-google-saudi-pif-among-shareholders-as-filing-goes-live"], ["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"]] },
+        { "name": "Reliance Jio Infocomm Ltd", "parent": "Jio Platforms Ltd", "activity": "Telecom operator (mobile, fixed broadband).", "listed": false, "srcs": [["Screener.in — JIOFIN (group description)", "https://www.screener.in/company/JIOFIN/"]] },
+        { "name": "Reliance Retail Ventures Ltd (RRVL)", "parent": "Reliance Industries Ltd", "activity": "Unlisted retail holding company; parent of Reliance Retail Ltd. Minority stakes sold to global investors in 2020 and 2023 rounds.", "listed": false, "srcs": [["Business Standard — Reliance Retail receives Rs 8,278 cr from QIA", "https://www.business-standard.com/companies/news/reliance-retail-receives-rs-8-278-cr-from-qia-allots-68-mn-shares-123090601205_1.html"]] },
+        { "name": "Reliance Retail Ltd", "parent": "Reliance Retail Ventures Ltd", "activity": "Operating retail company (grocery, fashion, consumer electronics, digital commerce).", "listed": false, "srcs": [["Business Standard — Reliance Retail receives Rs 8,278 cr from QIA", "https://www.business-standard.com/companies/news/reliance-retail-receives-rs-8-278-cr-from-qia-allots-68-mn-shares-123090601205_1.html"]] },
+        { "name": "Jio Finance Ltd", "parent": "Jio Financial Services Ltd", "activity": "NBFC lending arm.", "listed": false, "srcs": [["Screener.in — JIOFIN", "https://www.screener.in/company/JIOFIN/"]] },
+        { "name": "Jio Insurance Broking Ltd", "parent": "Jio Financial Services Ltd", "activity": "Insurance broking.", "listed": false, "srcs": [["Screener.in — JIOFIN", "https://www.screener.in/company/JIOFIN/"]] },
+        { "name": "Jio Payment Solutions Ltd", "parent": "Jio Financial Services Ltd", "activity": "Payments.", "listed": false, "srcs": [["Screener.in — JIOFIN", "https://www.screener.in/company/JIOFIN/"]] },
+        { "name": "JioStar (Star India Pvt Ltd)", "parent": "Reliance Industries Ltd / Viacom18", "activity": "Media & entertainment JV formed by merging Viacom18's media and JioCinema businesses into Star India; transaction completed November 2024, valued at Rs 70,352 crore post-money.", "listed": false, "srcs": [["JioStar — completion of Reliance–Disney JV", "https://www.jiostar.com/news/reliance-and-disney-announce-completion-of-transaction-to-form-joint-venture-to-bring-together-the-most-iconic-and-engaging-entertainment-brands-in-india/"]] }
+      ],
+      "foreignPartners": [
+        { "name": "Meta Platforms", "country": "United States", "stake": "9.98% of Jio Platforms Ltd", "entity": "Jio Platforms Ltd", "srcs": [["Outlook Business — Jio's global investor list", "https://www.outlookbusiness.com/corporate/jios-global-investor-list-meta-google-saudi-pif-among-shareholders-as-filing-goes-live"], ["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"]] },
+        { "name": "Google (Alphabet)", "country": "United States", "stake": "7.73% of Jio Platforms Ltd", "entity": "Jio Platforms Ltd", "srcs": [["Outlook Business — Jio's global investor list", "https://www.outlookbusiness.com/corporate/jios-global-investor-list-meta-google-saudi-pif-among-shareholders-as-filing-goes-live"]] },
+        { "name": "Public Investment Fund (PIF)", "country": "Saudi Arabia", "stake": "2.31% of Jio Platforms Ltd", "entity": "Jio Platforms Ltd", "srcs": [["Outlook Business — Jio's global investor list", "https://www.outlookbusiness.com/corporate/jios-global-investor-list-meta-google-saudi-pif-among-shareholders-as-filing-goes-live"]] },
+        { "name": "KKR (via Omicron Asia Holdings II)", "country": "United States", "stake": "2.31% of Jio Platforms Ltd; separately 1.42% of Reliance Retail Ventures Ltd", "entity": "Jio Platforms Ltd; Reliance Retail Ventures Ltd", "srcs": [["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"], ["Private Equity Insights — KKR completes investment in Reliance Retail", "https://pe-insights.com/kkr-completes-240m-investment-in-reliance-retail/"]] },
+        { "name": "Vista Equity Partners (VEPF VII AIV I)", "country": "United States", "stake": "2.31% of Jio Platforms Ltd", "entity": "Jio Platforms Ltd", "srcs": [["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"]] },
+        { "name": "Silver Lake (SLP Redwood Holdings)", "country": "United States", "stake": "1.88% of Jio Platforms Ltd; also an investor in Reliance Retail Ventures Ltd (2020 round, percentage not verified here)", "entity": "Jio Platforms Ltd; Reliance Retail Ventures Ltd", "srcs": [["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"]] },
+        { "name": "Mubadala Investment Company (MIC Redwood 1 RSC)", "country": "United Arab Emirates", "stake": "1.85% of Jio Platforms Ltd", "entity": "Jio Platforms Ltd", "srcs": [["Business Standard — Mubadala to buy 1.85% stake in Jio Platforms", "https://www.business-standard.com/article/companies/abu-dhabi-s-mubadala-to-buy-1-85-stake-in-jio-platforms-for-9093-6-crore-120060500122_1.html"]] },
+        { "name": "General Atlantic (General Atlantic Singapore JP)", "country": "United States", "stake": "1.34% of Jio Platforms Ltd", "entity": "Jio Platforms Ltd", "srcs": [["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"]] },
+        { "name": "Abu Dhabi Investment Authority (ADIA, via Platinum Jasmine A 2018 Trust)", "country": "United Arab Emirates", "stake": "1.16% of Jio Platforms Ltd; 0.59% of Reliance Retail Ventures Ltd (2023 investment of Rs 4,966.80 cr)", "entity": "Jio Platforms Ltd; Reliance Retail Ventures Ltd", "srcs": [["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"], ["Inc42 — Reliance Retail raises INR 4,966 Cr from ADIA", "https://inc42.com/buzz/after-kkr-qia-reliance-retail-raises-inr-4966-cr-from-adia/"]] },
+        { "name": "TPG (India Markets Pte Ltd)", "country": "United States", "stake": "0.93% of Jio Platforms Ltd", "entity": "Jio Platforms Ltd", "srcs": [["Inc42 — Jio Platforms cap table", "https://inc42.com/buzz/from-meta-to-intel-a-detailed-look-at-jio-platforms-cap-table/"]] },
+        { "name": "Qatar Investment Authority (QIA)", "country": "Qatar", "stake": "Approximately 1% of Reliance Retail Ventures Ltd, acquired for Rs 8,278 crore (2023)", "entity": "Reliance Retail Ventures Ltd", "srcs": [["Business Standard — Reliance Retail receives Rs 8,278 cr from QIA", "https://www.business-standard.com/companies/news/reliance-retail-receives-rs-8-278-cr-from-qia-allots-68-mn-shares-123090601205_1.html"]] },
+        { "name": "BP plc", "country": "United Kingdom", "stake": "30% of the KG-D6 block (upstream); 49% of the Jio-bp fuel retailing joint venture (RIL 51%)", "entity": "KG-D6 block; Reliance BP Mobility Ltd (Jio-bp)", "srcs": [["Business Standard — BP holds 30% in RIL's KG-D6 block", "https://www.business-standard.com/amp/article/companies/bp-completes-full-reversal-of-earlier-impairments-on-kg-d6-gas-block-118033000625_1.html"]] },
+        { "name": "The Walt Disney Company", "country": "United States", "stake": "36.84% of the JioStar joint venture; RIL directly holds 16.34% and Viacom18 holds 46.82%", "entity": "JioStar (Star India Pvt Ltd)", "srcs": [["JioStar — completion of Reliance–Disney JV", "https://www.jiostar.com/news/reliance-and-disney-announce-completion-of-transaction-to-form-joint-venture-to-bring-together-the-most-iconic-and-engaging-entertainment-brands-in-india/"], ["Variety — Disney, Reliance seal $8.5bn deal", "https://variety.com/2024/tv/news/disney-reliance-merger-deal-indian-media-1235925129"]] },
+        { "name": "Saudi Aramco", "country": "Saudi Arabia", "stake": "None. A proposed ~$15bn investment for a stake in RIL's oil-to-chemicals business was called off in November 2021 over valuation differences. Recorded here as a terminated transaction, not a current holding.", "entity": "Reliance O2C Ltd (proposed, not completed)", "srcs": [["Reuters via Investing.com — Reliance, Aramco call off $15 billion deal", "https://www.investing.com/news/commodities-news/reliance-aramco-call-off-15-billion-deal-amid-valuation-differences-sources-say-2690273"]] }
+      ],
+      "notes": "combinedMcapCr is the sum of RELIANCE + JIOFIN + NETWORK18 only, and excludes unlisted Jio Platforms and Reliance Retail Ventures. Anil Ambani's Reliance Power and Reliance Infrastructure are deliberately excluded from combinedMcapCr and listedEntities — see disambiguation.twoAmbaniGroups. Reliance Retail Ventures' full current cap table could not be verified as of 2026-08-11; only the individually sourced stakes above are recorded.",
+      "srcs": [["Screener.in — RELIANCE", "https://www.screener.in/company/RELIANCE/"], ["RIL — Board of Directors", "https://www.ril.com/about/board-of-directors"]]
+    },
+    {
+      "id": "adani",
+      "name": "Adani Group",
+      "promoterFamily": "Gautam S. Adani family",
+      "holdingEntity": "S. B. Adani Family Trust (SBAFT) — apex family holding vehicle for the listed portfolio; Gautam S. Adani and Rajesh S. Adani sign exchange filings on its behalf. Listed-company promoter stakes are also held through intermediate entities including Adani Tradeline, Adani Properties and offshore vehicles such as Renew Exim DMCC (used for the Cemindia/ITD Cementation acquisition).",
+      "foundedYear": "1988",
+      "hqCity": "Ahmedabad",
+      "state": "Gujarat",
+      "stateCode": "gj",
+      "sectors": ["Ports & Logistics", "Power Generation", "Power Transmission & Distribution", "Renewable Energy", "City Gas Distribution", "Cement", "Airports", "Mining & Natural Resources", "Data Centres", "Roads", "Defence & Aerospace", "Media", "Construction / EPC"],
+      "combinedMcapCr": 1853636,
+      "listedEntities": [
+        { "name": "Adani Enterprises Ltd", "nse": "ADANIENT", "bse": "512599", "sector": "Diversified / incubator", "mcapCr": 406435, "promoterHoldingPct": 71.97, "asOfQuarter": "Jul 2026", "hqState": "gj", "listedYear": null, "notes": "Group flagship and incubator for airports, data centres, green hydrogen, roads, mining and defence.", "srcs": [["Screener.in — ADANIENT", "https://www.screener.in/company/ADANIENT/"]] },
+        { "name": "Adani Ports & Special Economic Zone Ltd", "nse": "ADANIPORTS", "bse": "532921", "sector": "Ports & Logistics", "mcapCr": 384992, "promoterHoldingPct": 66.03, "asOfQuarter": "Jun 2026", "hqState": "gj", "listedYear": null, "notes": "India's largest private port operator; also operates internationally (Israel, Tanzania, Sri Lanka).", "srcs": [["Screener.in — ADANIPORTS", "https://www.screener.in/company/ADANIPORTS/"]] },
+        { "name": "Adani Power Ltd", "nse": "ADANIPOWER", "bse": "533096", "sector": "Thermal Power Generation", "mcapCr": 406714, "promoterHoldingPct": 74.96, "asOfQuarter": "Jun 2026", "hqState": "gj", "listedYear": null, "notes": "Largest private thermal power producer in India.", "srcs": [["Screener.in — ADANIPOWER", "https://www.screener.in/company/ADANIPOWER/"]] },
+        { "name": "Adani Green Energy Ltd", "nse": "ADANIGREEN", "bse": "541450", "sector": "Renewable Energy", "mcapCr": 225531, "promoterHoldingPct": 62.43, "asOfQuarter": "Jun 2026", "hqState": "gj", "listedYear": null, "srcs": [["Screener.in — ADANIGREEN", "https://www.screener.in/company/ADANIGREEN/"]] },
+        { "name": "Adani Energy Solutions Ltd", "nse": "ADANIENSOL", "bse": "539254", "sector": "Power Transmission & Distribution", "mcapCr": 199910, "promoterHoldingPct": 73.39, "asOfQuarter": "Jul 2026", "hqState": "gj", "listedYear": null, "notes": "Formerly Adani Transmission Ltd; renamed Adani Energy Solutions Ltd. Operates transmission, the Mumbai distribution utility (AEML) and smart metering.", "srcs": [["Screener.in — ADANIENSOL", "https://www.screener.in/company/ADANIENSOL/"]] },
+        { "name": "Ambuja Cements Ltd", "nse": "AMBUJACEM", "bse": "500425", "sector": "Cement", "mcapCr": 106052, "promoterHoldingPct": 67.33, "asOfQuarter": "Jun 2026", "hqState": "gj", "listedYear": null, "notes": "Acquired by Adani from Holcim in 2022. Now the group's cement holding platform; Sanghi Industries amalgamated into it effective 12 March 2026.", "srcs": [["Screener.in — AMBUJACEM", "https://www.screener.in/company/AMBUJACEM/"]] },
+        { "name": "Adani Total Gas Ltd", "nse": "ATGL", "bse": "542066", "sector": "City Gas Distribution", "mcapCr": 73506, "promoterHoldingPct": 74.80, "asOfQuarter": "Jun 2026", "hqState": "gj", "listedYear": null, "notes": "Jointly promoted by the Adani group and TotalEnergies, each holding 37.4% as of March 2026; the 74.80% figure is the combined promoter holding of both.", "srcs": [["Screener.in — ATGL", "https://www.screener.in/company/ATGL/"]] },
+        { "name": "ACC Ltd", "nse": "ACC", "bse": "500410", "sector": "Cement", "mcapCr": 25276, "promoterHoldingPct": 56.69, "asOfQuarter": "Jun 2026", "hqState": null, "listedYear": null, "notes": "Acquired with Ambuja from Holcim in 2022; held via Ambuja. Remains separately listed as of Jun 2026. Registered-office state not verified for this file.", "srcs": [["Screener.in — ACC", "https://www.screener.in/company/ACC/"]] },
+        { "name": "Cemindia Projects Ltd", "nse": "ITDCEM", "bse": "509496", "sector": "Construction / EPC (marine, urban infrastructure)", "mcapCr": 21582, "promoterHoldingPct": 67.46, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Formerly ITD Cementation India Ltd. Adani acquired control through Renew Exim DMCC (completed 2025); renamed Cemindia Projects Ltd effective 19 August 2025. NSE ticker remains ITDCEM. Reported acquired stake figures differ between sources (67.46% shareholding pattern vs a reported 72.64% post-open-offer figure) — recorded here at the shareholding-pattern value.", "srcs": [["Screener.in — ITDCEM/Cemindia Projects", "https://www.screener.in/company/509496/"], ["Adani newsroom — Renew Exim concludes ITD Cementation acquisition", "https://www.adani.com/newsroom/media-releases/renew-exim-successfully-achieves-the-key-milestone-to-conclude-the-acquisition-of-itd-cementation"]] },
+        { "name": "Orient Cement Ltd", "nse": "ORIENTCEM", "bse": "535754", "sector": "Cement", "mcapCr": 2769, "promoterHoldingPct": 72.66, "asOfQuarter": "Jun 2026", "hqState": "tg", "listedYear": null, "notes": "Acquired by the Adani cement platform from the CK Birla group (2024-25); still separately listed as of Jun 2026. Screener does not name the current promoter entity on its page, so the specific Adani holding vehicle is not asserted here.", "srcs": [["Screener.in — ORIENTCEM", "https://www.screener.in/company/ORIENTCEM/"]] },
+        { "name": "New Delhi Television Ltd (NDTV)", "nse": "NDTV", "bse": "532529", "sector": "Media / Broadcasting", "mcapCr": 869, "promoterHoldingPct": 69.02, "asOfQuarter": "Jun 2026", "hqState": "dl", "listedYear": null, "notes": "Adani group acquired control in 2022-23 via AMG Media Networks; remains listed.", "srcs": [["Screener.in — NDTV", "https://www.screener.in/company/NDTV/"]] }
+      ],
+      "formerListedEntities": [
+        { "name": "Sanghi Industries Ltd", "nse": "SANGHIIND", "status": "Delisted / merged", "notes": "Acquired by Ambuja Cements in 2023. NCLT Ahmedabad approved amalgamation into Ambuja Cements on 9 February 2026; merger effective 12 March 2026; shares delisted and trading suspended on NSE and BSE from 6 April 2026. No longer a separate listed entity.", "srcs": [["Angel One — Ambuja/Sanghi merger effective after NCLT approval", "https://www.angelone.in/news/stocks/ambuja-cements-merger-with-sanghi-industries-becomes-effective-after-nclt-approval"], ["World Cement — Ambuja Cements and Sanghi Industries merger approved", "https://www.worldcement.com/indian-subcontinent/11022026/ambuja-cements-and-sanghi-industries-merger-approved/"]] },
+        { "name": "AWL Agri Business Ltd (formerly Adani Wilmar Ltd)", "nse": "AWL", "bse": "543458", "status": "Sold — no longer an Adani group company", "mcapCr": 25097, "promoterHoldingPct": null, "notes": "Adani exited the edible-oil/FMCG joint venture in stages: 13.5% sold January 2025, 20% sold to Wilmar International July 2025, and the residual ~7% sold via block deal on 20 November 2025, completing a full exit. Wilmar International is now the sole promoter with a reported ~57% stake; the company was renamed AWL Agri Business Ltd. Screener's page still carries stale text describing Adani entities as promoters — the 56.94% promoter figure it shows for Jun 2026 is Wilmar's, NOT Adani's. Adani promoter holding is therefore recorded as null/zero here. mcapCr retained for reference only and is NOT included in the Adani combinedMcapCr.", "srcs": [["Business Standard — Adani to sell entire AWL Agri stake to Wilmar", "https://www.business-standard.com/companies/news/adani-to-sell-entire-awl-agri-stake-to-wilmar-others-for-10-874-crore-125071700758_1.html"], ["Business Standard — Adani exits AWL agri business, sells 10.42% to Wilmar", "https://www.business-standard.com/companies/news/adani-exits-awl-agri-business-sells-10-42-stake-to-wilmar-for-3-732-cr-125071801223_1.html"], ["Screener.in — AWL", "https://www.screener.in/company/AWL/"]] }
+      ],
+      "keyPeople": [
+        { "name": "Gautam S. Adani", "role": "Chairman", "entity": "Adani Group", "since": null, "family": true, "notes": "Founder. Has publicly indicated an intention to hand over to the next generation by the early 2030s; no formal successor has been designated.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Rajesh S. Adani", "role": "Managing Director", "entity": "Adani Enterprises Ltd", "since": null, "family": true, "notes": "Younger brother of Gautam Adani; an individual promoter of group listed entities.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"], ["Business Standard — Vinod Adani part of promoter group", "https://www.business-standard.com/article/current-affairs/vinod-adani-is-part-of-promoter-group-of-listed-entities-adani-group-123031601267_1.html"]] },
+        { "name": "Vinod S. Adani", "role": "Promoter group member", "entity": "Adani group listed entities", "since": null, "family": true, "notes": "PRECISE DISCLOSED RELATIONSHIP: elder brother of Gautam Adani. Per an Adani Enterprises stock-exchange filing (March 2023), Gautam Adani and Rajesh Adani are the INDIVIDUAL PROMOTERS of various group listed entities, while Vinod Adani is an 'immediate relative' of those individual promoters and is therefore part of the PROMOTER GROUP (not an individual promoter) of various listed entities. The group stated this had been disclosed to Indian regulatory authorities from time to time. He is not listed on the Adani Group leadership page and holds no disclosed executive role.", "srcs": [["Business Standard — Vinod Adani part of promoter group of listed entities", "https://www.business-standard.com/article/current-affairs/vinod-adani-is-part-of-promoter-group-of-listed-entities-adani-group-123031601267_1.html"], ["Business Today — Vinod Adani is part of promoter group, clarifies Adani Group", "https://www.businesstoday.in/latest/corporate/story/vinod-adani-is-part-of-promoter-group-of-listed-firms-clarifies-adani-group-373636-2023-03-16"]] },
+        { "name": "Karan Adani", "role": "Managing Director", "entity": "Adani Ports & SEZ Ltd", "since": null, "family": true, "notes": "Elder son of Gautam Adani.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Jeet Adani", "role": "Director, Airports", "entity": "Adani Airport Holdings Ltd / Adani Group", "since": null, "family": true, "notes": "Younger son of Gautam Adani.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Pranav Adani", "role": "Managing Director — Agro, Oil & Gas", "entity": "Adani Enterprises Ltd / Adani Group", "since": null, "family": true, "notes": "Son of Vasant Adani; nephew of Gautam Adani. Also a director of Adani Enterprises.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Sagar Adani", "role": "Executive Director", "entity": "Adani Green Energy Ltd", "since": null, "family": true, "notes": "Son of Rajesh Adani; nephew of Gautam Adani.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Dr. Priti G. Adani", "role": "Chairperson", "entity": "Adani Foundation", "since": null, "family": true, "notes": "Wife of Gautam Adani.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Jugeshinder (Robbie) Singh", "role": "Group Chief Financial Officer", "entity": "Adani Group", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Anil Sardana", "role": "Managing Director (Adani Energy Solutions and Adani Power); CEO, Navbharat Mega Developers", "entity": "Adani Energy Solutions Ltd / Adani Power Ltd", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Ashwani Gupta", "role": "Whole-Time Director and CEO", "entity": "Adani Ports & SEZ Ltd", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Vneet S. Jaain", "role": "Managing Director (Adani Green Energy); CEO, Adani New Industries Ltd", "entity": "Adani Green Energy Ltd", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Suresh Manglani", "role": "Executive Director", "entity": "Adani Total Gas Ltd", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Arun Bansal", "role": "CEO, Airports", "entity": "Adani Airport Holdings Ltd", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Dr. Vinay Prakash", "role": "CEO, Adani Natural Resources", "entity": "Adani Natural Resources", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Ashish Rajvanshi", "role": "CEO, Adani Defence & Aerospace", "entity": "Adani Defence & Aerospace", "since": null, "family": false, "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Adani Airport Holdings Ltd (AAHL)", "parent": "Adani Enterprises Ltd", "activity": "Airport operations and development, including Navi Mumbai International Airport; incubating airport-city developments.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"], ["Business Standard — Adani Enterprises step-down subsidiary incorporates new subsidiaries", "https://www.business-standard.com/markets/capital-market-news/adani-enterprises-rises-after-step-down-subsidiary-incorporates-four-new-subsidiaries-126041300391_1.html"]] },
+        { "name": "Adani New Industries Ltd (ANIL)", "parent": "Adani Enterprises Ltd", "activity": "Green hydrogen value chain, solar module and wind turbine manufacturing, electrolysers.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "AdaniConneX", "parent": "Adani Enterprises Ltd (JV)", "activity": "Data centres; 50:50 joint venture with EdgeConneX.", "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"]] },
+        { "name": "Adani Electricity Mumbai Ltd (AEML)", "parent": "Adani Energy Solutions Ltd", "activity": "Integrated electricity distribution utility for Mumbai; QIA holds 25.1%.", "srcs": [["Adani newsroom — QIA to invest INR 3,200 crore in AEML", "https://www.adani.com/newsroom/media-releases/qatar-investment-authority-to-invest-inr-3200-crore-in-adani-electricity-mumbai-limited"]] },
+        { "name": "Adani Airport City Ltd", "parent": "Adani Airport Holdings Ltd", "activity": "Airport-adjacent city developments; incorporated city-specific subsidiaries for Navi Mumbai, Guwahati and Ahmedabad in April 2026.", "srcs": [["Business Standard — Adani Enterprises step-down subsidiary incorporates four new subsidiaries", "https://www.business-standard.com/markets/capital-market-news/adani-enterprises-rises-after-step-down-subsidiary-incorporates-four-new-subsidiaries-126041300391_1.html"]] },
+        { "name": "AMG Media Networks Ltd", "parent": "Adani Enterprises Ltd", "activity": "Media holding vehicle; route through which the group holds NDTV.", "srcs": [["Screener.in — NDTV", "https://www.screener.in/company/NDTV/"]] },
+        { "name": "Renew Exim DMCC", "parent": "Adani promoter group (offshore)", "activity": "Dubai-based promoter-group entity used to acquire control of ITD Cementation India (now Cemindia Projects Ltd).", "srcs": [["Adani newsroom — Renew Exim concludes ITD Cementation acquisition", "https://www.adani.com/newsroom/media-releases/renew-exim-successfully-achieves-the-key-milestone-to-conclude-the-acquisition-of-itd-cementation"]] }
+      ],
+      "foreignPartners": [
+        { "name": "TotalEnergies SE", "country": "France", "stake": "37.4% of Adani Total Gas Ltd (co-promoter, as of March 2026). Separately held 19.75% of Adani Green Energy from January 2021, trimmed to 17.25% after block deals in Q4 2025; further reductions have been reported as planned but the current precise stake is not verified here.", "entity": "Adani Total Gas Ltd; Adani Green Energy Ltd", "status": "Current", "srcs": [["Screener.in — ATGL", "https://www.screener.in/company/ATGL/"], ["Business Standard — TotalEnergies sells stake in Adani Green", "https://www.business-standard.com/companies/news/totalenergies-sell-stake-adani-green-agel-debt-reduction-125112400104_1.html"], ["TotalEnergies statement on its investments in India", "https://www.businesswire.com/news/home/20230202005951/en/TotalEnergies-Statement-on-Its-Investments-in-India"]] },
+        { "name": "International Holding Company (IHC)", "country": "United Arab Emirates (Abu Dhabi)", "stake": "Invested Rs 15,400 crore of primary equity across Adani Enterprises, Adani Green Energy and Adani Transmission in 2022. Subsequently raised its Adani Enterprises holding to 5.04% and exited its Adani Green Energy and Adani Transmission (now Adani Energy Solutions) holdings. In July 2026 IHC and Adani signed a ~USD 11.3-11.5bn 50:50 joint venture for an aluminium project in Odisha. The current precise IHC shareholding in Adani Enterprises as of 2026-08-11 is NOT verified.", "entity": "Adani Enterprises Ltd; Odisha aluminium JV", "status": "Current (stake percentage unverified)", "srcs": [["Adani newsroom — IHC completes INR 15,400 cr primary equity transaction", "https://www.adani.com/newsroom/media-releases/adani-portfolio-companies-complete-inr-15400-cr-primary-equity-transaction-with-ihc"], ["Business Standard — IHC increases stake in Adani Enterprises to 5.04%", "https://www.business-standard.com/companies/news/abu-dhabi-based-ihc-increases-stake-in-adani-enterprises-to-5-04-123100301233_1.html"], ["The National — IHC and Adani sign $11.5bn pact for aluminium project", "https://www.thenationalnews.com/business/economy/2026/07/02/ihc-and-indias-adani-group-sign-115bn-pact-for-aluminium-project/"]] },
+        { "name": "Qatar Investment Authority (QIA)", "country": "Qatar", "stake": "25.1% of Adani Electricity Mumbai Ltd (AEML), acquired for a total Rs 3,220 crore (equity plus shareholder subordinated debt); completed 10 February 2020. No publicly reported change as of 2026-08-11.", "entity": "Adani Electricity Mumbai Ltd", "status": "Current", "srcs": [["Adani newsroom — QIA to invest INR 3,200 crore in AEML", "https://www.adani.com/newsroom/media-releases/qatar-investment-authority-to-invest-inr-3200-crore-in-adani-electricity-mumbai-limited"], ["Business Standard — QIA completes Adani Electricity Mumbai deal", "https://www.business-standard.com/article/companies/qatar-investment-authority-completes-adani-electricity-mumbai-deal-120021101069_1.html"]] },
+        { "name": "Wilmar International", "country": "Singapore", "stake": "None with Adani. Former 50:50 joint-venture partner in Adani Wilmar Ltd. Adani exited fully by 20 November 2025; Wilmar is now sole promoter of the renamed AWL Agri Business Ltd with a reported ~57% stake. The Adani-Wilmar partnership has ENDED.", "entity": "AWL Agri Business Ltd (formerly Adani Wilmar Ltd)", "status": "Ended", "srcs": [["Business Standard — Adani to sell entire AWL Agri stake to Wilmar", "https://www.business-standard.com/companies/news/adani-to-sell-entire-awl-agri-stake-to-wilmar-others-for-10-874-crore-125071700758_1.html"]] },
+        { "name": "EdgeConneX", "country": "United States", "stake": "50% of AdaniConneX (data centre joint venture)", "entity": "AdaniConneX", "status": "Current", "srcs": [["Adani Group — Leadership (AdaniConneX)", "https://www.adani.com/about-us/leadership"]] }
+      ],
+      "notes": "combinedMcapCr is the sum of the 11 currently-listed Adani entities recorded above (Rs 18,53,636 crore), consistent with press reports in mid-2026 that the group's combined market capitalisation was approaching Rs 20 lakh crore. AWL Agri Business is excluded because Adani has fully exited it; Sanghi Industries is excluded because it has been merged into Ambuja and delisted. Group founding year 1988 refers to Adani Exports Ltd, the predecessor of Adani Enterprises.",
+      "srcs": [["Adani Group — Leadership", "https://www.adani.com/about-us/leadership"], ["Screener.in — ADANIENT", "https://www.screener.in/company/ADANIENT/"]]
+    },
+    {
+      "id": "tata",
+      "name": "Tata Group",
+      "promoterFamily": "Tata family (control exercised through philanthropic trusts, not by individual family shareholding)",
+      "holdingEntity": "Tata Sons Pvt Ltd — the apex holding company. Tata Trusts (principally Sir Dorabji Tata Trust and Sir Ratan Tata Trust) hold approximately 66% of Tata Sons.",
+      "foundedYear": "1868",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["IT Services", "Automobiles", "Steel", "Consumer & Retail", "Power", "Hospitality", "Telecom", "Chemicals", "Aviation", "Electronics & Semiconductors"],
+      "combinedMcapCr": 2509454,
+      "listedEntities": [
+        { "name": "Tata Consultancy Services Ltd", "nse": "TCS", "bse": "532540", "sector": "IT Services", "mcapCr": 883537, "promoterHoldingPct": 71.77, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — TCS", "https://www.screener.in/company/TCS/"]] },
+        { "name": "Titan Company Ltd", "nse": "TITAN", "bse": "500114", "sector": "Consumer / Jewellery & Watches", "mcapCr": 456615, "promoterHoldingPct": 52.90, "asOfQuarter": "Jun 2026", "hqState": "tn", "listedYear": null, "notes": "Joint venture between the Tata group and Tamil Nadu Industrial Development Corporation (TIDCO); the promoter block comprises both. Tata Sons holds ~21% and TIDCO ~28%.", "srcs": [["Screener.in — TITAN", "https://www.screener.in/company/TITAN/"]] },
+        { "name": "Tata Steel Ltd", "nse": "TATASTEEL", "bse": "500470", "sector": "Steel", "mcapCr": 234503, "promoterHoldingPct": 32.94, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — TATASTEEL", "https://www.screener.in/company/TATASTEEL/"]] },
+        { "name": "Tata Motors Ltd (commercial vehicles)", "nse": "TMCV", "bse": null, "sector": "Commercial Vehicles", "mcapCr": 164285, "promoterHoldingPct": 42.56, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": "2025", "notes": "Product of the Tata Motors demerger: the commercial-vehicle business was separated and listed on 12 November 2025 under the Tata Motors Ltd name, ticker TMCV. Shareholders of the pre-demerger entity received shares 1:1. BSE code not verified for this file.", "srcs": [["Screener.in — TMCV", "https://www.screener.in/company/TMCV/"], ["Tata Motors — Demerger of CV business into a separate listed company", "https://www.tatamotors.com/press-releases/demerger-of-cv-business-undertaking-of-tata-motors-ltd-into-a-separate-listed-company/"]] },
+        { "name": "Tata Motors Passenger Vehicles Ltd", "nse": "TMPV", "bse": null, "sector": "Passenger Vehicles (incl. EVs and Jaguar Land Rover)", "mcapCr": 127907, "promoterHoldingPct": 42.51, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": "2025", "notes": "The pre-demerger Tata Motors Ltd entity was renamed Tata Motors Passenger Vehicles Ltd and began trading under the TMPV symbol in October 2025; it retains the PV, EV and Jaguar Land Rover businesses. BSE code not verified for this file.", "srcs": [["Screener.in — TMPV", "https://www.screener.in/company/TMPV/"], ["Angel One — Tata Motors renamed to TMPV; CV listing update", "https://www.angelone.in/news/market-updates/tata-motors-demerger-tata-motors-renamed-to-tmpv-commercial-vehicles-listing-update"]] },
+        { "name": "Trent Ltd", "nse": "TRENT", "bse": "500251", "sector": "Retail", "mcapCr": 160866, "promoterHoldingPct": 37.01, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Tata Sons holds ~32.5% and Tata Investment Corporation ~4.3%.", "srcs": [["Screener.in — TRENT", "https://www.screener.in/company/TRENT/"]] },
+        { "name": "Tata Power Company Ltd", "nse": "TATAPOWER", "bse": "500400", "sector": "Power Generation & Distribution", "mcapCr": 121215, "promoterHoldingPct": 46.86, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — TATAPOWER", "https://www.screener.in/company/TATAPOWER/"]] },
+        { "name": "Tata Consumer Products Ltd", "nse": "TATACONSUM", "bse": "500800", "sector": "FMCG", "mcapCr": 107253, "promoterHoldingPct": 33.83, "asOfQuarter": "Jun 2026", "hqState": null, "listedYear": null, "srcs": [["Screener.in — TATACONSUM", "https://www.screener.in/company/TATACONSUM/"]] },
+        { "name": "Indian Hotels Company Ltd", "nse": "INDHOTEL", "bse": "500850", "sector": "Hospitality", "mcapCr": 103213, "promoterHoldingPct": 38.12, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — INDHOTEL", "https://www.screener.in/company/INDHOTEL/"]] },
+        { "name": "Tata Communications Ltd", "nse": "TATACOMM", "bse": "500483", "sector": "Telecom / Digital Infrastructure", "mcapCr": 48696, "promoterHoldingPct": 58.86, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Promoter stake held via Panatone Finvest (44.80%) and Tata Sons (14.07%); the Government of India exited in FY2021.", "srcs": [["Screener.in — TATACOMM", "https://www.screener.in/company/TATACOMM/"]] },
+        { "name": "Voltas Ltd", "nse": "VOLTAS", "bse": "500575", "sector": "Consumer Durables / HVAC", "mcapCr": 42421, "promoterHoldingPct": 30.30, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — VOLTAS", "https://www.screener.in/company/VOLTAS/"]] },
+        { "name": "Tata Technologies Ltd", "nse": "TATATECH", "bse": "544028", "sector": "Engineering & Product Development Services", "mcapCr": 35288, "promoterHoldingPct": 55.17, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — TATATECH", "https://www.screener.in/company/TATATECH/"]] },
+        { "name": "Tata Elxsi Ltd", "nse": "TATAELXSI", "bse": "500408", "sector": "Design & Technology Services", "mcapCr": 23655, "promoterHoldingPct": 43.90, "asOfQuarter": "Jun 2026", "hqState": "ka", "listedYear": null, "srcs": [["Screener.in — TATAELXSI", "https://www.screener.in/company/TATAELXSI/"]] }
+      ],
+      "keyPeople": [
+        { "name": "N. Chandrasekaran", "role": "Executive Chairman", "entity": "Tata Sons Pvt Ltd", "since": "2017", "family": false, "notes": "In February 2026 the Tata Sons board deferred a decision on extending his term.", "srcs": [["Business Standard — Tata Sons AGM to vote on board seats", "https://www.business-standard.com/companies/news/tata-sons-agm-to-vote-on-noel-tata-other-board-seats-ipo-update-due-125081301530_1.html"]] },
+        { "name": "Noel N. Tata", "role": "Chairman, Tata Trusts; Director, Tata Sons", "entity": "Tata Trusts / Tata Sons Pvt Ltd", "since": "2024", "family": true, "notes": "Appointed Chairman of Tata Trusts on 11 October 2024 following the death of Ratan Tata; approved as a Tata Sons director at the 2025 AGM.", "srcs": [["Gulf News — Noel Tata appointed as new Tata Trusts head", "https://gulfnews.com/amp/gulfnews/business/markets/noel-tata-appointed-as-new-tata-trusts-head-to-oversee-165-billion-group-1.1728642133175"]] },
+        { "name": "Ratan N. Tata", "role": "Chairman Emeritus (deceased)", "entity": "Tata Sons Pvt Ltd", "since": null, "family": true, "notes": "Died October 2024. Recorded for historical continuity only; no current role.", "srcs": [["Gulf News — Noel Tata appointed as new Tata Trusts head (references Ratan Tata's death)", "https://gulfnews.com/amp/gulfnews/business/markets/noel-tata-appointed-as-new-tata-trusts-head-to-oversee-165-billion-group-1.1728642133175"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Tata Sons Pvt Ltd", "parent": "Tata Trusts (~66%)", "activity": "Apex unlisted holding company for the group; holds the promoter stakes in the listed Tata companies.", "srcs": [["Outlook Business — Tata Sons shareholders", "https://www.outlookbusiness.com/corporate/who-are-tata-sons-newest-shareholders-meet-noel-tatas-three-children"]] },
+        { "name": "Panatone Finvest Ltd", "parent": "Tata Sons Pvt Ltd", "activity": "Intermediate holding company; holds 44.80% of Tata Communications.", "srcs": [["Screener.in — TATACOMM", "https://www.screener.in/company/TATACOMM/"]] },
+        { "name": "Tata Investment Corporation Ltd", "parent": "Tata Sons Pvt Ltd", "activity": "Listed investment company; holds ~4.3% of Trent among other group holdings.", "srcs": [["Screener.in — TRENT", "https://www.screener.in/company/TRENT/"]] }
+      ],
+      "foreignPartners": [],
+      "notes": "Coverage is a SUBSET: the Tata group has substantially more than the 13 listed entities recorded here (e.g. Tata Chemicals, Tata Investment Corporation, Nelco, Rallis India, Automotive Stampings, Tata Metaliks, TRF, Trent's associates). combinedMcapCr of Rs 25,09,454 crore is therefore the sum of the listed entities in THIS file only and understates the group total. Unlisted Air India, Tata Electronics and Tata Digital are not covered. Foreign partners were not researched for this group.",
+      "srcs": [["Screener.in — TCS", "https://www.screener.in/company/TCS/"]]
+    },
+    {
+      "id": "aditya-birla",
+      "name": "Aditya Birla Group",
+      "promoterFamily": "Kumar Mangalam Birla family",
+      "holdingEntity": "Not verified. The promoter block of the listed Aditya Birla companies is held through a set of closely held family investment companies and trusts; a single named apex entity could not be confirmed from a primary source for this file.",
+      "foundedYear": "1857",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Cement", "Metals (Aluminium & Copper)", "Chemicals & Viscose", "Financial Services", "Telecom", "Fashion & Retail", "Real Estate", "Asset Management"],
+      "combinedMcapCr": 1119893,
+      "listedEntities": [
+        { "name": "UltraTech Cement Ltd", "nse": "ULTRACEMCO", "bse": "532538", "sector": "Cement", "mcapCr": 348309, "promoterHoldingPct": 59.33, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — ULTRACEMCO", "https://www.screener.in/company/ULTRACEMCO/"]] },
+        { "name": "Hindalco Industries Ltd", "nse": "HINDALCO", "bse": "500440", "sector": "Aluminium & Copper", "mcapCr": 237307, "promoterHoldingPct": 34.67, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — HINDALCO", "https://www.screener.in/company/HINDALCO/"]] },
+        { "name": "Grasim Industries Ltd", "nse": "GRASIM", "bse": "500300", "sector": "Viscose, Chemicals, Paints, Holding company", "mcapCr": 226288, "promoterHoldingPct": 43.73, "asOfQuarter": "Jun 2026", "hqState": "mp", "listedYear": null, "notes": "Group's listed holding vehicle for UltraTech and Aditya Birla Capital. Registered office at Nagda, Madhya Pradesh; corporate office in Mumbai.", "srcs": [["Screener.in — GRASIM", "https://www.screener.in/company/GRASIM/"]] },
+        { "name": "Vodafone Idea Ltd", "nse": "IDEA", "bse": "532822", "sector": "Telecom", "mcapCr": 141063, "promoterHoldingPct": 25.64, "asOfQuarter": "Jun 2026", "hqState": "gj", "listedYear": null, "notes": "Co-promoted by the Aditya Birla Group and Vodafone Group Plc. The 25.64% is the COMBINED promoter block; the split between the two promoter groups is not verified here, and the Government of India separately holds a large non-promoter stake following the AGR dues conversion. Combined promoter holding has fallen from 50.36% in Sep 2023.", "srcs": [["Screener.in — IDEA", "https://www.screener.in/company/IDEA/"]] },
+        { "name": "Aditya Birla Capital Ltd", "nse": "ABCAPITAL", "bse": "540691", "sector": "Financial Services (holding company)", "mcapCr": 110991, "promoterHoldingPct": 68.81, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — ABCAPITAL", "https://www.screener.in/company/ABCAPITAL/"]] },
+        { "name": "Aditya Birla Sun Life AMC Ltd", "nse": "ABSLAMC", "bse": "543374", "sector": "Asset Management", "mcapCr": 29341, "promoterHoldingPct": 74.72, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Joint venture between Aditya Birla Capital and Sun Life (Canada).", "srcs": [["Screener.in — ABSLAMC", "https://www.screener.in/company/ABSLAMC/"]] },
+        { "name": "Aditya Birla Real Estate Ltd", "nse": "ABREL", "bse": "500040", "sector": "Real Estate / Pulp & Paper", "mcapCr": 15425, "promoterHoldingPct": 50.21, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Formerly Century Textiles & Industries Ltd; renamed Aditya Birla Real Estate Ltd.", "srcs": [["Screener.in — ABREL", "https://www.screener.in/company/ABREL/"]] },
+        { "name": "Aditya Birla Lifestyle Brands Ltd", "nse": "ABLBL", "bse": null, "sector": "Apparel / Lifestyle Retail", "mcapCr": 11169, "promoterHoldingPct": 46.60, "asOfQuarter": "Jun 2026", "hqState": null, "listedYear": null, "notes": "Created by the demerger of the Madura lifestyle-brands business from Aditya Birla Fashion & Retail Ltd. BSE code and registered-office state not verified for this file.", "srcs": [["Screener.in — ABLBL", "https://www.screener.in/company/ABLBL/"]] }
+      ],
+      "keyPeople": [
+        { "name": "Kumar Mangalam Birla", "role": "Chairman", "entity": "Aditya Birla Group (chairs the boards of the major group companies)", "since": null, "family": true, "srcs": [["Aditya Birla Group — Kumar Mangalam Birla", "https://www.adityabirla.com/mr-kumar-mangalam-birla/"], ["Hindalco — Board of Directors", "https://www.hindalco.com/about-us/leadership/board-of-directors/mr-kumar-mangalam-birla"]] },
+        { "name": "Rajashree Birla", "role": "Director; Chairperson, Aditya Birla Centre for Community Initiatives and Rural Development", "entity": "Aditya Birla Group", "since": null, "family": true, "notes": "Mother of Kumar Mangalam Birla. Board seats across group companies not individually verified here.", "srcs": [["Wikipedia — Aditya Birla Group", "https://en.wikipedia.org/wiki/Aditya_Birla_Group"]] },
+        { "name": "Vishakha Mulye", "role": "Chief Executive Officer", "entity": "Aditya Birla Capital Ltd", "since": null, "family": false, "srcs": [["Aditya Birla Capital — Board of Directors", "https://www.adityabirlacapital.com/about-us/board-of-directors/kumar-mangalam-birla"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Aditya Birla Fashion & Retail Ltd", "parent": "Aditya Birla Group", "activity": "Fashion retail; demerged its Madura lifestyle-brands business into Aditya Birla Lifestyle Brands Ltd. Separately listed; its market cap is not captured in this file.", "srcs": [["Wikipedia — Aditya Birla Group", "https://en.wikipedia.org/wiki/Aditya_Birla_Group"]] }
+      ],
+      "foreignPartners": [
+        { "name": "Vodafone Group Plc", "country": "United Kingdom", "stake": "Co-promoter of Vodafone Idea Ltd; individual promoter-group split not verified", "entity": "Vodafone Idea Ltd", "srcs": [["Screener.in — IDEA", "https://www.screener.in/company/IDEA/"]] },
+        { "name": "Sun Life Financial", "country": "Canada", "stake": "Joint-venture partner in Aditya Birla Sun Life AMC Ltd; exact stake not verified", "entity": "Aditya Birla Sun Life AMC Ltd", "srcs": [["Screener.in — ABSLAMC", "https://www.screener.in/company/ABSLAMC/"]] }
+      ],
+      "notes": "Coverage is a SUBSET (8 of the group's listed entities). combinedMcapCr is the sum of those 8 only. Aditya Birla Fashion & Retail and other listed group companies are not included. The group's apex promoter holding entity could not be verified from a primary source and is recorded as null-equivalent text.",
+      "srcs": [["Wikipedia — Aditya Birla Group", "https://en.wikipedia.org/wiki/Aditya_Birla_Group"]]
+    },
+    {
+      "id": "jsw",
+      "name": "JSW Group",
+      "promoterFamily": "Sajjan Jindal family (a branch of the O. P. Jindal family; distinct from the Jindal Steel & Power and Jindal Stainless branches)",
+      "holdingEntity": "Sajjan Jindal Family Trust — named promoter entity of JSW group companies (e.g. holder of the promoter stake in JSW Infrastructure). JSW Holdings Ltd is the listed group investment/holding company.",
+      "foundedYear": "1982",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Steel", "Energy", "Ports & Infrastructure", "Cement", "Paints", "Infrastructure", "Sports"],
+      "combinedMcapCr": 529288,
+      "listedEntities": [
+        { "name": "JSW Steel Ltd", "nse": "JSWSTEEL", "bse": "500228", "sector": "Steel", "mcapCr": 314045, "promoterHoldingPct": 44.29, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — JSWSTEEL", "https://www.screener.in/company/JSWSTEEL/"]] },
+        { "name": "JSW Energy Ltd", "nse": "JSWENERGY", "bse": "533148", "sector": "Power Generation", "mcapCr": 104279, "promoterHoldingPct": 66.53, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — JSWENERGY", "https://www.screener.in/company/JSWENERGY/"]] },
+        { "name": "JSW Infrastructure Ltd", "nse": "JSWINFRA", "bse": "543994", "sector": "Ports & Logistics", "mcapCr": 79721, "promoterHoldingPct": 73.93, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": "2023", "notes": "IPO September 2023. Promoter entity is the Sajjan Jindal Family Trust.", "srcs": [["Screener.in — JSWINFRA", "https://www.screener.in/company/JSWINFRA/"], ["Outlook Business — JSW Infrastructure promoter entity pares stake", "https://www.outlookbusiness.com/corporate/jsw-infrastructure-promoter-entity-pares-2-stake-for-rs-1210-crore"]] },
+        { "name": "JSW Cement Ltd", "nse": "JSWCEMENT", "bse": null, "sector": "Cement", "mcapCr": 17887, "promoterHoldingPct": 72.02, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": "2025", "notes": "IPO in 2025. BSE code not verified for this file.", "srcs": [["Screener.in — JSWCEMENT", "https://www.screener.in/company/JSWCEMENT/"]] },
+        { "name": "JSW Holdings Ltd", "nse": "JSWHL", "bse": "532642", "sector": "Investment / NBFC holding company", "mcapCr": 13356, "promoterHoldingPct": 66.28, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — JSWHL", "https://www.screener.in/company/JSWHL/"]] }
+      ],
+      "keyPeople": [
+        { "name": "Sajjan Jindal", "role": "Chairman (JSW Group); Chairman & Managing Director, JSW Steel; Chairman & Joint Managing Director, JSW Holdings", "entity": "JSW Group / JSW Steel Ltd", "since": null, "family": true, "srcs": [["JSW Group — About", "https://group.jsw.in/groups/about-groups"], ["Wikipedia — JSW Group", "https://en.wikipedia.org/wiki/JSW_Group"]] },
+        { "name": "Parth Jindal", "role": "Managing Director, JSW Paints; Managing Director, JSW Cement; Chairman, Akzo Nobel India (from 2026); Non-Executive Director, JSW Energy", "entity": "JSW Paints / JSW Cement / Akzo Nobel India", "since": null, "family": true, "srcs": [["JSW Cement — Leadership", "https://www.jswcement.in/leadership"], ["MarketScreener — Parth Sajjan Jindal positions", "https://www.marketscreener.com/insider/PARTH-SAJJAN-JINDAL-A0YX0R/"]] },
+        { "name": "Jayant Acharya", "role": "Joint Managing Director & CEO", "entity": "JSW Steel Ltd", "since": null, "family": false, "srcs": [["Wikipedia — JSW Steel", "https://en.wikipedia.org/wiki/JSW_Steel"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "JSW Paints Ltd", "parent": "JSW Group", "activity": "Decorative and industrial paints; agreed to acquire AkzoNobel's Indian arm (Akzo Nobel India Ltd) for approximately USD 1.64bn including debt.", "srcs": [["Coatings World — JSW Paints", "https://www.coatingsworld.com/top-company-profile/jsw-paints/"], ["MarketScreener — Parth Sajjan Jindal positions", "https://www.marketscreener.com/insider/PARTH-SAJJAN-JINDAL-A0YX0R/"]] }
+      ],
+      "foreignPartners": [
+        { "name": "AkzoNobel N.V.", "country": "Netherlands", "stake": "Sold its Indian arm (Akzo Nobel India Ltd) to JSW Paints for approximately USD 1.64bn including debt; Parth Jindal became Chairman of Akzo Nobel India from 2026. Residual AkzoNobel shareholding not verified here.", "entity": "Akzo Nobel India Ltd", "srcs": [["MarketScreener — Parth Sajjan Jindal positions", "https://www.marketscreener.com/insider/PARTH-SAJJAN-JINDAL-A0YX0R/"], ["Coatings World — JSW Paints", "https://www.coatingsworld.com/top-company-profile/jsw-paints/"]] }
+      ],
+      "notes": "combinedMcapCr is the sum of the five listed entities recorded here. Akzo Nobel India Ltd, now chaired by Parth Jindal following the JSW Paints acquisition, is separately listed and is NOT included in combinedMcapCr because its classification within the JSW promoter group was not verified for this file. JSW Paints is unlisted.",
+      "srcs": [["Wikipedia — JSW Group", "https://en.wikipedia.org/wiki/JSW_Group"]]
+    },
+    {
+      "id": "vedanta",
+      "name": "Vedanta Group",
+      "promoterFamily": "Anil Agarwal family",
+      "holdingEntity": "Volcan Investments Ltd (Bahamas) — wholly owned by Anil Agarwal — which controls Vedanta Resources Ltd (London, unlisted), which in turn holds the promoter stake in the Indian listed entities.",
+      "foundedYear": "1976",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Zinc & Base Metals", "Aluminium", "Oil & Gas", "Power", "Iron & Steel", "Copper"],
+      "combinedMcapCr": 590693,
+      "listedEntities": [
+        { "name": "Hindustan Zinc Ltd", "nse": "HINDZINC", "bse": "500188", "sector": "Zinc, Lead & Silver", "mcapCr": 251702, "promoterHoldingPct": 60.71, "asOfQuarter": "Jun 2026", "hqState": "rj", "listedYear": null, "notes": "Vedanta group is the promoter; the Government of India separately holds 27.92% as a non-promoter shareholder (Jun 2026).", "srcs": [["Screener.in — HINDZINC", "https://www.screener.in/company/HINDZINC/"]] },
+        { "name": "Vedanta Aluminium Metal Ltd", "nse": "VAML", "bse": null, "sector": "Aluminium", "mcapCr": 185509, "promoterHoldingPct": 56.38, "asOfQuarter": "Jun 2026", "hqState": null, "listedYear": "2026", "notes": "Incorporated 6 October 2023; created by the demerger of Vedanta Ltd's aluminium undertaking, effective 1 May 2026; listed 15 June 2026. BSE code and registered-office state not verified.", "srcs": [["Screener.in — VAML", "https://www.screener.in/company/VAML/"], ["Business Today — Vedanta demerger listing date", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"]] },
+        { "name": "Vedanta Ltd", "nse": "VEDL", "bse": "500295", "sector": "Zinc, Copper & Base Metals (residual entity post-demerger)", "mcapCr": 108943, "promoterHoldingPct": 54.72, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Residual entity after the May-June 2026 demerger; retains zinc, copper and base metals including the 64.9% holding in Hindustan Zinc.", "srcs": [["Screener.in — VEDL", "https://www.screener.in/company/VEDL/"], ["Business Today — Vedanta demerger listing date", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"]] },
+        { "name": "Vedanta Oil and Gas Ltd", "nse": "VOGL", "bse": null, "sector": "Oil & Gas", "mcapCr": 15411, "promoterHoldingPct": 56.38, "asOfQuarter": "Jun 2026", "hqState": null, "listedYear": "2026", "notes": "Formerly Malco Energy Ltd; renamed and listed 15 June 2026 under the demerger scheme.", "srcs": [["Screener.in — VOGL", "https://www.screener.in/company/VOGL/"], ["Business Today — Vedanta demerger listing date", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"]] },
+        { "name": "Vedanta Iron & Steel Ltd", "nse": "VISL", "bse": null, "sector": "Iron & Steel", "mcapCr": 15184, "promoterHoldingPct": 56.38, "asOfQuarter": "Jun 2026", "hqState": null, "listedYear": "2026", "srcs": [["Screener.in — VISL", "https://www.screener.in/company/VISL/"], ["Business Today — Vedanta demerger listing date", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"]] },
+        { "name": "Vedanta Power Ltd", "nse": "VEDPOWER", "bse": null, "sector": "Thermal Power", "mcapCr": 13944, "promoterHoldingPct": null, "asOfQuarter": null, "hqState": "pb", "listedYear": "2026", "notes": "Formerly Talwandi Sabo Power Ltd (incorporated in Punjab 5 April 2007); renamed Vedanta Power Ltd on 3 June 2026 under the demerger scheme and listed 15 June 2026. Operates a 1,980 MW coal plant in Punjab. mcapCr of Rs 13,944 crore is as of 29 July 2026 — a DIFFERENT date from the rest of this file — because the Screener page for this ticker was not reachable; promoter holding not verified.", "srcs": [["Bajaj Finserv — Vedanta Power share price", "https://www.bajajfinserv.in/investments/vedpower-share-price"], ["Business Today — Vedanta demerger listing date", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"]] }
+      ],
+      "keyPeople": [
+        { "name": "Anil Agarwal", "role": "Executive Chairman; sole owner of Volcan Investments Ltd", "entity": "Vedanta Resources Ltd", "since": "2005", "family": true, "srcs": [["Vedanta Resources — Leadership", "https://www.vedantaresources.com/who-we-are-leadership.php"]] },
+        { "name": "Priya Agarwal Hebbar", "role": "Chairperson, Hindustan Zinc Ltd; Non-Executive Director, Vedanta Ltd", "entity": "Hindustan Zinc Ltd / Vedanta Ltd", "since": null, "family": true, "notes": "Daughter of Anil Agarwal.", "srcs": [["Vedanta Ltd — Leadership", "https://www.vedantalimited.com/eng/who-we-are-leadership.php"]] },
+        { "name": "Navin Agarwal", "role": "Director", "entity": "Vedanta group", "since": null, "family": true, "notes": "Brother of Anil Agarwal. Exact current designation not verified for this file.", "srcs": [["Vedanta Resources — Leadership", "https://www.vedantaresources.com/who-we-are-leadership.php"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Vedanta Resources Ltd", "parent": "Volcan Investments Ltd", "activity": "London-headquartered unlisted holding company (taken private in 2018) through which the group's Indian listed stakes are held.", "srcs": [["Business Standard — Vedanta Resources to go private", "https://www.business-standard.com/amp/article/companies/vedanta-resources-chairman-anil-agarwal-to-take-company-private-on-oct-1-118090300271_1.html"]] },
+        { "name": "Cairn Oil & Gas", "parent": "Vedanta Oil and Gas Ltd", "activity": "Oil and gas exploration and production. Attribution of this business to the post-demerger VOGL entity is inferred from the demerger scheme description and is NOT independently verified.", "srcs": [["Business Today — Vedanta demerger listing date", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"]] }
+      ],
+      "foreignPartners": [],
+      "notes": "MATERIAL RESTRUCTURING: the Vedanta demerger completed during 2026. NCLT Mumbai approved the scheme by orders of 16 December 2025 and 9 January 2026; the demerger became effective 1 May 2026 (record date 1 May 2026, 1:1 share entitlement in each new entity); the four new entities listed on NSE and BSE on 15 June 2026. Any dataset built before mid-2026 showing Vedanta as a single listed entity is out of date. combinedMcapCr sums the six entities above but mixes one 29 July 2026 figure (VEDPOWER) with 11 August 2026 figures for the rest.",
+      "srcs": [["Business Today — Vedanta demerger listing date", "https://www.businesstoday.in/markets/stocks/story/vedanta-demerger-listing-date-out-for-oil-gas-power-aluminium-and-iron-steel-firms-536452-2026-06-12"]]
+    },
+    {
+      "id": "bajaj",
+      "name": "Bajaj Group",
+      "promoterFamily": "Bajaj family (descendants of Jamnalal Bajaj)",
+      "holdingEntity": "Jamnalal Sons Pvt Ltd — the family's apex unlisted holding company, and the single largest promoter of Bajaj Holdings & Investment Ltd (18.01%). Bajaj Holdings & Investment Ltd (BHIL) is the listed group holding company; other promoter holders include family trusts such as the Niraj Bajaj Nirav Trust, Shekhar Bajaj Anant Bajaj Trust, Rahulkumar Bajaj Sanjiv Trust and Rahulkumar Bajaj Rajiv Trust.",
+      "foundedYear": "1926",
+      "hqCity": "Pune",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Two & Three Wheelers", "Consumer Lending", "Insurance", "Housing Finance", "Investments"],
+      "combinedMcapCr": 1525354,
+      "listedEntities": [
+        { "name": "Bajaj Finance Ltd", "nse": "BAJFINANCE", "bse": "500034", "sector": "NBFC / Consumer Lending", "mcapCr": 681742, "promoterHoldingPct": 54.68, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — BAJFINANCE", "https://www.screener.in/company/BAJFINANCE/"]] },
+        { "name": "Bajaj Finserv Ltd", "nse": "BAJAJFINSV", "bse": "532978", "sector": "Financial Services holding company", "mcapCr": 324143, "promoterHoldingPct": 58.72, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — BAJAJFINSV", "https://www.screener.in/company/BAJAJFINSV/"]] },
+        { "name": "Bajaj Auto Ltd", "nse": "BAJAJ-AUTO", "bse": "532977", "sector": "Two & Three Wheelers", "mcapCr": 320141, "promoterHoldingPct": 55.01, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — BAJAJ-AUTO", "https://www.screener.in/company/BAJAJ-AUTO/"]] },
+        { "name": "Bajaj Holdings & Investment Ltd", "nse": "BAJAJHLDNG", "bse": "500490", "sector": "Investment holding company", "mcapCr": 128495, "promoterHoldingPct": 51.46, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — BAJAJHLDNG", "https://www.screener.in/company/BAJAJHLDNG/"]] },
+        { "name": "Bajaj Housing Finance Ltd", "nse": "BAJAJHFL", "bse": "544252", "sector": "Housing Finance", "mcapCr": 70833, "promoterHoldingPct": 86.70, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": "2024", "notes": "IPO September 2024. Subsidiary of Bajaj Finance.", "srcs": [["Screener.in — BAJAJHFL", "https://www.screener.in/company/BAJAJHFL/"]] }
+      ],
+      "keyPeople": [
+        { "name": "Niraj Bajaj", "role": "Chairman", "entity": "Bajaj Auto Ltd", "since": null, "family": true, "notes": "Role reported via secondary sources; not verified against a company filing for this file.", "srcs": [["Simply Wall St — Bajaj Holdings & Investment", "https://simplywall.st/stocks/in/diversified-financials/nse-bajajhldng/bajaj-holdings-investment-shares"]] },
+        { "name": "Rajiv Bajaj", "role": "Managing Director", "entity": "Bajaj Auto Ltd", "since": null, "family": true, "notes": "Role reported via secondary sources; not verified against a company filing for this file.", "srcs": [["Screener.in — BAJAJ-AUTO", "https://www.screener.in/company/BAJAJ-AUTO/"]] },
+        { "name": "Sanjiv Bajaj", "role": "Chairman & Managing Director", "entity": "Bajaj Finserv Ltd", "since": null, "family": true, "notes": "Role reported via secondary sources; not verified against a company filing for this file.", "srcs": [["Screener.in — BAJAJFINSV", "https://www.screener.in/company/BAJAJFINSV/"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Bajaj Allianz General Insurance Company Ltd", "parent": "Bajaj Finserv Ltd", "activity": "General insurance. Bajaj Finserv, Bajaj Holdings and Jamnalal Sons jointly acquired an additional 23% from Allianz SE for approximately Rs 21,000 crore, making it a wholly Bajaj-owned business.", "srcs": [["Simply Wall St — Bajaj Holdings & Investment", "https://simplywall.st/stocks/in/diversified-financials/nse-bajajhldng/bajaj-holdings-investment-shares"]] },
+        { "name": "Bajaj Allianz Life Insurance Company Ltd", "parent": "Bajaj Finserv Ltd", "activity": "Life insurance; same Allianz SE buyout transaction as above.", "srcs": [["Simply Wall St — Bajaj Holdings & Investment", "https://simplywall.st/stocks/in/diversified-financials/nse-bajajhldng/bajaj-holdings-investment-shares"]] },
+        { "name": "Jamnalal Sons Pvt Ltd", "parent": "Bajaj family", "activity": "Apex unlisted family holding company; largest single promoter of Bajaj Holdings & Investment Ltd at 18.01%.", "srcs": [["Simply Wall St — Bajaj Holdings & Investment", "https://simplywall.st/stocks/in/diversified-financials/nse-bajajhldng/bajaj-holdings-investment-shares"]] }
+      ],
+      "foreignPartners": [
+        { "name": "Allianz SE", "country": "Germany", "stake": "None remaining. Former 26% joint-venture partner in Bajaj Allianz General Insurance and Bajaj Allianz Life Insurance; sold an additional 23% to Bajaj Finserv, Bajaj Holdings and Jamnalal Sons for approximately Rs 21,000 crore, completing its exit from the insurance JVs. The partnership has ENDED.", "entity": "Bajaj Allianz General Insurance Co Ltd; Bajaj Allianz Life Insurance Co Ltd", "status": "Ended", "srcs": [["Simply Wall St — Bajaj Holdings & Investment", "https://simplywall.st/stocks/in/diversified-financials/nse-bajajhldng/bajaj-holdings-investment-shares"]] }
+      ],
+      "notes": "Bajaj Group founding year 1926 refers to Jamnalal Bajaj's founding of the business house; Bajaj Auto's own predecessor dates to 1945. Note that the Bajaj family has multiple separate branches: Bajaj Electricals (Shekhar Bajaj branch) and Bajaj Hindusthan Sugar (Shishir Bajaj branch) are run separately from the Niraj/Rajiv/Sanjiv Bajaj group covered here and are NOT included. combinedMcapCr covers the five entities listed above only. Key-people designations for this group rest on secondary sources and should be re-verified against company filings.",
+      "srcs": [["Simply Wall St — Bajaj Holdings & Investment", "https://simplywall.st/stocks/in/diversified-financials/nse-bajajhldng/bajaj-holdings-investment-shares"]]
+    },
+    {
+      "id": "mahindra",
+      "name": "Mahindra Group",
+      "promoterFamily": "Mahindra family (Anand Mahindra)",
+      "holdingEntity": "Mahindra & Mahindra Ltd is itself the group's operating and holding flagship; the promoter block comprises the Mahindra family together with closely held entities including Prudential Management & Services Pvt Ltd. A single apex trust could not be verified for this file.",
+      "foundedYear": "1945",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Automobiles & Farm Equipment", "IT Services", "Financial Services", "Real Estate", "Hospitality", "Logistics", "Renewables"],
+      "combinedMcapCr": 662923,
+      "listedEntities": [
+        { "name": "Mahindra & Mahindra Ltd", "nse": "M&M", "bse": "500520", "sector": "Automobiles & Tractors", "mcapCr": 432785, "promoterHoldingPct": 18.44, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Unusually low promoter holding for a family-controlled Indian conglomerate; control is exercised through the promoter block plus institutional support rather than a majority stake.", "srcs": [["Screener.in — M&M", "https://www.screener.in/company/M%26M/"]] },
+        { "name": "Tech Mahindra Ltd", "nse": "TECHM", "bse": "532755", "sector": "IT Services", "mcapCr": 160945, "promoterHoldingPct": 34.96, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — TECHM", "https://www.screener.in/company/TECHM/"]] },
+        { "name": "Mahindra & Mahindra Financial Services Ltd", "nse": "M&MFIN", "bse": "532720", "sector": "NBFC / Vehicle & Rural Finance", "mcapCr": 56398, "promoterHoldingPct": 52.49, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — M&MFIN", "https://www.screener.in/company/M%26MFIN/"]] },
+        { "name": "Mahindra Lifespace Developers Ltd", "nse": "MAHLIFE", "bse": "532313", "sector": "Real Estate", "mcapCr": 8188, "promoterHoldingPct": 52.41, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — MAHLIFE", "https://www.screener.in/company/MAHLIFE/"]] },
+        { "name": "Mahindra Holidays & Resorts India Ltd", "nse": "MHRIL", "bse": "533088", "sector": "Hospitality / Vacation Ownership", "mcapCr": 4607, "promoterHoldingPct": 66.73, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — MHRIL", "https://www.screener.in/company/MHRIL/"]] }
+      ],
+      "keyPeople": [
+        { "name": "Anand G. Mahindra", "role": "Chairman", "entity": "Mahindra Group / Mahindra & Mahindra Ltd", "since": null, "family": true, "srcs": [["Mahindra — Dr. Anish Shah, Group CEO & MD", "https://www.mahindra.com/dr-anish-shah"], ["Wikipedia — Mahindra Group", "https://en.wikipedia.org/wiki/Mahindra_Group"]] },
+        { "name": "Dr. Anish Shah", "role": "Group CEO & Managing Director", "entity": "Mahindra Group / Mahindra & Mahindra Ltd", "since": "2021", "family": false, "notes": "First non-family CEO and MD of the group; completed five years in the role on 2 April 2026.", "srcs": [["Mahindra — Dr. Anish Shah, Group CEO & MD", "https://www.mahindra.com/dr-anish-shah"], ["Business Today — How Anish Shah steered Mahindra Group over last 5 years", "https://www.businesstoday.in/latest/corporate/story/from-capital-allocation-discipline-to-bold-bets-how-anish-shah-steered-mahindra-group-over-last-5-years-523945-2026-04-03"]] },
+        { "name": "Rajesh Jejurikar", "role": "Executive Director & CEO (Auto and Farm Sector)", "entity": "Mahindra & Mahindra Ltd", "since": null, "family": false, "srcs": [["Mahindra & Mahindra — Integrated Annual Report 2025-26", "https://www.mahindra.com/annual-report-FY2026/"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Prudential Management & Services Pvt Ltd", "parent": "Mahindra promoter group", "activity": "Closely held promoter-group entity holding part of the M&M promoter stake. Recorded from secondary sourcing; not verified against a shareholding-pattern filing for this file.", "srcs": [["Wikipedia — Mahindra Group", "https://en.wikipedia.org/wiki/Mahindra_Group"]] }
+      ],
+      "foreignPartners": [],
+      "notes": "Coverage is a SUBSET (5 of the group's listed entities); Mahindra Logistics, Swaraj Engines and others are not included, so combinedMcapCr understates the group. Foreign partners were not researched for this group.",
+      "srcs": [["Wikipedia — Mahindra Group", "https://en.wikipedia.org/wiki/Mahindra_Group"]]
+    },
+    {
+      "id": "lt",
+      "name": "Larsen & Toubro Group",
+      "promoterFamily": "None — L&T has no promoter. It is a professionally managed, institutionally owned company.",
+      "holdingEntity": "No apex holding entity or promoter. The L&T Employees Welfare Foundation holds a significant block (approximately 13.5% as of mid-2025), and Life Insurance Corporation of India is the largest single shareholder (approximately 11-11.5%). Domestic institutional investors collectively held 43.01% as of Jun 2026.",
+      "foundedYear": "1938",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Engineering & Construction", "Infrastructure", "Heavy Engineering", "Defence", "IT Services", "Financial Services", "Semiconductors", "Green Energy"],
+      "combinedMcapCr": 817741,
+      "listedEntities": [
+        { "name": "Larsen & Toubro Ltd", "nse": "LT", "bse": "500510", "sector": "Engineering & Construction", "mcapCr": 556545, "promoterHoldingPct": null, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "NO PROMOTER. Screener's shareholding table for LT shows no promoter category: Jun 2026 breakdown is DIIs 43.01%, Public 37.60%, FIIs 19.13%, Government 0.25%. promoterHoldingPct is therefore null by fact, not by data gap.", "srcs": [["Screener.in — LT", "https://www.screener.in/company/LT/"]] },
+        { "name": "LTM Ltd (formerly LTIMindtree Ltd / Larsen & Toubro Infotech Ltd)", "nse": "LTM", "bse": "540005", "sector": "IT Services", "mcapCr": 143565, "promoterHoldingPct": 68.49, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "The Screener page for this ticker is titled 'LTM Ltd' with the legal name shown as Larsen & Toubro Infotech Ltd, indicating a rename from LTIMindtree; the exact effective date of the rename was NOT verified. Formed by the 2022 merger of Larsen & Toubro Infotech and Mindtree. NSE ticker was LTIM and now resolves as LTM on Screener; treat the ticker as provisional.", "srcs": [["Screener.in — LTM", "https://www.screener.in/company/LTM/"], ["LTM — S.N. Subrahmanyan, Chairman & MD of Larsen & Toubro", "https://www.ltm.com/investors/leaders/sn-subrahmanyan"]] },
+        { "name": "L&T Finance Ltd", "nse": "LTF", "bse": "533519", "sector": "NBFC", "mcapCr": 78803, "promoterHoldingPct": 65.96, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — LTF", "https://www.screener.in/company/LTF/"]] },
+        { "name": "L&T Technology Services Ltd", "nse": "LTTS", "bse": "540115", "sector": "Engineering R&D Services", "mcapCr": 38828, "promoterHoldingPct": 73.52, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — LTTS", "https://www.screener.in/company/LTTS/"]] }
+      ],
+      "keyPeople": [
+        { "name": "S. N. Subrahmanyan", "role": "Chairman & Managing Director", "entity": "Larsen & Toubro Ltd", "since": "2023", "family": false, "notes": "Took charge as Chairman & MD on 1 October 2023; had been MD since 1 July 2017. Also Chairman of LTM and L&T Technology Services and Chairperson of L&T Finance.", "srcs": [["L&T — Leadership: S. N. Subrahmanyan", "https://www.larsentoubro.com/leadership/s-n-subrahmanyan"], ["LTTS — Board of Directors: S. N. Subrahmanyan", "https://www.ltts.com/about-us/board-of-directors/mr-s-n-subrahmanyan"]] },
+        { "name": "A. M. Naik", "role": "Former Chairman (Chairman Emeritus)", "entity": "Larsen & Toubro Ltd", "since": null, "family": false, "notes": "Preceded S. N. Subrahmanyan; handed over the MD role in 2017. Current formal title not verified.", "srcs": [["L&T — Leadership: S. N. Subrahmanyan", "https://www.larsentoubro.com/leadership/s-n-subrahmanyan"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "L&T Semiconductor Technologies Ltd", "parent": "Larsen & Toubro Ltd", "activity": "Fabless semiconductor design.", "srcs": [["L&T Semiconductor Technologies — Leadership", "https://www.ltsct.com/leadership_bod/s-n-subrahmanyan/"]] },
+        { "name": "L&T Metro Rail (Hyderabad) Ltd", "parent": "Larsen & Toubro Ltd", "activity": "Hyderabad Metro concession.", "srcs": [["L&T Metro — Leadership", "https://www.ltmetro.in/about-us/leadership/s-n-subrahmanyan"]] },
+        { "name": "L&T Employees Welfare Foundation Pvt Ltd", "parent": "L&T employees", "activity": "Employee-owned vehicle holding ~13.5% of L&T; central to L&T's non-promoter governance model.", "srcs": [["Trendlyne — L&T Employees Welfare Foundation holding over time", "https://trendlyne.com/equity/holding-overtime/6307584/l-t-employees-welfare-foundation/larsen-toubro-ltd/"]] }
+      ],
+      "foreignPartners": [],
+      "notes": "L&T is the outlier in this dataset: no promoter family and no apex holding vehicle. combinedMcapCr covers the four listed entities above. The LTM/LTIMindtree ticker and rename need re-verification against an NSE corporate action notice before this row is treated as settled.",
+      "srcs": [["Screener.in — LT", "https://www.screener.in/company/LT/"], ["L&T — Leadership", "https://www.larsentoubro.com/corporate/about-lt-group/leadership"]]
+    },
+    {
+      "id": "hinduja",
+      "name": "Hinduja Group",
+      "promoterFamily": "Hinduja family (descendants of Parmanand Deepchand Hinduja)",
+      "holdingEntity": "Hinduja Group Ltd, with the automotive interests held through Hinduja Automotive Ltd (UK). The family's holdings have historically been described as jointly held by the four brothers; the precise current apex trust or holding structure could NOT be verified for this file.",
+      "foundedYear": "1914",
+      "hqCity": "Mumbai",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "sectors": ["Commercial Vehicles", "Banking", "Lubricants", "Business Process Management", "Media", "Healthcare", "Power"],
+      "combinedMcapCr": 189676,
+      "listedEntities": [
+        { "name": "Ashok Leyland Ltd", "nse": "ASHOKLEY", "bse": "500477", "sector": "Commercial Vehicles", "mcapCr": 103350, "promoterHoldingPct": 51.51, "asOfQuarter": "Jun 2026", "hqState": "tn", "listedYear": null, "notes": "Flagship of the Hinduja group. Screener flags that promoters have pledged 40.1% of their holding.", "srcs": [["Screener.in — ASHOKLEY", "https://www.screener.in/company/ASHOKLEY/"]] },
+        { "name": "IndusInd Bank Ltd", "nse": "INDUSINDBK", "bse": "532187", "sector": "Banking", "mcapCr": 78544, "promoterHoldingPct": 15.82, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "notes": "Promoter holding is capped low by RBI bank-ownership norms. Screener does not name the promoter entity on its page; the promoter is publicly known as IndusInd International Holdings Ltd / IndusInd Ltd (Hinduja vehicles) but this was not verified from a filing for this file. Screener flags that promoters have pledged 42.8% of their holding.", "srcs": [["Screener.in — INDUSINDBK", "https://www.screener.in/company/INDUSINDBK/"]] },
+        { "name": "Gulf Oil Lubricants India Ltd", "nse": "GULFOILLUB", "bse": "538567", "sector": "Lubricants", "mcapCr": 5868, "promoterHoldingPct": 66.85, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — GULFOILLUB", "https://www.screener.in/company/GULFOILLUB/"]] },
+        { "name": "Hinduja Global Solutions Ltd", "nse": "HGS", "bse": "532859", "sector": "Business Process Management / Digital Media", "mcapCr": 1914, "promoterHoldingPct": 67.99, "asOfQuarter": "Jun 2026", "hqState": "mh", "listedYear": null, "srcs": [["Screener.in — HGS", "https://www.screener.in/company/HGS/"]] }
+      ],
+      "keyPeople": [
+        { "name": "Gopichand P. Hinduja", "role": "Chairman (deceased)", "entity": "Hinduja Group", "since": "2023", "family": true, "notes": "Became group chairman after the death of his elder brother Srichand P. Hinduja in May 2023. Died in London on 4 November 2025, aged 85. Recorded because no publicly confirmed successor as group chairman could be verified as of 2026-08-11.", "srcs": [["Business Standard — Gopichand Hinduja passes away", "https://www.business-standard.com/india-news/gopichand-hinduja-passes-away-hinduja-group-chairman-london-125110401793_1.html"], ["India TV — Gopichand Hinduja dies at 85", "https://www.indiatvnews.com/business/news/gopichand-hinduja-hinduja-group-chairman-dies-at-85-say-sources-close-to-family-2025-11-04-1015777"]] },
+        { "name": "Dheeraj G. Hinduja", "role": "Chairman", "entity": "Ashok Leyland Ltd", "since": "2010", "family": true, "notes": "Son of Gopichand Hinduja.", "srcs": [["Wikipedia — Dheeraj Hinduja", "https://en.wikipedia.org/wiki/Dheeraj_Hinduja"]] },
+        { "name": "Ashok P. Hinduja", "role": "Chairman, Hinduja Group of Companies (India)", "entity": "Hinduja Group India", "since": null, "family": true, "notes": "Youngest of the four Hinduja brothers.", "srcs": [["Hinduja Group — Family tree", "https://www.hindujagroup.com/family-tree.php"]] },
+        { "name": "Prakash P. Hinduja", "role": "Chairman, Hinduja Group Europe", "entity": "Hinduja Group Europe", "since": null, "family": true, "srcs": [["Wikipedia — Prakash Hinduja", "https://en.wikipedia.org/wiki/Prakash_Hinduja"]] }
+      ],
+      "notableSubsidiaries": [
+        { "name": "Hinduja Automotive Ltd (UK)", "parent": "Hinduja Group Ltd", "activity": "Holding vehicle for the group's Ashok Leyland stake. Recorded from general public knowledge and NOT verified from a filing for this file.", "srcs": [["Hinduja Group — corporate site", "https://www.hindujagroup.com/"]] }
+      ],
+      "foreignPartners": [],
+      "notes": "SUCCESSION GAP: Gopichand Hinduja, group chairman, died 4 November 2025 and no successor as overall Hinduja Group chairman could be verified from a credible source as of 2026-08-11. Coverage is a SUBSET of the group's listed entities; combinedMcapCr covers the four above only. IndusInd International Holdings' acquisition of Reliance Capital was not researched for this file.",
+      "srcs": [["Hinduja Group — corporate site", "https://www.hindujagroup.com/"], ["Business Standard — Gopichand Hinduja passes away", "https://www.business-standard.com/india-news/gopichand-hinduja-passes-away-hinduja-group-chairman-london-125110401793_1.html"]]
+    }
+  ],
+  "gaps": [
+    "BSE scrip codes: filled only where confidently known. Codes for TMPV, TMCV, JSWCEMENT, ABLBL, VAML, VOGL, VISL and VEDPOWER are null — these are recent listings and the codes were not verified against an exchange source.",
+    "listedYear: null for most entities. Only listing years explicitly stated by a source are recorded (JIOFIN 2023, JSWINFRA 2023, BAJAJHFL 2024, TMPV/TMCV 2025, JSWCEMENT 2025, VAML/VOGL/VISL/VEDPOWER 2026).",
+    "Reliance Retail Ventures Ltd: the full current cap table could not be verified. Only individually sourced stakes (KKR 1.42%, QIA ~1%, ADIA 0.59%) are recorded; the 2020-round investors Silver Lake, GIC, TPG, General Atlantic, Mubadala and PIF are named without percentages.",
+    "Jio Platforms cap-table percentages come from press coverage of a filing rather than the filing itself. RIL's own stake is recorded at 66.43% from the same coverage.",
+    "IHC's current shareholding in Adani Enterprises is NOT verified as of 2026-08-11. The 5.04% figure is from an October 2023 disclosure; IHC's exits from Adani Green and Adani Transmission are recorded but the residual position is unconfirmed.",
+    "TotalEnergies' current stake in Adani Green Energy is unsettled: 17.25% after Q4 2025 block deals, with further sales reported as planned. ATGL's 37.4% is as of March 2026.",
+    "Vedanta Power Ltd (VEDPOWER): market cap is as of 29 July 2026, not 11 August 2026, and promoter holding is null — the Screener page for this ticker returned 404.",
+    "LTM / LTIMindtree: the Screener page resolves the ticker as LTM with legal name 'Larsen & Toubro Infotech Ltd'. The rename from LTIMindtree and the current NSE ticker need verification against an exchange corporate-action notice.",
+    "Aditya Birla Group: no apex promoter holding entity could be verified from a primary source.",
+    "Vodafone Idea: the 25.64% promoter figure is the combined Aditya Birla Group + Vodafone Group Plc block; the split between the two was not verified.",
+    "Hinduja Group: no confirmed successor to Gopichand Hinduja as group chairman following his death on 4 November 2025.",
+    "Bajaj key-people designations (Niraj, Rajiv, Sanjiv Bajaj) rest on secondary sources and were not confirmed against company filings.",
+    "Registered-office states are null for ACC, TATACONSUM, ABLBL, VAML, VOGL and VISL where they could not be verified.",
+    "Foreign partners were not researched for Tata, Mahindra, Vedanta, L&T or Hinduja; the empty arrays for those groups mean 'not researched', not 'none exist'.",
+    "combinedMcapCr is complete only for Reliance (listed entities), Adani, JSW and Vedanta. For Tata, Aditya Birla, Bajaj, Mahindra, L&T and Hinduja it is a partial subtotal of the entities present in this file."
+  ]
+}

@@ -1,0 +1,1090 @@
+{
+  "asOf": "2026-08-11",
+  "sources": [
+    [
+      "Wikipedia - List of Indian states and union territories by GDP (MoSPI GSDP, FY2024-25)",
+      "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+    ],
+    [
+      "Wikipedia - List of states and union territories of India by population (2011 Census)",
+      "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+    ],
+    [
+      "MoSPI - State-wise GSDP statistics",
+      "https://www.mospi.gov.in/"
+    ],
+    [
+      "RBI - Handbook of Statistics on Indian States",
+      "https://www.rbi.org.in/Scripts/AnnualPublications.aspx?head=Handbook%20of%20Statistics%20on%20Indian%20States"
+    ]
+  ],
+  "states": [
+    {
+      "stateCode": "an",
+      "name": "Andaman and Nicobar Islands",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 380581,
+      "populationYear": "2011 Census",
+      "capital": "Port Blair",
+      "dominantIndustries": [
+        "Fisheries",
+        "Tourism",
+        "Defence & logistics"
+      ],
+      "notableClusters": [
+        "Port Blair - transhipment port project and tourism"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ap",
+      "name": "Andhra Pradesh",
+      "gsdpCr": 1641000,
+      "gsdpYear": "FY25",
+      "population": 49577103,
+      "populationYear": "2011 Census",
+      "capital": "Amaravati",
+      "dominantIndustries": [
+        "Agri & aquaculture",
+        "Cement",
+        "Auto & EV",
+        "Ports",
+        "Pharmaceuticals"
+      ],
+      "notableClusters": [
+        "Visakhapatnam - steel, port, petrochemicals, IT",
+        "Sri City SEZ - electronics and consumer durables",
+        "Tirupati - Amara Raja batteries and electronics manufacturing",
+        "Krishna-Godavari basin - gas",
+        "Nandyal-Kurnool - cement belt"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ar",
+      "name": "Arunachal Pradesh",
+      "gsdpCr": 47800,
+      "gsdpYear": "FY25",
+      "population": 1383727,
+      "populationYear": "2011 Census",
+      "capital": "Itanagar",
+      "dominantIndustries": [
+        "Hydropower",
+        "Timber & horticulture",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "Siang and Subansiri basins - large hydro projects"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "as",
+      "name": "Assam",
+      "gsdpCr": 643100,
+      "gsdpYear": "FY25",
+      "population": 31205576,
+      "populationYear": "2011 Census",
+      "capital": "Dispur",
+      "dominantIndustries": [
+        "Crude oil & natural gas",
+        "Tea",
+        "Plywood & wood panels",
+        "Refining",
+        "Cement"
+      ],
+      "notableClusters": [
+        "Duliajan-Digboi - Oil India upstream and Asia's oldest refinery",
+        "Tinsukia - plywood and tea",
+        "Guwahati - trade, chemicals and North-East corporate base",
+        "Numaligarh - refining"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "br",
+      "name": "Bihar",
+      "gsdpCr": 976000,
+      "gsdpYear": "FY25",
+      "population": 104099452,
+      "populationYear": "2011 Census",
+      "capital": "Patna",
+      "dominantIndustries": [
+        "Security & business services",
+        "Consumer retail",
+        "Media & publishing",
+        "Food processing"
+      ],
+      "notableClusters": [
+        "Patna - SIS, Aditya Vision, Hindustan Media Ventures",
+        "Begusarai - Barauni refinery and fertilisers",
+        "Muzaffarpur and Bhagalpur - agri and textiles"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ch",
+      "name": "Chandigarh",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 1055450,
+      "populationYear": "2011 Census",
+      "capital": "Chandigarh",
+      "dominantIndustries": [
+        "Pharmaceuticals",
+        "Laminates & panels",
+        "Steel tubes",
+        "IT services"
+      ],
+      "notableClusters": [
+        "Chandigarh Industrial Area - laminates and pharma",
+        "Chandigarh IT Park - services",
+        "Tricity (with Mohali and Panchkula) - healthcare and education"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ct",
+      "name": "Chhattisgarh",
+      "gsdpCr": 561700,
+      "gsdpYear": "FY25",
+      "population": 25545198,
+      "populationYear": "2011 Census",
+      "capital": "Raipur",
+      "dominantIndustries": [
+        "Steel & sponge iron",
+        "Coal & power",
+        "Cement",
+        "Aluminium"
+      ],
+      "notableClusters": [
+        "Raipur-Siltara - largest sponge iron and steel SME cluster in India",
+        "Bhilai - SAIL integrated steel plant",
+        "Korba - coal and thermal power",
+        "Nagarnar - NMDC Steel plant"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "dd",
+      "name": "Daman and Diu",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 243247,
+      "populationYear": "2011 Census",
+      "capital": "Daman",
+      "dominantIndustries": [
+        "Beverages & alcohol",
+        "Plastics",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "Daman industrial estate",
+        "Diu tourism"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "dl",
+      "name": "Delhi",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 16787941,
+      "populationYear": "2011 Census",
+      "capital": "New Delhi",
+      "dominantIndustries": [
+        "Central PSU headquarters",
+        "Telecom",
+        "Retail & trade",
+        "Media & policy services"
+      ],
+      "notableClusters": [
+        "New Delhi - registered offices of most Maharatna PSUs (NTPC, ONGC, IOC, GAIL, PowerGrid, BHEL, SAIL)",
+        "Nehru Place/Connaught Place - corporate registered offices",
+        "Okhla, Bawana, Narela - light manufacturing"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "dn",
+      "name": "Dadra and Nagar Haveli",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 343709,
+      "populationYear": "2011 Census",
+      "capital": "Silvassa",
+      "dominantIndustries": [
+        "Textiles & synthetic yarn",
+        "Plastics & moulded products",
+        "Engineering",
+        "Chemicals"
+      ],
+      "notableClusters": [
+        "Silvassa - excise-advantaged textile and plastics belt",
+        "Masat, Dapada and Rakholi industrial estates"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ga",
+      "name": "Goa",
+      "gsdpCr": 121300,
+      "gsdpYear": "FY25",
+      "population": 1458545,
+      "populationYear": "2011 Census",
+      "capital": "Panaji",
+      "dominantIndustries": [
+        "Fertilisers & chemicals",
+        "Tourism & hospitality",
+        "Pharmaceuticals",
+        "Iron ore (suspended)",
+        "Shipbuilding"
+      ],
+      "notableClusters": [
+        "Zuarinagar - Zuari fertilisers and chemicals",
+        "Verna-Kundaim industrial estates - pharma and electronics",
+        "Panaji-Vasco - tourism, casinos and Mormugao port"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "gj",
+      "name": "Gujarat",
+      "gsdpCr": 2790000,
+      "gsdpYear": "FY25",
+      "population": 60439692,
+      "populationYear": "2011 Census",
+      "capital": "Gandhinagar",
+      "dominantIndustries": [
+        "Petrochemicals",
+        "Chemicals & dyes",
+        "Pharmaceuticals",
+        "Textiles",
+        "Ports & logistics",
+        "Diamonds"
+      ],
+      "notableClusters": [
+        "Jamnagar - world's largest refining complex",
+        "Ahmedabad-Gandhinagar - Adani/Torrent HQs, GIFT City",
+        "Surat - diamonds, textiles, PSU-free MSME base",
+        "Vadodara-Ankleshwar-Dahej - petrochemicals and bulk chemicals",
+        "Mundra-Kandla - ports and SEZ"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "hp",
+      "name": "Himachal Pradesh",
+      "gsdpCr": 227100,
+      "gsdpYear": "FY25",
+      "population": 6864602,
+      "populationYear": "2011 Census",
+      "capital": "Shimla",
+      "dominantIndustries": [
+        "Pharmaceuticals",
+        "Hydropower",
+        "Telecom equipment",
+        "Horticulture & tourism"
+      ],
+      "notableClusters": [
+        "Baddi-Barotiwala-Nalagarh - India's largest pharma formulation cluster",
+        "Solan - HFCL, Morepen, KDDL precision engineering",
+        "Shimla - SJVN hydropower",
+        "Sutlej and Beas basins - hydro projects"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "hr",
+      "name": "Haryana",
+      "gsdpCr": 1216000,
+      "gsdpYear": "FY25",
+      "population": 25351462,
+      "populationYear": "2011 Census",
+      "capital": "Chandigarh",
+      "dominantIndustries": [
+        "Auto & auto components",
+        "Real estate",
+        "IT & BPO",
+        "Apparel"
+      ],
+      "notableClusters": [
+        "Gurugram - corporate HQs, IT/BPO and real estate",
+        "Manesar-Bawal - auto manufacturing belt",
+        "Faridabad - engineering and tractors",
+        "Panipat - textiles and refinery"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "jh",
+      "name": "Jharkhand",
+      "gsdpCr": 470100,
+      "gsdpYear": "FY25",
+      "population": 32988134,
+      "populationYear": "2011 Census",
+      "capital": "Ranchi",
+      "dominantIndustries": [
+        "Coal mining",
+        "Iron & steel",
+        "Heavy engineering",
+        "Mine planning services"
+      ],
+      "notableClusters": [
+        "Dhanbad-Jharia - Bharat Coking Coal",
+        "Ranchi - CMPDI, HEC heavy engineering",
+        "Jamshedpur - Tata Steel and Tata group industrial town",
+        "Bokaro - SAIL steel plant"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "jk",
+      "name": "Jammu and Kashmir",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 12267032,
+      "populationYear": "2011 Census",
+      "capital": "Srinagar (summer) / Jammu (winter)",
+      "dominantIndustries": [
+        "Banking",
+        "Horticulture (apples, saffron)",
+        "Handicrafts",
+        "Tourism",
+        "Hydropower"
+      ],
+      "notableClusters": [
+        "Srinagar - J&K Bank headquarters",
+        "Kashmir valley - apple and saffron economy",
+        "Chenab basin - hydropower projects",
+        "Jammu - Kathua industrial belt"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ka",
+      "name": "Karnataka",
+      "gsdpCr": 2809100,
+      "gsdpYear": "FY25",
+      "population": 61095297,
+      "populationYear": "2011 Census",
+      "capital": "Bengaluru",
+      "dominantIndustries": [
+        "IT & software",
+        "Aerospace & defence",
+        "Biotechnology",
+        "Machine tools",
+        "Coffee & agri"
+      ],
+      "notableClusters": [
+        "Bengaluru - India's largest IT and startup cluster",
+        "Bengaluru - HAL/BEL/ISRO aerospace and defence cluster",
+        "Mysuru - IT and tourism",
+        "Mangaluru - refining, banking origin (Karnataka Bank, Canara Bank)",
+        "Hubballi-Dharwad - engineering"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "kl",
+      "name": "Kerala",
+      "gsdpCr": 1311400,
+      "gsdpYear": "FY25",
+      "population": 33406061,
+      "populationYear": "2011 Census",
+      "capital": "Thiruvananthapuram",
+      "dominantIndustries": [
+        "Gold loans & NBFCs",
+        "Banking",
+        "Rubber & tyres",
+        "Shipbuilding",
+        "Spices & plantations",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "Kochi-Ernakulam - Federal Bank, Muthoot, Cochin Shipyard, FACT",
+        "Thrissur - Kalyan Jewellers, Manappuram, South Indian Bank",
+        "Kollam - cashew",
+        "Idukki-Wayanad - spices and plantations"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ld",
+      "name": "Lakshadweep",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 64473,
+      "populationYear": "2011 Census",
+      "capital": "Kavaratti",
+      "dominantIndustries": [
+        "Fisheries",
+        "Coconut & coir",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "Kavaratti - fisheries and tourism"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "mh",
+      "name": "Maharashtra",
+      "gsdpCr": 4267800,
+      "gsdpYear": "FY25",
+      "population": 112374333,
+      "populationYear": "2011 Census",
+      "capital": "Mumbai",
+      "dominantIndustries": [
+        "Financial services",
+        "IT",
+        "Auto",
+        "Chemicals",
+        "Media & entertainment",
+        "Pharmaceuticals"
+      ],
+      "notableClusters": [
+        "Mumbai - banking, insurance, capital markets, Bollywood",
+        "Pune-Chakan-Chinchwad - auto and IT",
+        "Nashik-Aurangabad - auto components and wine",
+        "Nagpur - MIHAN logistics, manganese and defence",
+        "Gadchiroli - iron ore"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ml",
+      "name": "Meghalaya",
+      "gsdpCr": 53000,
+      "gsdpYear": "FY25",
+      "population": 2966889,
+      "populationYear": "2011 Census",
+      "capital": "Shillong",
+      "dominantIndustries": [
+        "Cement",
+        "Ferro alloys",
+        "Coal & limestone",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "East Jaintia Hills (Lumshnong) - Star Cement and Meghalaya cement cluster",
+        "Shillong - services and tourism"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "mn",
+      "name": "Manipur",
+      "gsdpCr": 49900,
+      "gsdpYear": "FY25",
+      "population": 2570390,
+      "populationYear": "2011 Census",
+      "capital": "Imphal",
+      "dominantIndustries": [
+        "Handloom & handicrafts",
+        "Horticulture",
+        "Government services"
+      ],
+      "notableClusters": [
+        "Imphal valley - handloom and trade"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "mp",
+      "name": "Madhya Pradesh",
+      "gsdpCr": 1522100,
+      "gsdpYear": "FY25",
+      "population": 72626809,
+      "populationYear": "2011 Census",
+      "capital": "Bhopal",
+      "dominantIndustries": [
+        "Cement & limestone",
+        "Textiles & viscose",
+        "Soya and agri processing",
+        "Power generation",
+        "Diamonds"
+      ],
+      "notableClusters": [
+        "Nagda-Satna-Rewa - Birla viscose, cables and cement",
+        "Indore-Pithampur - auto, pharma and pumps",
+        "Bhopal - BHEL heavy electricals",
+        "Singrauli - thermal power and coal"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "mz",
+      "name": "Mizoram",
+      "gsdpCr": 36000,
+      "gsdpYear": "FY25",
+      "population": 1097206,
+      "populationYear": "2011 Census",
+      "capital": "Aizawl",
+      "dominantIndustries": [
+        "Bamboo",
+        "Horticulture",
+        "Government services"
+      ],
+      "notableClusters": [
+        "Aizawl - trade and services"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "nl",
+      "name": "Nagaland",
+      "gsdpCr": 47400,
+      "gsdpYear": "FY25",
+      "population": 1978502,
+      "populationYear": "2011 Census",
+      "capital": "Kohima",
+      "dominantIndustries": [
+        "Agriculture & horticulture",
+        "Handicrafts",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "Dimapur - trade and logistics"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "or",
+      "name": "Odisha",
+      "gsdpCr": 926000,
+      "gsdpYear": "FY25",
+      "population": 41974219,
+      "populationYear": "2011 Census",
+      "capital": "Bhubaneswar",
+      "dominantIndustries": [
+        "Aluminium & alumina",
+        "Iron ore & steel",
+        "Fertilisers",
+        "Ports"
+      ],
+      "notableClusters": [
+        "Angul-Damanjodi - NALCO alumina and smelter",
+        "Kalinganagar-Jajpur - Tata Steel and ferro alloys",
+        "Paradip - port, refinery and phosphatic fertilisers",
+        "Keonjhar-Sundargarh - iron ore belt"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "pb",
+      "name": "Punjab",
+      "gsdpCr": 802700,
+      "gsdpYear": "FY25",
+      "population": 27743338,
+      "populationYear": "2011 Census",
+      "capital": "Chandigarh",
+      "dominantIndustries": [
+        "Textiles & hosiery",
+        "Bicycles & auto components",
+        "Agri and food processing",
+        "Pharmaceuticals"
+      ],
+      "notableClusters": [
+        "Ludhiana - hosiery, bicycles, forgings",
+        "Mohali-Chandigarh periphery - healthcare, IT and pharma",
+        "Barnala-Sanghera - Trident terry towels",
+        "Baddi border belt - pharma formulations"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "py",
+      "name": "Puducherry",
+      "gsdpCr": 52700,
+      "gsdpYear": "FY25",
+      "population": 1247953,
+      "populationYear": "2011 Census",
+      "capital": "Puducherry",
+      "dominantIndustries": [
+        "Auto components",
+        "Pharmaceuticals",
+        "Textiles",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "Puducherry-Sedarapet industrial estate - auto components and pharma units of Tamil Nadu-registered firms",
+        "Karaikal - port and petro-logistics"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "rj",
+      "name": "Rajasthan",
+      "gsdpCr": 1781100,
+      "gsdpYear": "FY25",
+      "population": 68548437,
+      "populationYear": "2011 Census",
+      "capital": "Jaipur",
+      "dominantIndustries": [
+        "Metals & mining (zinc, lead, silver)",
+        "Cement",
+        "Tourism",
+        "Textiles",
+        "Solar power"
+      ],
+      "notableClusters": [
+        "Udaipur - Hindustan Zinc and PI Industries",
+        "Beawar-Chittorgarh-Nimbahera - cement belt",
+        "Jaipur - AU Bank, gems and jewellery",
+        "Bhilwara - textiles",
+        "Barmer - crude oil and refinery"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "sk",
+      "name": "Sikkim",
+      "gsdpCr": 52600,
+      "gsdpYear": "FY25",
+      "population": 610577,
+      "populationYear": "2011 Census",
+      "capital": "Gangtok",
+      "dominantIndustries": [
+        "Pharmaceutical manufacturing",
+        "Hydropower",
+        "Tourism",
+        "Cardamom"
+      ],
+      "notableClusters": [
+        "East Sikkim (Rangpo-Majhitar) - pharma formulation plants of Maharashtra/Gujarat-registered firms",
+        "Teesta basin - hydropower"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "tg",
+      "name": "Telangana",
+      "gsdpCr": 1649000,
+      "gsdpYear": "FY25",
+      "population": 35003674,
+      "populationYear": "2011 Census",
+      "capital": "Hyderabad",
+      "dominantIndustries": [
+        "Pharmaceuticals & life sciences",
+        "IT & software",
+        "Defence & aerospace",
+        "Seeds & agri-biotech"
+      ],
+      "notableClusters": [
+        "Hyderabad HITEC City - IT and global capability centres",
+        "Genome Valley/Hyderabad Pharma City - bulk drugs and vaccines",
+        "Hyderabad - DRDO, BDL, MIDHANI defence cluster",
+        "Kothagudem - Singareni coalfields"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "tn",
+      "name": "Tamil Nadu",
+      "gsdpCr": 3155100,
+      "gsdpYear": "FY25",
+      "population": 72147030,
+      "populationYear": "2011 Census",
+      "capital": "Chennai",
+      "dominantIndustries": [
+        "Auto & auto components",
+        "Textiles & apparel",
+        "Electronics manufacturing",
+        "Leather",
+        "Financial services"
+      ],
+      "notableClusters": [
+        "Chennai-Sriperumbudur-Oragadam - 'Detroit of India' auto and electronics",
+        "Coimbatore - textile machinery, pumps, foundries",
+        "Tiruppur - knitwear exports",
+        "Hosur - Titan, TVS, EV manufacturing",
+        "Madurai-Sivakasi - fireworks and printing"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "tr",
+      "name": "Tripura",
+      "gsdpCr": null,
+      "gsdpYear": null,
+      "population": 3673917,
+      "populationYear": "2011 Census",
+      "capital": "Agartala",
+      "dominantIndustries": [
+        "Natural gas",
+        "Rubber",
+        "Bamboo & handicrafts",
+        "Tea"
+      ],
+      "notableClusters": [
+        "Agartala - gas-based power and services",
+        "South Tripura - rubber plantations"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "up",
+      "name": "Uttar Pradesh",
+      "gsdpCr": 2699100,
+      "gsdpYear": "FY25",
+      "population": 199812341,
+      "populationYear": "2011 Census",
+      "capital": "Lucknow",
+      "dominantIndustries": [
+        "Sugar & ethanol",
+        "Electronics manufacturing",
+        "Leather & footwear",
+        "Cement",
+        "Handicrafts"
+      ],
+      "notableClusters": [
+        "Noida-Greater Noida - electronics, IT and media",
+        "Kanpur - leather, cement (JK Cement)",
+        "Western UP sugar belt - Lakhimpur, Bijnor, Meerut",
+        "Agra - footwear",
+        "Moradabad - brassware"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "ut",
+      "name": "Uttarakhand",
+      "gsdpCr": 394700,
+      "gsdpYear": "FY25",
+      "population": 10086292,
+      "populationYear": "2011 Census",
+      "capital": "Dehradun",
+      "dominantIndustries": [
+        "Pharmaceuticals",
+        "Auto components",
+        "Chemicals & glycols",
+        "Hydropower",
+        "Tourism"
+      ],
+      "notableClusters": [
+        "Haridwar-Roorkee SIDCUL - pharma, FMCG and auto plants",
+        "Kashipur-Rudrapur - chemicals and agri processing",
+        "Dehradun - ONGC operational headquarters and services",
+        "Tehri and Alaknanda basins - hydropower"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    },
+    {
+      "stateCode": "wb",
+      "name": "West Bengal",
+      "gsdpCr": 1880000,
+      "gsdpYear": "FY25",
+      "population": 91276115,
+      "populationYear": "2011 Census",
+      "capital": "Kolkata",
+      "dominantIndustries": [
+        "Tobacco & FMCG",
+        "Coal & mining headquarters",
+        "Engineering",
+        "Tea",
+        "Jute & textiles"
+      ],
+      "notableClusters": [
+        "Kolkata - ITC, Coal India, Britannia registered offices; eastern banking",
+        "Haldia - petrochemicals and port",
+        "Asansol-Durgapur - steel and engineering",
+        "Darjeeling and Dooars - tea"
+      ],
+      "srcs": [
+        [
+          "Wikipedia - List of Indian states and union territories by GDP (MoSPI, FY2024-25)",
+          "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_GDP"
+        ],
+        [
+          "Wikipedia - List of states and union territories of India by population (2011 Census)",
+          "https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population"
+        ]
+      ]
+    }
+  ]
+}

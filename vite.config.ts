@@ -5,12 +5,11 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  // Relative base so a built `dist/` opens directly from disk (file://) as well
+  // as from a server. The hand-off bundle ships a runnable dist and relies on it.
   base: './',
   build: {
     outDir: 'dist',
     sourcemap: true,
   },
-  optimizeDeps: {
-    include: ['mapbox-gl', 'd3', 'fuse.js'],
-  }
 })

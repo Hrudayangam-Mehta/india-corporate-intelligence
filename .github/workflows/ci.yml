@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      # Extraction → resolution → grounding → assembly over research/raw.
+      # Fails only on a record that would violate the provenance invariant;
+      # weakly-identified entities are quarantined, which is the gate working.
+      - name: Promote research quarantine
+        run: npm run promote
+
+      # The four invariants. This is what makes them true by construction rather
+      # than by author care: every edge carries sources or is tier alleged/analytic,
+      # every analytic edge carries an innocent reading, no unresolved entity holds
+      # an edge, every superseded fact stays addressable, every motif census has a
+      # denominator.
+      - name: Data integrity
+        run: npm run validate
+
+      - name: Typecheck and build
+        run: npm run build
+
+      - name: Install Chromium for the render smoke test
+        run: npx playwright install --with-deps chromium
+
+      # The smoke test serves dist itself, so there is no preview server to start,
+      # wait on, or have reaped out from under it.
+      - name: Headless render smoke test
+        run: npm run smoke

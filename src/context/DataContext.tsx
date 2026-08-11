@@ -1,239 +1,143 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
-import type { Company, Person, PoliticalParty, MediaHouse, NetworkEdge, FilterState, TimelineEvent } from '../types';
+import { createContext, useContext, useState, useCallback, useMemo, useEffect, type ReactNode } from 'react';
+import { COMPANIES, COMPANIES_AS_OF, rollupByState, sectorTotals, type Company } from '../data/companies';
+import { MINISTERS, type Minister } from '../data/politics';
+import { GROUPS, type Group } from '../data/conglomerates';
+import { NODES, EDGES } from '../graph/data';
+import { buildNationalGraph } from '../graph/build';
+import type { GNode, GEdge, StateCode } from '../graph/schema';
+
+/**
+ * Application data context.
+ *
+ * Serves the real datasets — no sample data. Every figure carries its as-of date,
+ * and the merged graph is built once and memoised, because the derived national
+ * layer is several hundred nodes and rebuilding it per route is wasteful.
+ */
+
+export interface Filters {
+  sectors: string[];
+  states: StateCode[];
+  exchanges: ('NSE' | 'BSE')[];
+  ownership: string[];
+  groups: string[];
+  minMarketCap: number;
+  query: string;
+}
+
+const DEFAULT_FILTERS: Filters = {
+  sectors: [],
+  states: [],
+  exchanges: [],
+  ownership: [],
+  groups: [],
+  minMarketCap: 0,
+  query: '',
+};
 
 interface DataContextType {
   companies: Company[];
-  persons: Person[];
-  parties: PoliticalParty[];
-  mediaHouses: MediaHouse[];
-  edges: NetworkEdge[];
-  events: TimelineEvent[];
-  filter: FilterState;
-  setFilter: (filter: FilterState) => void;
-  selectedCompany: Company | null;
-  setSelectedCompany: (company: Company | null) => void;
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  isLoading: boolean;
+  filteredCompanies: Company[];
+  ministers: Minister[];
+  groups: Group[];
+  nodes: GNode[];
+  edges: GEdge[];
+  asOf: string;
+  filters: Filters;
+  setFilters: (f: Filters) => void;
+  resetFilters: () => void;
+  sectors: ReturnType<typeof sectorTotals>;
+  stateRollup: ReturnType<typeof rollupByState>;
   watchlist: string[];
-  addToWatchlist: (id: string) => void;
-  removeFromWatchlist: (id: string) => void;
+  toggleWatch: (id: string) => void;
+  isWatched: (id: string) => boolean;
 }
 
 const DataContext = createContext<DataContextType | null>(null);
-
-// Sample data for demonstration
-const sampleCompanies: Company[] = [
-  {
-    id: 'L17110MH1973PLC019786',
-    name: 'Reliance Industries Ltd',
-    isin: 'INE002A01018',
-    nseSymbol: 'RELIANCE',
-    bseCode: '500325',
-    sector: 'Energy',
-    industry: 'Oil & Gas',
-    subIndustry: 'Refining & Marketing',
-    marketCap: 1850000,
-    faceValue: 10,
-    listingDate: '1977-01-01',
-    hqLocation: { city: 'Mumbai', state: 'Maharashtra', lat: 19.076, lng: 72.8777 },
-    otherLocations: [
-      { city: 'Jamnagar', state: 'Gujarat', lat: 22.4707, lng: 70.0577, type: 'factory' },
-      { city: 'Navi Mumbai', state: 'Maharashtra', lat: 19.033, lng: 73.0297, type: 'office' },
-    ],
-    incorporated: '1973-05-08',
-    listingStatus: 'listed',
-    exchanges: ['NSE', 'BSE'],
-    website: 'https://www.ril.com',
-    about: 'India\'s largest private sector company with interests in energy, petrochemicals, textiles, retail and telecom.',
-    employeeCount: '389,000+',
-    revenue: 920000,
-    netProfit: 73000,
-    totalAssets: 1900000,
-    totalDebt: 310000,
-    equityCapital: 6765,
-    promoterHolding: 50.49,
-    publicHolding: 49.51,
-    fiiHolding: 22.3,
-    diiHolding: 18.7,
-    directors: ['Mukesh Ambani', 'Nita Ambani', 'Pawan Kumar Kapil'],
-    promoters: ['Mukesh Ambani', 'Nita Ambani'],
-    subsidiaries: ['Reliance Jio Infocomm', 'Reliance Retail Ventures'],
-    auditors: ['Deloitte Haskins & Sells'],
-    tags: ['conglomerate', 'energy', 'telecom', 'retail'],
-    lastUpdated: '2024-01-01',
-    dataSource: ['NSE', 'BSE'],
-  },
-  {
-    id: 'L24240KA1998PLC024488',
-    name: 'Tata Consultancy Services Ltd',
-    isin: 'INE467B01029',
-    nseSymbol: 'TCS',
-    bseCode: '532540',
-    sector: 'IT',
-    industry: 'Software & Services',
-    subIndustry: 'IT Consulting',
-    marketCap: 1450000,
-    faceValue: 1,
-    listingDate: '2004-08-25',
-    hqLocation: { city: 'Mumbai', state: 'Maharashtra', lat: 19.076, lng: 72.8777 },
-    otherLocations: [
-      { city: 'Bangalore', state: 'Karnataka', lat: 12.9716, lng: 77.5946, type: 'office' },
-      { city: 'Hyderabad', state: 'Telangana', lat: 17.4065, lng: 78.4772, type: 'office' },
-      { city: 'Chennai', state: 'Tamil Nadu', lat: 13.0827, lng: 80.2707, type: 'office' },
-    ],
-    incorporated: '1995-04-01',
-    listingStatus: 'listed',
-    exchanges: ['NSE', 'BSE'],
-    website: 'https://www.tcs.com',
-    about: 'India\'s largest IT services company, part of the Tata Group.',
-    employeeCount: '600,000+',
-    revenue: 240000,
-    netProfit: 46000,
-    totalAssets: 180000,
-    totalDebt: 0,
-    equityCapital: 366,
-    promoterHolding: 72.3,
-    publicHolding: 27.7,
-    fiiHolding: 18.5,
-    diiHolding: 6.2,
-    directors: ['N Chandrasekaran', 'K Krithivasan', 'Rajesh Gopinathan'],
-    promoters: ['Tata Sons Pvt Ltd'],
-    subsidiaries: ['TCS Iberoamerica', 'TCS Asia Pacific'],
-    auditors: ['BSR & Co LLP'],
-    tags: ['it', 'software', 'services', 'tata-group'],
-    lastUpdated: '2024-01-01',
-    dataSource: ['NSE', 'BSE'],
-  },
-  {
-    id: 'L17120MH1936PLC002378',
-    name: 'Hindustan Unilever Ltd',
-    isin: 'INE030A01027',
-    nseSymbol: 'HINDUNILVR',
-    bseCode: '500696',
-    sector: 'FMCG',
-    industry: 'Personal Products',
-    subIndustry: 'Household Products',
-    marketCap: 620000,
-    faceValue: 1,
-    listingDate: '1956-01-01',
-    hqLocation: { city: 'Mumbai', state: 'Maharashtra', lat: 19.076, lng: 72.8777 },
-    otherLocations: [
-      { city: 'Haridwar', state: 'Uttarakhand', lat: 29.9457, lng: 78.1642, type: 'factory' },
-      { city: 'Dapada', state: 'Gujarat', lat: 20.0333, lng: 73.0167, type: 'factory' },
-    ],
-    incorporated: '1933-10-17',
-    listingStatus: 'listed',
-    exchanges: ['NSE', 'BSE'],
-    website: 'https://www.hul.co.in',
-    about: 'India\'s largest FMCG company, subsidiary of Unilever PLC.',
-    employeeCount: '21,000+',
-    revenue: 61000,
-    netProfit: 10500,
-    totalAssets: 45000,
-    totalDebt: 0,
-    equityCapital: 235,
-    promoterHolding: 61.99,
-    publicHolding: 38.01,
-    fiiHolding: 12.8,
-    diiHolding: 9.5,
-    directors: ['Rohit Jawa', 'Sanjiv Mehta'],
-    promoters: ['Unilever PLC'],
-    subsidiaries: ['Unilever India Exports Ltd'],
-    auditors: ['SRBC & Co LLP'],
-    tags: ['fmcg', 'consumer', 'unilever'],
-    lastUpdated: '2024-01-01',
-    dataSource: ['NSE', 'BSE'],
-  },
-];
-
-const samplePersons: Person[] = [
-  {
-    id: 'P001',
-    name: 'Mukesh Ambani',
-    age: 67,
-    currentDirectorships: [
-      { companyId: 'L17110MH1973PLC019786', companyName: 'Reliance Industries', designation: 'Chairman & MD', since: '2002-01-01' },
-    ],
-    lastUpdated: '2024-01-01',
-  },
-  {
-    id: 'P002',
-    name: 'N Chandrasekaran',
-    age: 61,
-    currentDirectorships: [
-      { companyId: 'L24240KA1998PLC024488', companyName: 'TCS', designation: 'Chairman', since: '2017-02-21' },
-    ],
-    lastUpdated: '2024-01-01',
-  },
-];
-
-const sampleEdges: NetworkEdge[] = [
-  {
-    id: 'E001',
-    source: 'P001',
-    target: 'L17110MH1973PLC019786',
-    type: 'directorship',
-    strength: 1,
-    since: '2002-01-01',
-  },
-  {
-    id: 'E002',
-    source: 'P002',
-    target: 'L24240KA1998PLC024488',
-    type: 'directorship',
-    strength: 1,
-    since: '2017-02-21',
-  },
-];
-
-const defaultFilter: FilterState = {
-  sectors: [],
-  industries: [],
-  states: [],
-  marketCapRange: [0, 10000000],
-  listingStatus: ['listed'],
-  hasPoliticalConnection: null,
-  hasMediaConnection: null,
-  redFlagsOnly: false,
-  searchQuery: '',
-};
+const WATCH_KEY = 'icip.watchlist.v1';
 
 export function DataProvider({ children }: { children: ReactNode }) {
-  const [companies] = useState<Company[]>(sampleCompanies);
-  const [persons] = useState<Person[]>(samplePersons);
-  const [parties] = useState<PoliticalParty[]>([]);
-  const [mediaHouses] = useState<MediaHouse[]>([]);
-  const [edges] = useState<NetworkEdge[]>(sampleEdges);
-  const [events] = useState<TimelineEvent[]>([]);
-  const [filter, setFilter] = useState<FilterState>(defaultFilter);
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isLoading] = useState(false);
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [watchlist, setWatchlist] = useState<string[]>([]);
 
-  const addToWatchlist = useCallback((id: string) => {
-    setWatchlist(prev => prev.includes(id) ? prev : [...prev, id]);
+  // Persist the watchlist locally. Nothing is sent anywhere.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(WATCH_KEY);
+      if (raw) setWatchlist(JSON.parse(raw));
+    } catch {
+      /* storage unavailable — the watchlist is simply session-scoped */
+    }
   }, []);
 
-  const removeFromWatchlist = useCallback((id: string) => {
-    setWatchlist(prev => prev.filter(w => w !== id));
+  useEffect(() => {
+    try {
+      localStorage.setItem(WATCH_KEY, JSON.stringify(watchlist));
+    } catch {
+      /* ignore */
+    }
+  }, [watchlist]);
+
+  const graph = useMemo(() => {
+    const national = buildNationalGraph();
+    return { nodes: [...NODES, ...national.nodes], edges: [...EDGES, ...national.edges] };
   }, []);
+
+  const filteredCompanies = useMemo(() => {
+    const q = filters.query.trim().toLowerCase();
+    return COMPANIES.filter((c) => {
+      if (filters.sectors.length && !filters.sectors.includes(c.sector)) return false;
+      if (filters.states.length && !filters.states.includes(c.stateCode)) return false;
+      if (filters.ownership.length && !filters.ownership.includes(c.ownership)) return false;
+      if (filters.groups.length && (!c.group || !filters.groups.includes(c.group))) return false;
+      if (filters.exchanges.length) {
+        const has = filters.exchanges.some((x) => (x === 'NSE' ? !!c.nse : !!c.bse));
+        if (!has) return false;
+      }
+      if (filters.minMarketCap && (c.marketCapCr ?? 0) < filters.minMarketCap) return false;
+      if (q) {
+        const hay = `${c.name} ${c.shortName} ${c.nse ?? ''} ${c.bse ?? ''} ${c.isin ?? ''} ${c.sector} ${c.industry} ${c.hqCity} ${c.state} ${c.group ?? ''}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [filters]);
+
+  const sectors = useMemo(() => sectorTotals(), []);
+  const stateRollup = useMemo(() => rollupByState(), []);
+
+  const toggleWatch = useCallback((id: string) => {
+    setWatchlist((prev) => (prev.includes(id) ? prev.filter((w) => w !== id) : [...prev, id]));
+  }, []);
+
+  const isWatched = useCallback((id: string) => watchlist.includes(id), [watchlist]);
+  const resetFilters = useCallback(() => setFilters(DEFAULT_FILTERS), []);
 
   return (
-    <DataContext.Provider value={{
-      companies, persons, parties, mediaHouses, edges, events,
-      filter, setFilter,
-      selectedCompany, setSelectedCompany,
-      searchQuery, setSearchQuery,
-      isLoading,
-      watchlist, addToWatchlist, removeFromWatchlist,
-    }}>
+    <DataContext.Provider
+      value={{
+        companies: COMPANIES,
+        filteredCompanies,
+        ministers: MINISTERS,
+        groups: GROUPS,
+        nodes: graph.nodes,
+        edges: graph.edges,
+        asOf: COMPANIES_AS_OF,
+        filters,
+        setFilters,
+        resetFilters,
+        sectors,
+        stateRollup,
+        watchlist,
+        toggleWatch,
+        isWatched,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useData() {
   const ctx = useContext(DataContext);
   if (!ctx) throw new Error('useData must be used within DataProvider');

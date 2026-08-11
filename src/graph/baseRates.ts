@@ -1,0 +1,165 @@
+/**
+ * Base-rate engine.
+ *
+ * A network graph is only informative if its edges are SELECTIVE — if drawing one
+ * distinguishes the flagged entities from everyone else. Most edges people want to
+ * draw in Indian corporate-political data are close to universal, which means
+ * drawing them proves almost nothing.
+ *
+ * Every published base rate here has a real denominator and a real source.
+ */
+
+import type { Source } from './schema';
+
+export type Discrimination = 'none' | 'negligible' | 'weak' | 'moderate' | 'high';
+
+export interface BaseRate {
+  id: string;
+  /** The claim as people usually phrase it. */
+  claim: string;
+  /** What fraction of comparable entities show this property anyway. */
+  rate: number;
+  numerator: number | null;
+  denominator: number | null;
+  denominatorLabel: string;
+  period: string;
+  discrimination: Discrimination;
+  /** Why the number is what it is, and what it does to the claim. */
+  reading: string;
+  srcs: Source[];
+}
+
+export const DISCRIMINATION_META: Record<Discrimination, { label: string; note: string }> = {
+  none: { label: 'None', note: 'Universal by statute or practice. The edge carries zero information.' },
+  negligible: { label: 'Negligible', note: 'So common that the edge is expected. Do not present it as a finding.' },
+  weak: { label: 'Weak', note: 'Usable only with a control group and a reported effect size.' },
+  moderate: { label: 'Moderate', note: 'Genuinely worth arguing about. Publish the denominator alongside.' },
+  high: { label: 'High', note: 'Specific, documented, non-routine. This is where attention belongs.' },
+};
+
+export function classify(rate: number): Discrimination {
+  if (rate >= 0.97) return 'none';
+  if (rate >= 0.8) return 'negligible';
+  if (rate >= 0.4) return 'weak';
+  if (rate >= 0.1) return 'moderate';
+  return 'high';
+}
+
+export const BASE_RATES: BaseRate[] = [
+  {
+    id: 'br-bjp-trusts',
+    claim: 'This tender winner donated to the ruling party.',
+    rate: 0.8245,
+    numerator: 314265,
+    denominator: 381134,
+    denominatorLabel: '₹ lakh distributed by all nine electoral trusts',
+    period: 'FY 2024–25',
+    discrimination: 'negligible',
+    reading:
+      'Nine electoral trusts distributed ₹3,811.34 crore. The BJP received ₹3,142.65 crore of it; the Congress ₹298.76 crore. Across all sources the ratio is roughly twelve to one. Almost any company that donated at all, donated to the BJP — so the edge does not separate tender winners from anyone else.',
+    srcs: [['ECI contribution reports, as analysed by ADR', 'https://adrindia.org/']],
+  },
+  {
+    id: 'br-pmcares-psu',
+    claim: 'This public-sector undertaking gave money to PM CARES.',
+    rate: 1.0,
+    numerator: 38,
+    denominator: 38,
+    denominatorLabel: 'PSUs that responded to the RTI (of 55 asked)',
+    period: '2020',
+    discrimination: 'none',
+    reading:
+      'Every single responding PSU had contributed — ₹2,105 crore in total, against a fund corpus of ₹3,076 crore at 31 March 2020. Coal India pledged ₹220 crore, ONGC ₹300 crore, NTPC ₹250 crore. Many gave from unspent CSR budgets in the four days before the financial year closed. The interesting question is the fund’s opacity, not who gave.',
+    srcs: [['Indian Express RTI reporting', 'https://indianexpress.com/']],
+  },
+  {
+    id: 'br-csr-exists',
+    claim: 'This company spends money on CSR.',
+    rate: 1.0,
+    numerator: null,
+    denominator: null,
+    denominatorLabel: 'all companies qualifying under Companies Act 2013 s.135',
+    period: '2014–present',
+    discrimination: 'none',
+    reading:
+      'Section 135 compels qualifying companies to spend 2% of average net profit. The law expressly excludes contributions to political parties from counting as CSR. The existence of CSR spending is therefore not a finding — it is a legal obligation. Only the DESTINATION of CSR can carry information.',
+    srcs: [['Companies Act 2013, s.135', 'https://www.mca.gov.in/']],
+  },
+  {
+    id: 'br-ongc-sangh',
+    claim: "This PSU's CSR went to ideologically-affiliated organisations.",
+    rate: 0.147,
+    numerator: 66801,
+    denominator: 453100,
+    denominatorLabel: '₹ lakh of ONGC CSR spend, 2015–25',
+    period: '2015–2025',
+    discrimination: 'moderate',
+    reading:
+      'ONGC gave ₹668.01 crore — 14.7% of its ₹4,531 crore CSR spend — to 20 organisations with RSS links. Here the base rate finally drops, so the edge starts to mean something. But 85.3% (₹3,863 crore) went to more than 1,980 organisations with no such connection, and 86% of the flagged amount went to just two hospitals. It is CSR, not political donation: contributions to parties cannot legally be booked as CSR.',
+    srcs: [
+      ['The News Minute', 'https://www.thenewsminute.com/news/state-owned-ongc-donated-over-rs-668-crore-to-20-sangh-linked-organisations-across-10-years'],
+    ],
+  },
+  {
+    id: 'br-fci-silo',
+    claim: 'An anti-monopoly clause was removed from a tender, and two firms then took most of it.',
+    rate: 0.12,
+    numerator: 110,
+    denominator: 134,
+    denominatorLabel: 'FCI silo contracts across both phases',
+    period: '2022–2024',
+    discrimination: 'high',
+    reading:
+      'This is the shape of edge that actually carries evidence: a specific, documented, discretionary act with an identifiable beneficiary and a counterfactual. Two companies hold 110 of 134 contracts worth over ₹16,500 crore. FCI’s answer is that other bidders succeeded in later rounds and that restricting participation would have reduced competition, not increased it — and the second-largest beneficiary is funded substantially by Western development finance institutions, which cuts against the simplest crony-capture reading.',
+    srcs: [
+      ['Newslaundry', 'https://www.newslaundry.com/'],
+      ['The News Minute', 'https://www.thenewsminute.com/'],
+    ],
+  },
+  {
+    id: 'br-shared-state',
+    claim: 'This company is headquartered in the same state as the minister who decided its case.',
+    rate: 0.0,
+    numerator: null,
+    denominator: null,
+    denominatorLabel: 'computed live from the ICIP company dataset',
+    period: 'live',
+    discrimination: 'weak',
+    reading:
+      'Computed at runtime from the loaded dataset rather than asserted. Maharashtra alone carries a large plurality of listed corporate headquarters, so co-location with any Maharashtra-seated minister is close to expected. This rate is recomputed on the current data — see the Base Rates page for the live figure.',
+    srcs: [],
+  },
+];
+
+/** Compute the share of a population that satisfies a predicate. Publishes the denominator. */
+export function computeRate<T>(
+  population: T[],
+  predicate: (t: T) => boolean,
+): { rate: number; numerator: number; denominator: number; discrimination: Discrimination } {
+  const denominator = population.length;
+  const numerator = population.filter(predicate).length;
+  const rate = denominator === 0 ? 0 : numerator / denominator;
+  return { rate, numerator, denominator, discrimination: classify(rate) };
+}
+
+/**
+ * Benjamini–Hochberg false-discovery-rate correction.
+ *
+ * Scan 200 company-minister pairs at p<0.05 and roughly ten "findings" are
+ * guaranteed to be noise. Report the raw and the corrected count, and state how
+ * many comparisons were in the family.
+ */
+export function benjaminiHochberg(pValues: number[], q = 0.05): { rejected: boolean[]; threshold: number } {
+  const n = pValues.length;
+  const indexed = pValues.map((p, i) => ({ p, i })).sort((a, b) => a.p - b.p);
+  let threshold = 0;
+  for (let k = n; k >= 1; k--) {
+    if (indexed[k - 1].p <= (k / n) * q) {
+      threshold = indexed[k - 1].p;
+      break;
+    }
+  }
+  const rejected = new Array<boolean>(n).fill(false);
+  for (const { p, i } of indexed) if (p <= threshold) rejected[i] = true;
+  return { rejected, threshold };
+}
