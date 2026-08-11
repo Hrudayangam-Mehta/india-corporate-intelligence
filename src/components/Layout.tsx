@@ -21,6 +21,7 @@ import {
   Users,
   Radar,
   ShieldCheck,
+  Gavel,
 } from 'lucide-react';
 import { COMPANIES, COMPANIES_AS_OF } from '../data/companies';
 import { MINISTERS } from '../data/politics';
@@ -42,6 +43,7 @@ const navGroups: { label: string; items: { path: string; label: string; icon: ty
     label: 'Power',
     items: [
       { path: '/cabinet', label: 'Union cabinet', icon: Landmark },
+      { path: '/tenders', label: 'Govt awards', icon: Gavel },
       { path: '/network', label: 'Connection graph', icon: Network },
       { path: '/atlas', label: 'Money-trail atlas', icon: GitBranch },
       { path: '/media', label: 'Media', icon: Newspaper },
