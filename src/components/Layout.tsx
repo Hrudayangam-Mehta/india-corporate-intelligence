@@ -1,29 +1,66 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Map, 
-  Network, 
-  Factory, 
-  Landmark, 
-  Newspaper, 
-  Search, 
-  Bookmark, 
-  Menu, 
+import {
+  LayoutDashboard,
+  Map,
+  Network,
+  Factory,
+  Landmark,
+  Newspaper,
+  Search,
+  Bookmark,
+  Menu,
   X,
-  Globe
+  Globe,
+  Building2,
+  GitBranch,
+  Scale,
+  Ruler,
+  BookOpen,
 } from 'lucide-react';
+import { COMPANIES, COMPANIES_AS_OF } from '../data/companies';
+import { MINISTERS } from '../data/politics';
+import { EDGES } from '../graph/data';
 
-const navItems = [
-  { path: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/map', label: 'Map', icon: Map },
-  { path: '/network', label: 'Network', icon: Network },
-  { path: '/industries', label: 'Industries', icon: Factory },
-  { path: '/political', label: 'Political', icon: Landmark },
-  { path: '/media', label: 'Media', icon: Newspaper },
-  { path: '/search', label: 'Search', icon: Search },
-  { path: '/watchlist', label: 'Watchlist', icon: Bookmark },
+const navGroups: { label: string; items: { path: string; label: string; icon: typeof Map }[] }[] = [
+  {
+    label: 'Markets',
+    items: [
+      { path: '/', label: 'Dashboard', icon: LayoutDashboard },
+      { path: '/map', label: 'NSE / BSE map', icon: Map },
+      { path: '/industries', label: 'Industries', icon: Factory },
+      { path: '/conglomerates', label: 'Conglomerates', icon: Building2 },
+    ],
+  },
+  {
+    label: 'Power',
+    items: [
+      { path: '/cabinet', label: 'Union cabinet', icon: Landmark },
+      { path: '/network', label: 'Connection graph', icon: Network },
+      { path: '/atlas', label: 'Money-trail atlas', icon: GitBranch },
+      { path: '/media', label: 'Media', icon: Newspaper },
+    ],
+  },
+  {
+    label: 'Method',
+    items: [
+      { path: '/patterns', label: 'Pattern discipline', icon: Ruler },
+      { path: '/evidence', label: 'Evidence audit', icon: Scale },
+      { path: '/base-rates', label: 'Base rates', icon: BookOpen },
+      { path: '/method', label: 'How this is built', icon: BookOpen },
+    ],
+  },
+  {
+    label: 'Tools',
+    items: [
+      { path: '/search', label: 'Search', icon: Search },
+      { path: '/political', label: 'Donations', icon: Landmark },
+      { path: '/watchlist', label: 'Watchlist', icon: Bookmark },
+    ],
+  },
 ];
+
+const navItems = navGroups.flatMap((g) => g.items);
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -47,31 +84,42 @@ export default function Layout() {
           </div>
         </div>
         
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.path);
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                  active 
-                    ? 'bg-accent/10 text-accent border border-accent/20' 
-                    : 'text-text-secondary hover:text-text hover:bg-bg-card'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {item.label}
-              </NavLink>
-            );
-          })}
+        <nav className="flex-1 p-3 space-y-4 overflow-y-auto">
+          {navGroups.map((group) => (
+            <div key={group.label}>
+              <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-text-muted px-3 mb-1.5">
+                {group.label}
+              </p>
+              <div className="space-y-0.5">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.path);
+                  return (
+                    <NavLink
+                      key={item.path}
+                      to={item.path}
+                      className={`flex items-center gap-3 px-3 py-2 rounded-lg text-[13.5px] font-medium transition-all ${
+                        active
+                          ? 'bg-accent/10 text-accent border border-accent/20'
+                          : 'text-text-secondary hover:text-text hover:bg-bg-card border border-transparent'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                      {item.label}
+                    </NavLink>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
-        
+
         <div className="p-4 border-t border-border">
-          <div className="text-xs text-text-muted">
-            <p>3 Companies Loaded</p>
-            <p className="mt-1">Sample Data Mode</p>
+          <div className="font-mono text-[10px] text-text-muted leading-relaxed">
+            <p>{COMPANIES.length} listed companies</p>
+            <p>{MINISTERS.length} union ministers</p>
+            <p>{EDGES.length} sourced relationships</p>
+            <p className="mt-1.5 text-text-muted/70">as of {COMPANIES_AS_OF || '—'}</p>
           </div>
         </div>
       </aside>

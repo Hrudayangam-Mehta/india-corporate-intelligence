@@ -1,0 +1,2374 @@
+{
+  "asOf": "2026-08-11",
+  "sources": [
+    [
+      "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+      "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+    ],
+    [
+      "Wikipedia — Third Modi ministry",
+      "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+    ],
+    [
+      "Wikipedia — Union Council of Ministers (India)",
+      "https://en.wikipedia.org/wiki/Union_Council_of_Ministers"
+    ],
+    [
+      "India TV — Pralhad Joshi named Education Minister after Dharmendra Pradhan's resignation accepted (25 Jul 2026)",
+      "https://www.indiatvnews.com/news/india/pralhad-joshi-named-interim-education-minister-dharmendra-pradhan-s-resignation-accepted-2026-07-25-1049412"
+    ],
+    [
+      "Al Jazeera — Who is India's new education minister Pralhad Joshi? (26 Jul 2026)",
+      "https://www.aljazeera.com/news/2026/7/26/who-is-indias-new-education-minister-pralhad-joshi"
+    ],
+    [
+      "Deccan Herald — Union Minister George Kurian steps down; President Murmu accepts resignation (Jun 2026)",
+      "https://www.deccanherald.com/india/union-minister-george-kurian-who-failed-to-get-rs-re-nomination-steps-down-president-murmu-accepts-resignation-4049050"
+    ],
+    [
+      "ThePrint — President accepts Ravneet Singh Bittu's resignation from Modi's Council of Ministers (Jul 2026)",
+      "https://theprint.in/india/president-accepts-ravneet-singh-bittus-resignation-from-modis-council-of-ministers/2996110/"
+    ],
+    [
+      "Sansad TV — Ramdas Bandu Athawale takes oath as re-elected Rajya Sabha member (6 Apr 2026)",
+      "https://sansadtv.nic.in/rajyasabha/ramdas-bandu-athawale-rpia-takes-oath-as-re-elected-member-of-rajya-sabha-06-april-2026"
+    ],
+    [
+      "The Hindu — Full list of ministers with portfolios in Modi 3.0 government (9 Jun 2024)",
+      "https://www.thehindu.com/elections/lok-sabha/full-list-of-portfolio-of-council-of-ministers-modi-government/article68274098.ece"
+    ]
+  ],
+  "changesSince2024": [
+    {
+      "date": "2026-06-23",
+      "change": "George Kurian (BJP) ceased to be Minister of State for Minority Affairs and for Fisheries, Animal Husbandry and Dairying; his resignation was accepted by President Droupadi Murmu after he was not re-nominated to the Rajya Sabha.",
+      "src": [
+        "Deccan Herald",
+        "https://www.deccanherald.com/india/union-minister-george-kurian-who-failed-to-get-rs-re-nomination-steps-down-president-murmu-accepts-resignation-4049050"
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "change": "Ravneet Singh Bittu (BJP) resigned as Minister of State for Railways and for Food Processing Industries after his Rajya Sabha term from Rajasthan ended; resignation accepted by the President.",
+      "src": [
+        "ThePrint",
+        "https://theprint.in/india/president-accepts-ravneet-singh-bittus-resignation-from-modis-council-of-ministers/2996110/"
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "change": "Dharmendra Pradhan (BJP) resigned as Minister of Education; Pralhad Joshi was given additional charge of the Ministry of Education.",
+      "src": [
+        "India TV",
+        "https://www.indiatvnews.com/news/india/pralhad-joshi-named-interim-education-minister-dharmendra-pradhan-s-resignation-accepted-2026-07-25-1049412"
+      ]
+    }
+  ],
+  "gaps": [
+    "Rajya Sabha members have no territorial constituency; 'constituency' is null for all 10 Rajya Sabha ministers and 'state' records the state they represent.",
+    "'since' is set to 2024-06-10 (the date portfolios were allocated for the third Modi ministry) for all ministers other than the Prime Minister (2024-06-09); the exact date each individual portfolio was assumed was not separately verified where a minister holds multiple ministries.",
+    "Pralhad Joshi's 'since' of 2024-06-10 covers Consumer Affairs and New & Renewable Energy only; his charge of the Ministry of Education dates from 2026-07-25 (flagged in his notes).",
+    "'priorPortfolios' is best-effort from Wikipedia infoboxes and is not exhaustive; it is empty for ministers with no verifiable earlier union portfolio.",
+    "cabinet.gov.in and india.gov.in could not be scraped (HTTP 503 / JavaScript-rendered), so the official cross-check relies on pmindia.gov.in's portfolio allocation page (last updated 25 July 2026).",
+    "Three former members of this ministry (Dharmendra Pradhan, George Kurian, Ravneet Singh Bittu) are excluded from 'ministers' as they are no longer in the council; their departures are recorded in 'changesSince2024'.",
+    "As of 2026-08-11 no successor had been appointed to the vacated Minister of State posts (Minority Affairs; Fisheries, Animal Husbandry and Dairying; Railways; Food Processing Industries) beyond Pralhad Joshi's additional charge of Education."
+  ],
+  "ministers": [
+    {
+      "id": "narendra-modi",
+      "name": "Narendra Modi",
+      "rank": "pm",
+      "party": "BJP",
+      "portfolios": [
+        "Prime Minister",
+        "Ministry of Personnel, Public Grievances and Pensions",
+        "Department of Atomic Energy",
+        "Department of Space",
+        "All important policy issues and all portfolios not allocated to any Minister"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Varanasi",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-09",
+      "priorPortfolios": [
+        "Prime Minister of India (2014-05-26 to present)",
+        "Chief Minister of Gujarat (2001-10-07 to 2014-05-22)"
+      ],
+      "notes": "Sworn in for a third consecutive term on 9 June 2024; portfolios allocated 10 June 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Narendra Modi",
+          "https://en.wikipedia.org/wiki/Narendra_Modi"
+        ]
+      ]
+    },
+    {
+      "id": "rajnath-singh",
+      "name": "Rajnath Singh",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Defence"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Lucknow",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Defence (2019-05-30 to present)",
+        "Minister of Home Affairs (2014-05-26 to 2019-05-30)"
+      ],
+      "notes": "Retained Defence in the third Modi ministry.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Rajnath Singh",
+          "https://en.wikipedia.org/wiki/Rajnath_Singh"
+        ]
+      ]
+    },
+    {
+      "id": "amit-shah",
+      "name": "Amit Shah",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Home Affairs",
+        "Ministry of Co-operation"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Gandhinagar",
+      "state": "Gujarat",
+      "stateCode": "gj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Home Affairs (2019-05-30 to present)",
+        "Minister of Co-operation (2021-07-07 to present)",
+        "Rajya Sabha MP, Gujarat (2017-08-19 to 2019-05-30)"
+      ],
+      "notes": "Retained Home Affairs and Co-operation.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Amit Shah",
+          "https://en.wikipedia.org/wiki/Amit_Shah"
+        ]
+      ]
+    },
+    {
+      "id": "nitin-gadkari",
+      "name": "Nitin Gadkari",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Road Transport and Highways"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Nagpur",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Road Transport and Highways (2014-05-26 to present)",
+        "Minister of Micro, Small and Medium Enterprises (2019-05-30 to 2021-07-07)"
+      ],
+      "notes": "Retained Road Transport and Highways for a third term.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Nitin Gadkari",
+          "https://en.wikipedia.org/wiki/Nitin_Gadkari"
+        ]
+      ]
+    },
+    {
+      "id": "jagat-prakash-nadda",
+      "name": "Jagat Prakash Nadda",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Health and Family Welfare",
+        "Ministry of Chemicals and Fertilizers"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Gujarat",
+      "stateCode": "gj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Health and Family Welfare (2014-11-09 to 2019-05-30)",
+        "National President, Bharatiya Janata Party (2020-01-20 to 2025)"
+      ],
+      "notes": "Rajya Sabha member from Gujarat since 3 April 2024; Leader of the House in the Rajya Sabha since 24 June 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — J. P. Nadda",
+          "https://en.wikipedia.org/wiki/J._P._Nadda"
+        ]
+      ]
+    },
+    {
+      "id": "shivraj-singh-chouhan",
+      "name": "Shivraj Singh Chouhan",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Agriculture and Farmers' Welfare",
+        "Ministry of Rural Development"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Vidisha",
+      "state": "Madhya Pradesh",
+      "stateCode": "mp",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Chief Minister of Madhya Pradesh (2005-11-29 to 2018-12-17; 2020-03-23 to 2023-12-13)"
+      ],
+      "notes": "First union ministerial appointment; elected to the Lok Sabha from Vidisha in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Shivraj Singh Chouhan",
+          "https://en.wikipedia.org/wiki/Shivraj_Singh_Chouhan"
+        ]
+      ]
+    },
+    {
+      "id": "nirmala-sitharaman",
+      "name": "Nirmala Sitharaman",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Finance",
+        "Ministry of Corporate Affairs"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Karnataka",
+      "stateCode": "ka",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Finance and Corporate Affairs (2019-05-31 to present)",
+        "Minister of Defence (2017-09-03 to 2019-05-30)",
+        "Minister of State (Independent Charge) for Commerce and Industry (2014-05-26 to 2017-09-03)"
+      ],
+      "notes": "Rajya Sabha member from Karnataka since 1 July 2016.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Nirmala Sitharaman",
+          "https://en.wikipedia.org/wiki/Nirmala_Sitharaman"
+        ]
+      ]
+    },
+    {
+      "id": "s-jaishankar",
+      "name": "S. Jaishankar",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of External Affairs"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Gujarat",
+      "stateCode": "gj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of External Affairs (2019-05-30 to present)",
+        "Foreign Secretary of India (2015-01-29 to 2018-01-28)"
+      ],
+      "notes": "Rajya Sabha member from Gujarat since 6 July 2019.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — S. Jaishankar",
+          "https://en.wikipedia.org/wiki/S._Jaishankar"
+        ]
+      ]
+    },
+    {
+      "id": "manohar-lal-khattar",
+      "name": "Manohar Lal Khattar",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Power",
+        "Ministry of Housing and Urban Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Karnal",
+      "state": "Haryana",
+      "stateCode": "hr",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Chief Minister of Haryana (2014-10-26 to 2024-03-12)"
+      ],
+      "notes": "First union ministerial appointment; elected to the Lok Sabha from Karnal in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Manohar Lal Khattar",
+          "https://en.wikipedia.org/wiki/Manohar_Lal_Khattar"
+        ]
+      ]
+    },
+    {
+      "id": "hd-kumaraswamy",
+      "name": "H. D. Kumaraswamy",
+      "rank": "cabinet",
+      "party": "JD(S)",
+      "portfolios": [
+        "Ministry of Heavy Industries",
+        "Ministry of Steel"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Mandya",
+      "state": "Karnataka",
+      "stateCode": "ka",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Chief Minister of Karnataka (2006-02-03 to 2007-10-09; 2018-05-23 to 2019-07-23)"
+      ],
+      "notes": "JD(S) representative in the NDA coalition cabinet; elected from Mandya in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — H. D. Kumaraswamy",
+          "https://en.wikipedia.org/wiki/H._D._Kumaraswamy"
+        ]
+      ]
+    },
+    {
+      "id": "piyush-goyal",
+      "name": "Piyush Goyal",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Commerce and Industry"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Mumbai North",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Commerce and Industry (2019-05-31 to present)",
+        "Minister of Railways (2017-09-03 to 2021-07-07)",
+        "Leader of the House in the Rajya Sabha (2021-07-14 to 2024-06-04)",
+        "Rajya Sabha MP, Maharashtra (2010-07-05 to 2024-06-04)"
+      ],
+      "notes": "Moved from the Rajya Sabha to the Lok Sabha after winning Mumbai North in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Piyush Goyal",
+          "https://en.wikipedia.org/wiki/Piyush_Goyal"
+        ]
+      ]
+    },
+    {
+      "id": "pralhad-joshi",
+      "name": "Pralhad Joshi",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Consumer Affairs, Food and Public Distribution",
+        "Ministry of New and Renewable Energy",
+        "Ministry of Education"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Dharwad",
+      "state": "Karnataka",
+      "stateCode": "ka",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Parliamentary Affairs (2019-05-31 to 2024-06-10)",
+        "Minister of Coal and Mines (2019-05-31 to 2024-06-10)"
+      ],
+      "notes": "Given additional charge of the Ministry of Education on 25 July 2026 after Dharmendra Pradhan's resignation; his own portfolios date from 10 June 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Pralhad Joshi",
+          "https://en.wikipedia.org/wiki/Pralhad_Joshi"
+        ],
+        [
+          "India TV — Pralhad Joshi named Education Minister after Pradhan's resignation accepted (25 Jul 2026)",
+          "https://www.indiatvnews.com/news/india/pralhad-joshi-named-interim-education-minister-dharmendra-pradhan-s-resignation-accepted-2026-07-25-1049412"
+        ],
+        [
+          "Al Jazeera — Who is India's new education minister Pralhad Joshi? (26 Jul 2026)",
+          "https://www.aljazeera.com/news/2026/7/26/who-is-indias-new-education-minister-pralhad-joshi"
+        ]
+      ]
+    },
+    {
+      "id": "jitan-ram-manjhi",
+      "name": "Jitan Ram Manjhi",
+      "rank": "cabinet",
+      "party": "HAM(S)",
+      "portfolios": [
+        "Ministry of Micro, Small and Medium Enterprises"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Gaya",
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Chief Minister of Bihar (2014-05-20 to 2015-02-22)",
+        "Founder-President, Hindustani Awam Morcha (2015-07-25 to 2022-04-26)"
+      ],
+      "notes": "HAM(S) representative in the NDA coalition cabinet; first-time Lok Sabha MP from Gaya (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Jitan Ram Manjhi",
+          "https://en.wikipedia.org/wiki/Jitan_Ram_Manjhi"
+        ]
+      ]
+    },
+    {
+      "id": "lalan-singh",
+      "name": "Rajiv Ranjan Singh (Lalan Singh)",
+      "rank": "cabinet",
+      "party": "JDU",
+      "portfolios": [
+        "Ministry of Panchayati Raj",
+        "Ministry of Fisheries, Animal Husbandry and Dairying"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Munger",
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "National President, Janata Dal (United) (2021-07-31 to 2023-12-29)",
+        "Minister of Water Resources, Government of Bihar (2014-06-02 to 2019-05-27)"
+      ],
+      "notes": "Listed in the official portfolio allocation as Rajiv Ranjan Singh alias Lalan Singh; JD(U) representative in the cabinet.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Rajiv Ranjan Singh (Lalan Singh)",
+          "https://en.wikipedia.org/wiki/Rajiv_Ranjan_Singh_(Lalan_Singh)"
+        ]
+      ]
+    },
+    {
+      "id": "sarbananda-sonowal",
+      "name": "Sarbananda Sonowal",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Ports, Shipping and Waterways"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Dibrugarh",
+      "state": "Assam",
+      "stateCode": "as",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Chief Minister of Assam (2016-05-24 to 2021-05-10)",
+        "Minister of Ports, Shipping and Waterways (2021-07-07 to present)"
+      ],
+      "notes": "Retained Ports, Shipping and Waterways; elected to the Lok Sabha from Dibrugarh in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Sarbananda Sonowal",
+          "https://en.wikipedia.org/wiki/Sarbananda_Sonowal"
+        ]
+      ]
+    },
+    {
+      "id": "virendra-kumar-khatik",
+      "name": "Virendra Kumar Khatik",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Social Justice and Empowerment"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Tikamgarh",
+      "state": "Madhya Pradesh",
+      "stateCode": "mp",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Social Justice and Empowerment (2021-07-07 to present)",
+        "Pro-tem Speaker, 17th Lok Sabha (2019-06-17 to 2019-06-19)"
+      ],
+      "notes": "Listed in the official allocation simply as Virendra Kumar; retained Social Justice and Empowerment.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Virendra Kumar Khatik",
+          "https://en.wikipedia.org/wiki/Virendra_Kumar_Khatik"
+        ]
+      ]
+    },
+    {
+      "id": "kinjarapu-ram-mohan-naidu",
+      "name": "Kinjarapu Ram Mohan Naidu",
+      "rank": "cabinet",
+      "party": "TDP",
+      "portfolios": [
+        "Ministry of Civil Aviation"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Srikakulam",
+      "state": "Andhra Pradesh",
+      "stateCode": "ap",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "National General Secretary, Telugu Desam Party (2017 to present)"
+      ],
+      "notes": "TDP representative in the NDA coalition cabinet; youngest minister in the third Modi ministry at the time of appointment.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Kinjarapu Ram Mohan Naidu",
+          "https://en.wikipedia.org/wiki/Kinjarapu_Ram_Mohan_Naidu"
+        ]
+      ]
+    },
+    {
+      "id": "jual-oram",
+      "name": "Jual Oram",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Tribal Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Sundargarh",
+      "state": "Odisha",
+      "stateCode": "or",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Tribal Affairs (2014-05-26 to 2019-05-24; 1999-10-13 to 2004-05-22)"
+      ],
+      "notes": "Returned to the Tribal Affairs portfolio he had held in earlier NDA governments.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Jual Oram",
+          "https://en.wikipedia.org/wiki/Jual_Oram"
+        ]
+      ]
+    },
+    {
+      "id": "giriraj-singh",
+      "name": "Giriraj Singh",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Textiles"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Begusarai",
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Rural Development (2021-07-07 to 2024-06-10)",
+        "Minister of Fisheries, Animal Husbandry and Dairying (2019-05-30 to 2021-07-07)"
+      ],
+      "notes": "Moved from Rural Development to Textiles in the third Modi ministry.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Giriraj Singh",
+          "https://en.wikipedia.org/wiki/Giriraj_Singh"
+        ]
+      ]
+    },
+    {
+      "id": "ashwini-vaishnaw",
+      "name": "Ashwini Vaishnaw",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Railways",
+        "Ministry of Information and Broadcasting",
+        "Ministry of Electronics and Information Technology"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Odisha",
+      "stateCode": "or",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Railways and Electronics and IT (2021-07-07 to present)",
+        "Minister of Communications (2021-07-07 to 2024-06-10)"
+      ],
+      "notes": "Rajya Sabha member from Odisha; re-elected unopposed in February 2024 for a term beginning 4 April 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Ashwini Vaishnaw",
+          "https://en.wikipedia.org/wiki/Ashwini_Vaishnaw"
+        ]
+      ]
+    },
+    {
+      "id": "jyotiraditya-scindia",
+      "name": "Jyotiraditya Scindia",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Communications",
+        "Ministry of Development of North Eastern Region"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Guna",
+      "state": "Madhya Pradesh",
+      "stateCode": "mp",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Civil Aviation (2021-07-07 to 2024-06-09)",
+        "Minister of Steel (2022-07-06 to 2024-06-09)",
+        "Rajya Sabha MP, Madhya Pradesh (2020-06-20 to 2024-06-04)"
+      ],
+      "notes": "Returned to the Lok Sabha from Guna in 2024; moved from Civil Aviation/Steel to Communications and DoNER.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Jyotiraditya Scindia",
+          "https://en.wikipedia.org/wiki/Jyotiraditya_Scindia"
+        ]
+      ]
+    },
+    {
+      "id": "bhupender-yadav",
+      "name": "Bhupender Yadav",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Environment, Forest and Climate Change"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Alwar",
+      "state": "Rajasthan",
+      "stateCode": "rj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Environment, Forest and Climate Change (2021-07-07 to present)",
+        "Minister of Labour and Employment (2021-07-07 to 2024-06-10)",
+        "Rajya Sabha MP, Rajasthan (2012-04-04 to 2024-04-04)"
+      ],
+      "notes": "Moved from the Rajya Sabha to the Lok Sabha after winning Alwar in 2024; retained Environment.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Bhupender Yadav",
+          "https://en.wikipedia.org/wiki/Bhupender_Yadav"
+        ]
+      ]
+    },
+    {
+      "id": "gajendra-singh-shekhawat",
+      "name": "Gajendra Singh Shekhawat",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Culture",
+        "Ministry of Tourism"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Jodhpur",
+      "state": "Rajasthan",
+      "stateCode": "rj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Jal Shakti (2019-05-30 to 2024-06-09)",
+        "Minister of State for Agriculture and Farmers' Welfare (2017-09-03 to 2019-05-30)"
+      ],
+      "notes": "Moved from Jal Shakti to Culture and Tourism in the third Modi ministry.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Gajendra Singh Shekhawat",
+          "https://en.wikipedia.org/wiki/Gajendra_Singh_Shekhawat"
+        ]
+      ]
+    },
+    {
+      "id": "annpurna-devi",
+      "name": "Annpurna Devi",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Women and Child Development"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Kodarma",
+      "state": "Jharkhand",
+      "stateCode": "jh",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Education (2021-07-07 to 2024-06-10)"
+      ],
+      "notes": "Promoted from Minister of State for Education to Cabinet rank at Women and Child Development.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Annpurna Devi",
+          "https://en.wikipedia.org/wiki/Annpurna_Devi"
+        ]
+      ]
+    },
+    {
+      "id": "kiren-rijiju",
+      "name": "Kiren Rijiju",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Parliamentary Affairs",
+        "Ministry of Minority Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Arunachal West",
+      "state": "Arunachal Pradesh",
+      "stateCode": "ar",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Earth Sciences (2023-05-18 to 2024-06-09)",
+        "Minister of Law and Justice (2021-07-07 to 2023-05-18)",
+        "Minister of State (Independent Charge) for Youth Affairs and Sports (2019-05-31 to 2021-07-07)",
+        "Minister of State for Home Affairs (2014-05-27 to 2019-05-30)"
+      ],
+      "notes": "Re-elected from Arunachal West for a fourth term in 2024; moved to Parliamentary Affairs and Minority Affairs.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Kiren Rijiju",
+          "https://en.wikipedia.org/wiki/Kiren_Rijiju"
+        ]
+      ]
+    },
+    {
+      "id": "hardeep-singh-puri",
+      "name": "Hardeep Singh Puri",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Petroleum and Natural Gas"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Petroleum and Natural Gas (2021-07-07 to present)",
+        "Minister of Housing and Urban Affairs (2017-09-03 to 2024-06-10)"
+      ],
+      "notes": "Rajya Sabha member from Uttar Pradesh since 9 January 2018; retained Petroleum and Natural Gas.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Hardeep Singh Puri",
+          "https://en.wikipedia.org/wiki/Hardeep_Singh_Puri"
+        ]
+      ]
+    },
+    {
+      "id": "mansukh-mandaviya",
+      "name": "Mansukh L. Mandaviya",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Labour and Employment",
+        "Ministry of Youth Affairs and Sports"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Porbandar",
+      "state": "Gujarat",
+      "stateCode": "gj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Health and Family Welfare (2021-07-07 to 2024-06-10)",
+        "Minister of Chemicals and Fertilizers (2021-07-07 to 2024-06-10)",
+        "Rajya Sabha MP, Gujarat (2012-04-24 to 2024-04-24)"
+      ],
+      "notes": "Moved from the Rajya Sabha to the Lok Sabha after winning Porbandar in 2024; moved from Health to Labour and Sports.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Mansukh Mandaviya",
+          "https://en.wikipedia.org/wiki/Mansukh_Mandaviya"
+        ]
+      ]
+    },
+    {
+      "id": "g-kishan-reddy",
+      "name": "G. Kishan Reddy",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Coal",
+        "Ministry of Mines"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Secunderabad",
+      "state": "Telangana",
+      "stateCode": "tg",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of Culture, Tourism and DoNER (2021-07-07 to 2024-06-09)",
+        "Minister of State for Home Affairs (2019-05-30 to 2021-07-07)"
+      ],
+      "notes": "Moved from Culture/Tourism/DoNER to Coal and Mines.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — G. Kishan Reddy",
+          "https://en.wikipedia.org/wiki/G._Kishan_Reddy"
+        ]
+      ]
+    },
+    {
+      "id": "chirag-paswan",
+      "name": "Chirag Paswan",
+      "rank": "cabinet",
+      "party": "LJP(RV)",
+      "portfolios": [
+        "Ministry of Food Processing Industries"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Hajipur",
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "National President, Lok Janshakti Party (Ram Vilas)"
+      ],
+      "notes": "LJP(RV) representative in the NDA coalition cabinet; first union ministerial appointment.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Chirag Paswan",
+          "https://en.wikipedia.org/wiki/Chirag_Paswan"
+        ]
+      ]
+    },
+    {
+      "id": "cr-patil",
+      "name": "C. R. Patil",
+      "rank": "cabinet",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Jal Shakti"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Navsari",
+      "state": "Gujarat",
+      "stateCode": "gj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "President, Bharatiya Janata Party Gujarat unit (2020-07-20 to 2024-06)"
+      ],
+      "notes": "First union ministerial appointment; Lok Sabha MP from Navsari since 2009.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — C. R. Patil",
+          "https://en.wikipedia.org/wiki/C._R._Patil"
+        ]
+      ]
+    },
+    {
+      "id": "rao-inderjit-singh",
+      "name": "Rao Inderjit Singh",
+      "rank": "mos-independent",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Statistics and Programme Implementation (Independent Charge)",
+        "Ministry of Planning (Independent Charge)",
+        "Ministry of Culture (Minister of State)"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Gurgaon",
+      "state": "Haryana",
+      "stateCode": "hr",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State (Independent Charge) for Statistics and Programme Implementation (2019-05-31 to present)",
+        "Minister of State for Corporate Affairs (2021-07-07 to 2024-06-10)"
+      ],
+      "notes": "Retained Statistics and Programme Implementation and Planning; also Minister of State for Culture.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Rao Inderjit Singh",
+          "https://en.wikipedia.org/wiki/Rao_Inderjit_Singh"
+        ]
+      ]
+    },
+    {
+      "id": "jitendra-singh",
+      "name": "Jitendra Singh",
+      "rank": "mos-independent",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Science and Technology (Independent Charge)",
+        "Ministry of Earth Sciences (Independent Charge)",
+        "Prime Minister's Office (Minister of State)",
+        "Ministry of Personnel, Public Grievances and Pensions (Minister of State)",
+        "Department of Atomic Energy (Minister of State)",
+        "Department of Space (Minister of State)"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Udhampur",
+      "state": "Jammu and Kashmir",
+      "stateCode": "jk",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State (Independent Charge) for Science and Technology (2021-07-07 to present)",
+        "Minister of State in the PMO (2014-05-26 to present)"
+      ],
+      "notes": "Lok Sabha MP from Udhampur since 2014; holds Earth Sciences alongside Science and Technology in this ministry.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Jitendra Singh (politician, born 1956)",
+          "https://en.wikipedia.org/wiki/Jitendra_Singh_(politician,_born_1956)"
+        ]
+      ]
+    },
+    {
+      "id": "arjun-ram-meghwal",
+      "name": "Arjun Ram Meghwal",
+      "rank": "mos-independent",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Law and Justice (Independent Charge)",
+        "Ministry of Parliamentary Affairs (Minister of State)"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Bikaner",
+      "state": "Rajasthan",
+      "stateCode": "rj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State (Independent Charge) for Law and Justice (2023-05-18 to present)",
+        "Minister of State for Culture (2021-07-07 to 2024-06-10)"
+      ],
+      "notes": "Retained Law and Justice with Independent Charge; Lok Sabha MP from Bikaner since 2009.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Arjun Ram Meghwal",
+          "https://en.wikipedia.org/wiki/Arjun_Ram_Meghwal"
+        ]
+      ]
+    },
+    {
+      "id": "prataprao-jadhav",
+      "name": "Prataprao Ganpatrao Jadhav",
+      "rank": "mos-independent",
+      "party": "SHS",
+      "portfolios": [
+        "Ministry of AYUSH (Independent Charge)",
+        "Ministry of Health and Family Welfare (Minister of State)"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Buldhana",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "Shiv Sena (Shinde) representative; first union ministerial appointment.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Prataprao Jadhav",
+          "https://en.wikipedia.org/wiki/Prataprao_Jadhav"
+        ]
+      ]
+    },
+    {
+      "id": "jayant-chaudhary",
+      "name": "Jayant Chaudhary",
+      "rank": "mos-independent",
+      "party": "RLD",
+      "portfolios": [
+        "Ministry of Skill Development and Entrepreneurship (Independent Charge)",
+        "Ministry of Education (Minister of State)"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Lok Sabha MP, Mathura (2009-05-16 to 2014-05-16)",
+        "National President, Rashtriya Lok Dal (2022 to present)"
+      ],
+      "notes": "RLD representative; Rajya Sabha member from Uttar Pradesh since 5 July 2022.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Jayant Chaudhary",
+          "https://en.wikipedia.org/wiki/Jayant_Chaudhary"
+        ]
+      ]
+    },
+    {
+      "id": "l-murugan",
+      "name": "L. Murugan",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Parliamentary Affairs",
+        "Ministry of Information and Broadcasting"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Madhya Pradesh",
+      "stateCode": "mp",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Information and Broadcasting (2021-07-07 to present)",
+        "Minister of State for Fisheries, Animal Husbandry and Dairying (2021-07-07 to 2024-06-10)"
+      ],
+      "notes": "Rajya Sabha member from Madhya Pradesh; second term began 3 April 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — L. Murugan",
+          "https://en.wikipedia.org/wiki/L._Murugan"
+        ]
+      ]
+    },
+    {
+      "id": "anupriya-patel",
+      "name": "Anupriya Patel",
+      "rank": "mos",
+      "party": "AD(S)",
+      "portfolios": [
+        "Ministry of Health and Family Welfare",
+        "Ministry of Chemicals and Fertilizers"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Mirzapur",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Commerce and Industry (2021-07-07 to 2024-06-10)",
+        "Minister of State for Health and Family Welfare (2016-07-05 to 2019-05-30)"
+      ],
+      "notes": "Apna Dal (Soneylal) president; Lok Sabha MP from Mirzapur since 2014.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Anupriya Patel",
+          "https://en.wikipedia.org/wiki/Anupriya_Patel"
+        ]
+      ]
+    },
+    {
+      "id": "sukanta-majumdar",
+      "name": "Sukanta Majumdar",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Education",
+        "Ministry of Development of North Eastern Region"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Balurghat",
+      "state": "West Bengal",
+      "stateCode": "wb",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "President, Bharatiya Janata Party West Bengal unit (2021-09-21 to 2025)"
+      ],
+      "notes": "First union ministerial appointment.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Sukanta Majumdar",
+          "https://en.wikipedia.org/wiki/Sukanta_Majumdar"
+        ]
+      ]
+    },
+    {
+      "id": "jitin-prasada",
+      "name": "Jitin Prasada",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Commerce and Industry",
+        "Ministry of Electronics and Information Technology"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Pilibhit",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Steel (2011-07-12 to 2014-05-26, UPA government)",
+        "Minister, Government of Uttar Pradesh (2021 to 2024)"
+      ],
+      "notes": "Elected to the Lok Sabha from Pilibhit in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Jitin Prasada",
+          "https://en.wikipedia.org/wiki/Jitin_Prasada"
+        ]
+      ]
+    },
+    {
+      "id": "shripad-yesso-naik",
+      "name": "Shripad Yesso Naik",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Power",
+        "Ministry of New and Renewable Energy"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "North Goa",
+      "state": "Goa",
+      "stateCode": "ga",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Defence (2019-05-31 to 2021-07-07)",
+        "Minister of State (Independent Charge) for AYUSH (2014-11-09 to 2021-07-07)"
+      ],
+      "notes": "Lok Sabha MP from North Goa since 1999.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Shripad Naik",
+          "https://en.wikipedia.org/wiki/Shripad_Naik"
+        ]
+      ]
+    },
+    {
+      "id": "pankaj-chaudhary",
+      "name": "Pankaj Chaudhary",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Finance"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Maharajganj",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Finance (2021-07-07 to present)"
+      ],
+      "notes": "Retained Minister of State for Finance.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Pankaj Chaudhary",
+          "https://en.wikipedia.org/wiki/Pankaj_Chaudhary"
+        ]
+      ]
+    },
+    {
+      "id": "krishan-pal-gurjar",
+      "name": "Krishan Pal Gurjar",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Co-operation"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Faridabad",
+      "state": "Haryana",
+      "stateCode": "hr",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Power and Heavy Industries (2021-07-07 to 2024-06-10)",
+        "Minister of State for Social Justice and Empowerment (2014-11-09 to 2021-07-07)"
+      ],
+      "notes": "Lok Sabha MP from Faridabad since 2014.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Krishan Pal Gurjar",
+          "https://en.wikipedia.org/wiki/Krishan_Pal_Gurjar"
+        ]
+      ]
+    },
+    {
+      "id": "murlidhar-mohol",
+      "name": "Murlidhar Mohol",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Co-operation",
+        "Ministry of Civil Aviation"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Pune",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Mayor of Pune (2019 to 2022)"
+      ],
+      "notes": "First union ministerial appointment; first-time Lok Sabha MP from Pune (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Murlidhar Mohol",
+          "https://en.wikipedia.org/wiki/Murlidhar_Mohol"
+        ]
+      ]
+    },
+    {
+      "id": "ramdas-athawale",
+      "name": "Ramdas Athawale",
+      "rank": "mos",
+      "party": "RPI(A)",
+      "portfolios": [
+        "Ministry of Social Justice and Empowerment"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Social Justice and Empowerment (2016-07-05 to present)",
+        "Lok Sabha MP, Pandharpur (1999-10-06 to 2009-05-16)"
+      ],
+      "notes": "RPI(A) president; re-elected to the Rajya Sabha from Maharashtra for a third consecutive term, taking oath on 6 April 2026 (term from 3 April 2026).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Ramdas Athawale",
+          "https://en.wikipedia.org/wiki/Ramdas_Athawale"
+        ],
+        [
+          "Sansad TV — Ramdas Bandu Athawale takes oath as re-elected member of Rajya Sabha (6 Apr 2026)",
+          "https://sansadtv.nic.in/rajyasabha/ramdas-bandu-athawale-rpia-takes-oath-as-re-elected-member-of-rajya-sabha-06-april-2026"
+        ]
+      ]
+    },
+    {
+      "id": "bl-verma",
+      "name": "B. L. Verma",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Social Justice and Empowerment",
+        "Ministry of Consumer Affairs, Food and Public Distribution"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for DoNER and Co-operation (2021-07-07 to 2024-06-10)"
+      ],
+      "notes": "Rajya Sabha member from Uttar Pradesh since 26 November 2020.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — B. L. Verma (Uttar Pradesh politician)",
+          "https://en.wikipedia.org/wiki/B._L._Verma_(Uttar_Pradesh_politician)"
+        ]
+      ]
+    },
+    {
+      "id": "ram-nath-thakur",
+      "name": "Ram Nath Thakur",
+      "rank": "mos",
+      "party": "JDU",
+      "portfolios": [
+        "Ministry of Agriculture and Farmers' Welfare"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister, Government of Bihar (2014 to 2015)"
+      ],
+      "notes": "JD(U) representative; re-elected to the Rajya Sabha from Bihar in the March 2026 biennial election, term beginning 10 April 2026.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Ram Nath Thakur",
+          "https://en.wikipedia.org/wiki/Ram_Nath_Thakur"
+        ],
+        [
+          "PRS India — Ram Nath Thakur, Rajya Sabha member profile",
+          "https://prsindia.org/mptrack/rajya-sabha/ramnaththakur"
+        ]
+      ]
+    },
+    {
+      "id": "bhagirath-choudhary",
+      "name": "Bhagirath Choudhary",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Agriculture and Farmers' Welfare"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Ajmer",
+      "state": "Rajasthan",
+      "stateCode": "rj",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; Lok Sabha MP from Ajmer since 2019.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Bhagirath Choudhary",
+          "https://en.wikipedia.org/wiki/Bhagirath_Choudhary"
+        ]
+      ]
+    },
+    {
+      "id": "nityanand-rai",
+      "name": "Nityanand Rai",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Home Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Ujiarpur",
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Home Affairs (2019-05-30 to present)"
+      ],
+      "notes": "Retained Minister of State for Home Affairs.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Nityanand Rai",
+          "https://en.wikipedia.org/wiki/Nityanand_Rai"
+        ]
+      ]
+    },
+    {
+      "id": "bandi-sanjay-kumar",
+      "name": "Bandi Sanjay Kumar",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Home Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Karimnagar",
+      "state": "Telangana",
+      "stateCode": "tg",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "President, Bharatiya Janata Party Telangana unit (2020-03-11 to 2023-07-04)"
+      ],
+      "notes": "First union ministerial appointment.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Bandi Sanjay Kumar",
+          "https://en.wikipedia.org/wiki/Bandi_Sanjay_Kumar"
+        ]
+      ]
+    },
+    {
+      "id": "v-somanna",
+      "name": "V. Somanna",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Jal Shakti",
+        "Ministry of Railways"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Tumkur",
+      "state": "Karnataka",
+      "stateCode": "ka",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister, Government of Karnataka (2019 to 2023)"
+      ],
+      "notes": "First union ministerial appointment; first-time Lok Sabha MP from Tumkur (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — V. Somanna",
+          "https://en.wikipedia.org/wiki/V._Somanna"
+        ]
+      ]
+    },
+    {
+      "id": "raj-bhushan-choudhary",
+      "name": "Raj Bhushan Choudhary",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Jal Shakti"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Muzaffarpur",
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; first-time Lok Sabha MP from Muzaffarpur (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Raj Bhushan Choudhary",
+          "https://en.wikipedia.org/wiki/Raj_Bhushan_Choudhary"
+        ]
+      ]
+    },
+    {
+      "id": "pemmasani-chandra-sekhar",
+      "name": "Pemmasani Chandra Sekhar",
+      "rank": "mos",
+      "party": "TDP",
+      "portfolios": [
+        "Ministry of Rural Development",
+        "Ministry of Communications"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Guntur",
+      "state": "Andhra Pradesh",
+      "stateCode": "ap",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "TDP representative; first-time Lok Sabha MP from Guntur (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Chandra Sekhar Pemmasani",
+          "https://en.wikipedia.org/wiki/Chandra_Sekhar_Pemmasani"
+        ]
+      ]
+    },
+    {
+      "id": "kamlesh-paswan",
+      "name": "Kamlesh Paswan",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Rural Development"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Bansgaon",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; Lok Sabha MP from Bansgaon since 2009.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Kamlesh Paswan",
+          "https://en.wikipedia.org/wiki/Kamlesh_Paswan"
+        ]
+      ]
+    },
+    {
+      "id": "sp-singh-baghel",
+      "name": "S. P. Singh Baghel",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Fisheries, Animal Husbandry and Dairying",
+        "Ministry of Panchayati Raj"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Agra",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Health and Family Welfare (2021-07-07 to 2024-06-10)",
+        "Minister of State for Law and Justice (2021-07-07 to 2024-06-10)"
+      ],
+      "notes": "Lok Sabha MP from Agra since 2019.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — S. P. Singh Baghel",
+          "https://en.wikipedia.org/wiki/S._P._Singh_Baghel"
+        ]
+      ]
+    },
+    {
+      "id": "shobha-karandlaje",
+      "name": "Shobha Karandlaje",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Micro, Small and Medium Enterprises",
+        "Ministry of Labour and Employment"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Bangalore North",
+      "state": "Karnataka",
+      "stateCode": "ka",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Agriculture and Farmers' Welfare (2021-07-07 to 2024-06-10)",
+        "Lok Sabha MP, Udupi Chikmagalur (2014 to 2024)"
+      ],
+      "notes": "Switched seats to Bangalore North for the 2024 general election, which she won.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Shobha Karandlaje",
+          "https://en.wikipedia.org/wiki/Shobha_Karandlaje"
+        ],
+        [
+          "ETV Bharat — Bangalore North Lok Sabha result 2024: Shobha Karandlaje wins",
+          "https://www.etvbharat.com/en/!state/karnataka-bangalore-north-lok-sabha-constituency-result-2024-winner-shobha-karadlaje-bjp-m-v-rajeev-gowda-congress-latest-update-enn24060204565"
+        ]
+      ]
+    },
+    {
+      "id": "kirti-vardhan-singh",
+      "name": "Kirti Vardhan Singh",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Environment, Forest and Climate Change",
+        "Ministry of External Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Gonda",
+      "state": "Uttar Pradesh",
+      "stateCode": "up",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; Lok Sabha MP from Gonda since 2014.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Kirti Vardhan Singh",
+          "https://en.wikipedia.org/wiki/Kirti_Vardhan_Singh"
+        ]
+      ]
+    },
+    {
+      "id": "pabitra-margherita",
+      "name": "Pabitra Margherita",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of External Affairs",
+        "Ministry of Textiles"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Assam",
+      "stateCode": "as",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; Rajya Sabha member from Assam since 31 March 2022.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Pabitra Margherita",
+          "https://en.wikipedia.org/wiki/Pabitra_Margherita"
+        ]
+      ]
+    },
+    {
+      "id": "nimuben-bambhaniya",
+      "name": "Nimuben Bambhaniya",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Consumer Affairs, Food and Public Distribution"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Bhavnagar",
+      "state": "Gujarat",
+      "stateCode": "gj",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Mayor of Bhavnagar (2018 to 2020)"
+      ],
+      "notes": "First union ministerial appointment; first-time Lok Sabha MP from Bhavnagar (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Nimuben Bambhaniya",
+          "https://en.wikipedia.org/wiki/Nimuben_Bambhaniya"
+        ]
+      ]
+    },
+    {
+      "id": "shantanu-thakur",
+      "name": "Shantanu Thakur",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Ports, Shipping and Waterways"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Bangaon",
+      "state": "West Bengal",
+      "stateCode": "wb",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Ports, Shipping and Waterways (2021-07-07 to present)"
+      ],
+      "notes": "Retained Minister of State for Ports, Shipping and Waterways.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Shantanu Thakur",
+          "https://en.wikipedia.org/wiki/Shantanu_Thakur"
+        ]
+      ]
+    },
+    {
+      "id": "suresh-gopi",
+      "name": "Suresh Gopi",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Petroleum and Natural Gas",
+        "Ministry of Tourism"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Thrissur",
+      "state": "Kerala",
+      "stateCode": "kl",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Nominated Rajya Sabha member (2016-04-29 to 2022-04-24)"
+      ],
+      "notes": "First BJP Lok Sabha MP elected from Kerala; won Thrissur in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Suresh Gopi",
+          "https://en.wikipedia.org/wiki/Suresh_Gopi"
+        ]
+      ]
+    },
+    {
+      "id": "ajay-tamta",
+      "name": "Ajay Tamta",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Road Transport and Highways"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Almora",
+      "state": "Uttarakhand",
+      "stateCode": "ut",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Minister of State for Textiles (2016-07-05 to 2019-05-30)"
+      ],
+      "notes": "Lok Sabha MP from Almora; returned to the union council of ministers in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Ajay Tamta",
+          "https://en.wikipedia.org/wiki/Ajay_Tamta"
+        ]
+      ]
+    },
+    {
+      "id": "harsh-malhotra",
+      "name": "Harsh Malhotra",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Road Transport and Highways",
+        "Ministry of Corporate Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "East Delhi",
+      "state": "Delhi",
+      "stateCode": "dl",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Mayor of East Delhi (2017 to 2018)"
+      ],
+      "notes": "First union ministerial appointment; first-time Lok Sabha MP from East Delhi (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Harsh Malhotra",
+          "https://en.wikipedia.org/wiki/Harsh_Malhotra"
+        ]
+      ]
+    },
+    {
+      "id": "satish-chandra-dubey",
+      "name": "Satish Chandra Dubey",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Coal",
+        "Ministry of Mines"
+      ],
+      "house": "Rajya Sabha",
+      "constituency": null,
+      "state": "Bihar",
+      "stateCode": "br",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Lok Sabha MP, Valmiki Nagar (2014-05-16 to 2019-05-23)"
+      ],
+      "notes": "First union ministerial appointment; Rajya Sabha member from Bihar, re-elected for a second term in July 2022.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Satish Chandra Dubey",
+          "https://en.wikipedia.org/wiki/Satish_Chandra_Dubey"
+        ]
+      ]
+    },
+    {
+      "id": "sanjay-seth",
+      "name": "Sanjay Seth",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Defence"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Ranchi",
+      "state": "Jharkhand",
+      "stateCode": "jh",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; Lok Sabha MP from Ranchi since 2019.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Sanjay Seth (Jharkhand politician)",
+          "https://en.wikipedia.org/wiki/Sanjay_Seth_(Jharkhand_politician)"
+        ]
+      ]
+    },
+    {
+      "id": "durga-das-uikey",
+      "name": "Durga Das Uikey",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Tribal Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Betul",
+      "state": "Madhya Pradesh",
+      "stateCode": "mp",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; Lok Sabha MP from Betul since 2019.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Durga Das Uikey",
+          "https://en.wikipedia.org/wiki/Durga_Das_Uikey"
+        ]
+      ]
+    },
+    {
+      "id": "raksha-khadse",
+      "name": "Raksha Khadse",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Youth Affairs and Sports"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Raver",
+      "state": "Maharashtra",
+      "stateCode": "mh",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; Lok Sabha MP from Raver since 2014.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Raksha Khadse",
+          "https://en.wikipedia.org/wiki/Raksha_Khadse"
+        ]
+      ]
+    },
+    {
+      "id": "savitri-thakur",
+      "name": "Savitri Thakur",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Women and Child Development"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Dhar",
+      "state": "Madhya Pradesh",
+      "stateCode": "mp",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "Lok Sabha MP, Dhar (2014 to 2019)"
+      ],
+      "notes": "First union ministerial appointment; returned to the Lok Sabha from Dhar in 2024.",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Savitri Thakur",
+          "https://en.wikipedia.org/wiki/Savitri_Thakur"
+        ]
+      ]
+    },
+    {
+      "id": "tokhan-sahu",
+      "name": "Tokhan Sahu",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Housing and Urban Affairs"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Bilaspur",
+      "state": "Chhattisgarh",
+      "stateCode": "ct",
+      "since": "2024-06-10",
+      "priorPortfolios": [
+        "MLA, Lormi, Chhattisgarh Legislative Assembly (2013-12-08 to 2018-12-11)"
+      ],
+      "notes": "First union ministerial appointment; first-time Lok Sabha MP from Bilaspur (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Tokhan Sahu",
+          "https://en.wikipedia.org/wiki/Tokhan_Sahu"
+        ]
+      ]
+    },
+    {
+      "id": "bhupathi-raju-srinivasa-varma",
+      "name": "Bhupathi Raju Srinivasa Varma",
+      "rank": "mos",
+      "party": "BJP",
+      "portfolios": [
+        "Ministry of Heavy Industries",
+        "Ministry of Steel"
+      ],
+      "house": "Lok Sabha",
+      "constituency": "Narasapuram",
+      "state": "Andhra Pradesh",
+      "stateCode": "ap",
+      "since": "2024-06-10",
+      "priorPortfolios": [],
+      "notes": "First union ministerial appointment; first-time Lok Sabha MP from Narasapuram (2024).",
+      "srcs": [
+        [
+          "PMIndia — Portfolios of the Union Council of Ministers (updated 25 Jul 2026)",
+          "https://www.pmindia.gov.in/en/news_updates/portfolios-of-the-union-council-of-ministers-2/"
+        ],
+        [
+          "Wikipedia — Third Modi ministry",
+          "https://en.wikipedia.org/wiki/Third_Modi_ministry"
+        ],
+        [
+          "Wikipedia — Bhupathi Raju Srinivasa Varma",
+          "https://en.wikipedia.org/wiki/Bhupathi_Raju_Srinivasa_Varma"
+        ]
+      ]
+    }
+  ]
+}
