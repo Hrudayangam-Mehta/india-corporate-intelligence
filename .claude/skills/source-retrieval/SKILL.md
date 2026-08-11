@@ -47,6 +47,22 @@ An FY24-25 integrated annual report retrieved this way became the backbone of an
 entire subsidiary map — with CINs, former names and exact ownership percentages from
 the auditor's CARO annexure and the related-party note.
 
+## 2b. The exchange archives serve annual reports directly — start here
+
+`nsearchives.nseindia.com/corporate/…` hosts listed companies' annual report PDFs as
+static files. They download cleanly with `curl` even when the company's own site
+403s and when WebFetch times out on them.
+
+A 404-page FY2026 integrated annual report retrieved this way settled, from one
+document: the full cement holding chain through Mauritius, three completed
+amalgamations with exact appointed and effective dates, two pending ones with their
+share-swap ratios, and the promoter structure. **An annual report is the single most
+productive artefact in this domain** — it carries the related-party note, the
+subsidiary list with ownership percentages, and the auditor's CARO annexure with
+CINs and former names.
+
+Look for the AR before spending rounds on registry mirrors.
+
 ## 3. The corporate domain 403s — try the *business unit's* domain
 
 "All Adani domains are blocked" turned out to be false. `adani.com`,
@@ -68,6 +84,51 @@ because the table is client-rendered. Alternatives, in order of preference:
    entities-consolidated annexure. They are the single most productive substitute.
 4. A broker mirror of the filing — **lowest preference**, and it caps the claim at
    `reported`, because you have read a mirror and not the record.
+
+## 4b. Foreign entities — two open registries that are not blocked
+
+Indian mirrors cover nothing offshore, and offshore registries mostly refuse
+automated fetching. These two do not, and between them they resolve most of it.
+
+**GLEIF (Legal Entity Identifier), unauthenticated:**
+
+```
+https://api.gleif.org/api/v1/lei-records?filter[fulltext]=<term>&page[size]=100
+https://api.gleif.org/api/v1/lei-records/<LEI>
+https://api.gleif.org/api/v1/lei-records/<LEI>/direct-parent
+```
+
+Returns legal name, jurisdiction, legal form, **the local registry entity ID**
+(Singapore UEN, Indian CIN, JAFZA number) and parent relationships. The
+`direct-parent` endpoint is the useful one — it contradicted a widely-repeated claim
+about which entity a Singapore subsidiary sits under, and the API is the better
+authority.
+
+**Australian Business Register — fully fetchable, including history:**
+
+```
+https://abr.business.gov.au/ABN/View?abn=<digits>
+https://abr.business.gov.au/AbnHistory/View?abn=<digits>      ← the valuable one
+https://abr.business.gov.au/Search/ResultsActive?SearchText=<term>
+```
+
+`AbnHistory` returns the complete entity-name history with exact dates.
+
+### The trap it caught: a trading name is not a rename
+
+Press widely reported that Adani Mining Pty Ltd "was renamed Bravus" in November
+2020. The ABR history shows the registered **company** name has been *Adani Mining
+Pty Ltd* continuously since 28 July 2010. *Bravus Mining and Resources* is a
+registered **business name** on the same ABN from 4 November 2020.
+
+Those are different facts with different consequences, and a dataset that records a
+rename where only a trading name was registered has the corporate history wrong. The
+same register showed a *real* three-step rename on a sibling entity — APCT #1 →
+Adani Abbot Point Terminal → North Queensland Export Terminal, on 9 October 2020 —
+so the distinction is checkable, not theoretical.
+
+**Always separate: legal name change · trading/business name · brand.** Only the
+first changes what the entity is.
 
 ## 5. Registry mirrors — which lies, and how
 
