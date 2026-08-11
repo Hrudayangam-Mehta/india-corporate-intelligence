@@ -72,10 +72,17 @@ export default function NetworkView() {
       d.set(e.s, (d.get(e.s) ?? 0) + 1);
       d.set(e.t, (d.get(e.t) ?? 0) + 1);
     }
-    return [...d.entries()]
-      .map(([id, deg]) => ({ id, deg, label: nodes.find((n) => n.id === id)?.label ?? id }))
-      .sort((a, b) => b.deg - a.deg)
-      .slice(0, 8);
+    const byId = new Map(nodes.map((n) => [n.id, n]));
+    return (
+      [...d.entries()]
+        .map(([id, deg]) => ({ id, deg, node: byId.get(id) }))
+        // Sector and geography nodes are taxonomy, not actors — they are hubs by
+        // construction and would dominate a degree ranking without meaning anything.
+        .filter((x) => x.node && x.node.fam !== 'market')
+        .map((x) => ({ id: x.id, deg: x.deg, label: x.node!.label, sub: x.node!.sub ?? x.node!.ty }))
+        .sort((a, b) => b.deg - a.deg)
+        .slice(0, 8)
+    );
   }, [edges, nodes]);
 
   return (
@@ -95,7 +102,7 @@ export default function NetworkView() {
           { value: String(nodes.length), label: 'entities in view' },
           { value: String(edges.length), label: 'relationships in view' },
           { value: `${median} hops`, label: 'median separation between entities — the baseline any "short path" must beat', tone: 'muted' },
-          { value: String(degrees[0]?.deg ?? 0), label: `highest degree (${degrees[0]?.label ?? '—'}) — expected, not a finding`, tone: 'muted' },
+          { value: String(degrees[0]?.deg ?? 0), label: `highest-degree actor (${degrees[0]?.label ?? '—'}) — expected, not a finding`, tone: 'muted' },
         ]}
       />
 
@@ -180,11 +187,16 @@ export default function NetworkView() {
         )}
       </Section>
 
-      <Section title="Highest-degree entities" note="Sorted by connection count. Read as a size measure, not an influence measure.">
+      <Section
+        title="Highest-degree actors"
+        note="Sector and geography nodes excluded — they are taxonomy, hubs by construction, and would dominate the ranking without meaning anything"
+      >
         <div className="space-y-2">
           {degrees.map((d) => (
             <div key={d.id} className="flex items-center gap-3">
-              <span className="text-[13px] w-52 truncate text-text-secondary">{d.label}</span>
+              <span className="text-[13px] w-52 truncate text-text-secondary" title={d.sub}>
+                {d.label}
+              </span>
               <span className="h-3.5 bg-accent/50 rounded-sm" style={{ width: `${(d.deg / degrees[0].deg) * 55}%` }} />
               <span className="font-mono text-[11px] text-text-muted">{d.deg}</span>
             </div>

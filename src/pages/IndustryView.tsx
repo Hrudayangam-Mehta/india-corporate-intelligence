@@ -1,124 +1,188 @@
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Kicker, PageTitle, Standfirst, Byline, Section, Callout, StatGrid, DataTable } from '../components/Editorial';
+import IndiaMap from '../components/viz/IndiaMap';
 import { useData } from '../context/DataContext';
-import { Factory, MapPin, ArrowUpRight } from 'lucide-react';
+import { hhi } from '../data/companies';
+import { STATE_NAMES } from '../data/geo';
+import type { StateCode } from '../graph/schema';
 
+const fmtCr = (v: number) => (v >= 100000 ? `₹${(v / 100000).toFixed(2)}L cr` : `₹${Math.round(v).toLocaleString('en-IN')} cr`);
+
+/**
+ * Sector view.
+ *
+ * HHI here measures concentration among LISTED companies in the dataset — not
+ * market share in the real economy, which includes everything unlisted, imported
+ * and state-run. The page says so, because an HHI presented without that caveat
+ * reads as a competition finding it cannot support.
+ */
 export default function IndustryView() {
-  const { companies } = useData();
+  const { companies, sectors, groups } = useData();
+  const [sector, setSector] = useState<string>(sectors[0]?.sector ?? '');
 
-  // Group by sector
-  const sectorData = companies.reduce((acc, company) => {
-    const sector = company.sector;
-    if (!acc[sector]) {
-      acc[sector] = {
-        companies: [],
-        totalMarketCap: 0,
-        totalRevenue: 0,
-        states: new Set<string>(),
-      };
+  const inSector = useMemo(() => companies.filter((c) => c.sector === sector), [companies, sector]);
+  const conc = useMemo(() => hhi(inSector.map((c) => c.marketCapCr ?? 0)), [inSector]);
+  const totalMcap = useMemo(() => inSector.reduce((a, c) => a + (c.marketCapCr ?? 0), 0), [inSector]);
+  const topShare = useMemo(() => {
+    const sorted = [...inSector].sort((a, b) => (b.marketCapCr ?? 0) - (a.marketCapCr ?? 0));
+    return totalMcap ? ((sorted[0]?.marketCapCr ?? 0) / totalMcap) * 100 : 0;
+  }, [inSector, totalMcap]);
+
+  const mapData = useMemo(() => {
+    const d: Partial<Record<StateCode, { value: number | null; detail?: string }>> = {};
+    for (const c of inSector) {
+      const cur = d[c.stateCode]?.value ?? 0;
+      d[c.stateCode] = { value: (cur ?? 0) + (c.marketCapCr ?? 0) };
     }
-    acc[sector].companies.push(company);
-    acc[sector].totalMarketCap += company.marketCap || 0;
-    acc[sector].totalRevenue += company.revenue || 0;
-    acc[sector].states.add(company.hqLocation.state);
-    return acc;
-  }, {} as Record<string, { companies: typeof companies; totalMarketCap: number; totalRevenue: number; states: Set<string> }>);
+    return d;
+  }, [inSector]);
 
-  const sortedSectors = Object.entries(sectorData).sort((a, b) => b[1].totalMarketCap - a[1].totalMarketCap);
+  const groupsHere = useMemo(
+    () =>
+      groups
+        .map((g) => ({
+          g,
+          entities: g.listedEntities.filter((e) => e.sector.toLowerCase().includes(sector.toLowerCase().split(' ')[0])),
+        }))
+        .filter((x) => x.entities.length > 0),
+    [groups, sector],
+  );
+
+  const statesPresent = new Set(inSector.map((c) => c.stateCode)).size;
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="heading-editorial text-3xl font-bold">Industry Analysis</h1>
-        <p className="text-text-secondary mt-1">Sector-wise breakdown and concentration analysis</p>
-      </div>
+    <article className="pb-20">
+      <header className="pt-2 pb-6 border-b-2 border-border-light">
+        <Kicker>Sector layer</Kicker>
+        <PageTitle>Industries, and how concentrated they are</PageTitle>
+        <Standfirst>
+          Every sector in the dataset, with its geography, its concentration, and which conglomerate
+          groups sit inside it. Concentration is measured among <em>listed</em> companies only — the real
+          economy includes everything unlisted, imported and state-run, so these figures describe the
+          stock market, not the market.
+        </Standfirst>
+        <Byline>
+          {sectors.length} sectors · {companies.length} companies · Herfindahl–Hirschman index over
+          recorded market cap
+        </Byline>
+      </header>
 
-      {/* Sector Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {sortedSectors.map(([sector, data]) => (
-          <div key={sector} className="card-surface p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <Factory className="w-5 h-5 text-accent" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">{sector}</h3>
-                  <p className="text-xs text-text-muted">{data.companies.length} companies</p>
-                </div>
-              </div>
-              <ArrowUpRight className="w-4 h-4 text-text-muted" />
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div>
-                <div className="text-xs text-text-muted mb-1">Market Cap</div>
-                <div className="font-semibold text-sm">₹{(data.totalMarketCap / 1000).toFixed(0)}K Cr</div>
-              </div>
-              <div>
-                <div className="text-xs text-text-muted mb-1">Revenue</div>
-                <div className="font-semibold text-sm">₹{(data.totalRevenue / 1000).toFixed(1)}K Cr</div>
-              </div>
-              <div>
-                <div className="text-xs text-text-muted mb-1">States</div>
-                <div className="font-semibold text-sm">{data.states.size}</div>
-              </div>
-            </div>
-
-            {/* Companies in sector */}
-            <div className="space-y-2">
-              <h4 className="text-xs font-semibold text-text-secondary uppercase tracking-wider">Top Companies</h4>
-              {data.companies
-                .sort((a, b) => (b.marketCap || 0) - (a.marketCap || 0))
-                .slice(0, 3)
-                .map(company => (
-                  <div key={company.id} className="flex items-center justify-between p-2 bg-bg-elevated rounded">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3 h-3 text-text-muted" />
-                      <span className="text-sm">{company.name}</span>
-                    </div>
-                    <span className="text-xs text-accent">
-                      ₹{(company.marketCap || 0 / 1000).toFixed(0)}K Cr
-                    </span>
-                  </div>
-                ))}
-            </div>
-
-            {/* Geographic spread */}
-            <div className="mt-4">
-              <h4 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2">Presence</h4>
-              <div className="flex flex-wrap gap-2">
-                {Array.from(data.states).map(state => (
-                  <span key={state} className="px-2 py-1 bg-bg-elevated rounded text-xs text-text-secondary">
-                    {state}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+      <div className="flex flex-wrap gap-1.5 my-6">
+        {sectors.map((s) => (
+          <button
+            key={s.sector}
+            onClick={() => setSector(s.sector)}
+            className={`font-mono text-[11px] px-2.5 py-1.5 rounded border transition-colors ${
+              sector === s.sector ? 'border-accent text-accent bg-accent/10' : 'border-border text-text-muted hover:text-text'
+            }`}
+          >
+            {s.sector} <span className="opacity-60">{s.count}</span>
+          </button>
         ))}
       </div>
 
-      {/* Summary Stats */}
-      <div className="card-surface p-6">
-        <h2 className="font-semibold text-lg mb-4">Market Concentration</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div>
-            <div className="text-3xl font-bold text-accent">{Object.keys(sectorData).length}</div>
-            <div className="text-sm text-text-muted mt-1">Sectors Represented</div>
-          </div>
-          <div>
-            <div className="text-3xl font-bold text-sage">
-              {companies.reduce((sum, c) => sum + (c.marketCap || 0), 0) / 1000}K
-            </div>
-            <div className="text-sm text-text-muted mt-1">Total Market Cap (Cr)</div>
-          </div>
-          <div>
-            <div className="text-3xl font-bold text-amber">
-              {new Set(companies.map(c => c.hqLocation.state)).size}
-            </div>
-            <div className="text-sm text-text-muted mt-1">States with HQs</div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <StatGrid
+        items={[
+          { value: String(inSector.length), label: `listed companies in ${sector}` },
+          { value: fmtCr(totalMcap), label: 'recorded market cap' },
+          { value: String(Math.round(conc)), label: `HHI — ${conc > 2500 ? 'concentrated among listed firms' : conc > 1500 ? 'moderately concentrated' : 'dispersed'}`, tone: conc > 2500 ? 'rose' : 'sage' },
+          { value: `${topShare.toFixed(0)}%`, label: 'held by the largest listed firm in the sector', tone: 'muted' },
+        ]}
+      />
+
+      <Callout label="What HHI does and does not say here" tone="note">
+        <p>
+          The index is computed over the market caps of the listed companies in this dataset. A sector
+          with three listed companies will show a high HHI as a matter of arithmetic, whether or not the
+          underlying market is competitive — most Indian sectors have large unlisted and public-sector
+          participants that never enter this calculation. Read it as a measure of <em>listed</em>{' '}
+          concentration and nothing more.
+        </p>
+      </Callout>
+
+      <Section title={`Where ${sector} is registered`} note={`${statesPresent} of 36 states and UTs have a listed ${sector} headquarters`}>
+        <IndiaMap
+          data={mapData}
+          metricLabel={`${sector} market cap`}
+          unit="₹ cr"
+          scaleMode="log"
+          showMarks={false}
+          height={520}
+          format={(v) => fmtCr(v)}
+        />
+      </Section>
+
+      <Section title={`Listed ${sector} companies`} note="By recorded market cap">
+        <DataTable
+          columns={['Company', 'Ticker', 'Industry', 'Market cap', 'State', 'Group']}
+          rows={[...inSector]
+            .sort((a, b) => (b.marketCapCr ?? 0) - (a.marketCapCr ?? 0))
+            .map((c) => [
+              <Link key="n" to={`/company/${c.id}`} className="text-text hover:text-accent">
+                {c.shortName || c.name}
+              </Link>,
+              <span key="t" className="font-mono text-[11.5px]">
+                {c.nse ?? c.bse ?? '—'}
+              </span>,
+              <span key="i" className="text-[12.5px]">
+                {c.industry}
+              </span>,
+              <span key="m" className="font-mono text-[11.5px] whitespace-nowrap">
+                {c.marketCapCr != null ? fmtCr(c.marketCapCr) : '—'}
+              </span>,
+              <Link key="s" to={`/states/${c.stateCode}`} className="text-[12.5px] hover:text-accent">
+                {STATE_NAMES[c.stateCode]}
+              </Link>,
+              <span key="g" className="text-[12.5px]">
+                {c.group ?? '—'}
+              </span>,
+            ])}
+        />
+      </Section>
+
+      {groupsHere.length > 0 && (
+        <Section title="Conglomerate presence" note="Groups with a declared entity in this sector">
+          <ul className="space-y-2">
+            {groupsHere.map(({ g, entities }) => (
+              <li key={g.id} className="border border-border rounded-lg p-3">
+                <Link to="/conglomerates" className="font-medium hover:text-accent">
+                  {g.name}
+                </Link>
+                <p className="text-[13px] text-text-muted mt-1">{entities.map((e) => e.name).join(' · ')}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[13px] text-text-muted mt-4 max-w-[70ch]">
+            Two large groups operating in the same sector is what "diversified conglomerate" means. Sector
+            co-presence is a structural fact about the market and is never rendered as a relationship
+            between the groups.
+          </p>
+        </Section>
+      )}
+
+      <Section title="All sectors" note="Sorted by recorded market cap">
+        <DataTable
+          columns={['Sector', 'Companies', 'States', 'Market cap', 'HHI (listed only)']}
+          rows={sectors.map((s) => {
+            const list = companies.filter((c) => c.sector === s.sector);
+            const h = hhi(list.map((c) => c.marketCapCr ?? 0));
+            return [
+              <button key="s" onClick={() => setSector(s.sector)} className="text-text hover:text-accent text-left">
+                {s.sector}
+              </button>,
+              String(s.count),
+              String(s.states),
+              <span key="m" className="font-mono text-[12px] whitespace-nowrap">
+                {fmtCr(s.mcapCr)}
+              </span>,
+              <span key="h" className={`font-mono text-[12px] ${h > 2500 ? 'text-rose' : h > 1500 ? 'text-amber' : 'text-sage'}`}>
+                {Math.round(h)}
+              </span>,
+            ];
+          })}
+        />
+      </Section>
+    </article>
   );
 }

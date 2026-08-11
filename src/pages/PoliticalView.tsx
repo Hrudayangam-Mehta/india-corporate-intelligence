@@ -1,141 +1,203 @@
-import { useData } from '../context/DataContext';
-import { Landmark, AlertCircle, TrendingUp, Users } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Kicker, PageTitle, Standfirst, Byline, Section, Callout, StatGrid, DataTable, TierChip, Cite, Footnote } from '../components/Editorial';
+import { NODES, EDGES } from '../graph/data';
+import { BASE_RATES } from '../graph/baseRates';
+import type { Predicate } from '../graph/schema';
+
+/**
+ * Money to parties.
+ *
+ * Built from the case-study subgraph, which is the only part of the platform that
+ * carries donation edges — and every one of them is sourced. The page leads with
+ * the documented void rather than the flows, because the void is the finding that
+ * the flows on their own cannot support.
+ */
+
+const MONEY_PREDS: Predicate[] = ['bond', 'trust', 'direct', 'pmin', 'pmout', 'csr'];
+
+const PRED_LABEL: Record<string, string> = {
+  bond: 'Electoral bond',
+  trust: 'Electoral trust',
+  direct: 'Direct donation',
+  pmin: 'Into a fund',
+  pmout: 'Out of a fund',
+  csr: 'CSR disbursement',
+};
 
 export default function PoliticalView() {
-  const { companies } = useData();
+  const [pred, setPred] = useState<Predicate | 'all'>('all');
 
-  // Companies with political donations
-  const companiesWithDonations = companies.filter(c => c.politicalDonations && c.politicalDonations.length > 0);
-  
-  // Aggregate donations by party
-  const partyDonations = companies.reduce((acc, company) => {
-    company.politicalDonations?.forEach(donation => {
-      if (!acc[donation.party]) {
-        acc[donation.party] = { total: 0, count: 0, companies: [] };
-      }
-      acc[donation.party].total += donation.amount;
-      acc[donation.party].count += 1;
-      if (!acc[donation.party].companies.includes(company.name)) {
-        acc[donation.party].companies.push(company.name);
-      }
-    });
-    return acc;
-  }, {} as Record<string, { total: number; count: number; companies: string[] }>);
+  const byId = useMemo(() => new Map(NODES.map((n) => [n.id, n])), []);
+
+  const flows = useMemo(
+    () =>
+      EDGES.filter((e) => MONEY_PREDS.includes(e.pred))
+        .filter((e) => pred === 'all' || e.pred === pred)
+        .sort((a, b) => (b.a ?? 0) - (a.a ?? 0)),
+    [pred],
+  );
+
+  const totals = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const e of EDGES.filter((x) => MONEY_PREDS.includes(x.pred))) {
+      m.set(e.pred, (m.get(e.pred) ?? 0) + (e.a ?? 0));
+    }
+    return m;
+  }, []);
+
+  const totalTraced = [...totals.values()].reduce((a, b) => a + b, 0);
+  const sourced = flows.filter((e) => (e.srcs?.length ?? 0) > 0).length;
+
+  // The anti-motif: beneficiaries with awards but no traceable donation edge.
+  const beneficiaries = useMemo(() => {
+    const awarded = new Set(EDGES.filter((e) => e.pred === 'award').map((e) => e.t));
+    const donors = new Set(EDGES.filter((e) => ['bond', 'trust', 'direct'].includes(e.pred)).map((e) => e.s));
+    return [...awarded]
+      .filter((id) => !donors.has(id))
+      .map((id) => byId.get(id))
+      .filter(Boolean);
+  }, [byId]);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="heading-editorial text-3xl font-bold">Political Connections</h1>
-        <p className="text-text-secondary mt-1">Corporate donations, political affiliations, and influence networks</p>
-      </div>
+    <article className="pb-20">
+      <header className="pt-2 pb-6 border-b-2 border-border-light">
+        <Kicker>Money to parties and funds</Kicker>
+        <PageTitle>The flows, and what they are worth</PageTitle>
+        <Standfirst>
+          Every traceable political-money edge in the platform, with its source. The important thing on
+          this page is not the flows — it is the void beneath them: the largest beneficiaries in the graph
+          show no traceable political donations at all.
+        </Standfirst>
+        <Byline>
+          {flows.length} money edges · {sourced} carrying a source URL · figures in ₹ crore as published
+        </Byline>
+      </header>
 
-      {/* Info Banner */}
-      <div className="bg-amber/5 border border-amber/20 rounded-lg p-4 flex items-start gap-3">
-        <AlertCircle className="w-5 h-5 text-amber mt-0.5" />
-        <div>
-          <h3 className="font-medium text-amber text-sm">Data Source Note</h3>
-          <p className="text-sm text-text-secondary mt-1">
-            Political donation data is sourced from Election Commission disclosures and electoral bond records. 
-            Full coverage will be available when the data pipeline is complete.
+      <Callout label="Read this before the numbers" tone="bottomline">
+        <p>
+          Three of the four edges people most want to draw here are close to universal.{' '}
+          <strong>82.45%</strong> of electoral-trust money went to one party in FY2024-25;{' '}
+          <strong>every</strong> public-sector undertaking that responded to an RTI had contributed to PM
+          CARES; and CSR spending is <strong>compulsory by statute</strong> for qualifying companies.
+        </p>
+        <p>
+          Drawing those edges produces a dense, alarming-looking web — and it would look identical if you
+          fed in a random sample of large Indian companies that never won anything.{' '}
+          <Link to="/base-rates" className="underline underline-offset-2 text-accent">
+            The full arithmetic
+          </Link>
+          .
+        </p>
+      </Callout>
+
+      <StatGrid
+        items={[
+          { value: `₹${Math.round(totalTraced).toLocaleString('en-IN')} cr`, label: 'total traced across all money edges in the case study' },
+          { value: String(beneficiaries.length), label: 'award recipients with NO traceable donation edge', tone: 'accent' },
+          { value: '82.45%', label: 'ruling-party share of electoral-trust money, FY2024-25 — the base rate any donation edge must beat', tone: 'muted' },
+          { value: `${sourced}/${flows.length}`, label: 'money edges carrying a source URL', tone: 'sage' },
+        ]}
+      />
+
+      <Section title="The documented void" note="The anti-motif — and the integrity check on this whole exercise">
+        <Callout label="Benefit ≠ payment" tone="warn">
+          <p>
+            If benefit reliably followed payment, the largest beneficiaries in this graph would be its
+            heaviest donors. They are not in the donation data at all. That is a finding, and it is
+            rendered as loudly as any flow — a graph that can only show what exists systematically
+            overstates the case.
           </p>
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="card-surface p-4 border-rose/20">
-          <Landmark className="w-5 h-5 text-rose mb-2" />
-          <div className="text-2xl font-bold">{companiesWithDonations.length}</div>
-          <div className="text-xs text-text-muted">Companies with donations</div>
-        </div>
-        <div className="card-surface p-4 border-accent/20">
-          <TrendingUp className="w-5 h-5 text-accent mb-2" />
-          <div className="text-2xl font-bold">
-            ₹{(Object.values(partyDonations).reduce((sum, p) => sum + p.total, 0) / 100).toFixed(0)}Cr
-          </div>
-          <div className="text-xs text-text-muted">Total donations tracked</div>
-        </div>
-        <div className="card-surface p-4 border-purple/20">
-          <Users className="w-5 h-5 text-purple mb-2" />
-          <div className="text-2xl font-bold">{Object.keys(partyDonations).length}</div>
-          <div className="text-xs text-text-muted">Political parties</div>
-        </div>
-        <div className="card-surface p-4 border-sage/20">
-          <TrendingUp className="w-5 h-5 text-sage mb-2" />
-          <div className="text-2xl font-bold">
-            {Object.values(partyDonations).reduce((sum, p) => sum + p.count, 0)}
-          </div>
-          <div className="text-xs text-text-muted">Total donations</div>
-        </div>
-      </div>
-
-      {/* Party Breakdown */}
-      {Object.keys(partyDonations).length > 0 ? (
-        <div className="card-surface p-6">
-          <h2 className="font-semibold text-lg mb-4">Donations by Party</h2>
-          <div className="space-y-4">
-            {Object.entries(partyDonations)
-              .sort((a, b) => b[1].total - a[1].total)
-              .map(([party, data]) => (
-                <div key={party} className="p-4 bg-bg-elevated rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium">{party}</h3>
-                    <span className="text-accent font-semibold">₹{(data.total / 100).toFixed(0)} Cr</span>
-                  </div>
-                  <div className="text-xs text-text-muted mb-3">
-                    {data.count} donations from {data.companies.length} companies
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {data.companies.slice(0, 5).map((company, i) => (
-                      <span key={i} className="px-2 py-1 bg-bg-card rounded text-xs">
-                        {company}
-                      </span>
-                    ))}
-                    {data.companies.length > 5 && (
-                      <span className="px-2 py-1 bg-bg-card rounded text-xs text-text-muted">
-                        +{data.companies.length - 5} more
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      ) : (
-        <div className="card-surface p-8 text-center">
-          <Landmark className="w-12 h-12 text-text-muted mx-auto mb-4" />
-          <h2 className="text-lg font-semibold mb-2">No Political Data Yet</h2>
-          <p className="text-text-secondary text-sm max-w-md mx-auto">
-            Political connection data will be populated once the data pipeline is established. 
-            This will include electoral bonds, direct donations, and political party affiliations.
-          </p>
-        </div>
-      )}
-
-      {/* Company Donation List */}
-      {companiesWithDonations.length > 0 && (
-        <div className="card-surface p-6">
-          <h2 className="font-semibold text-lg mb-4">Company Donations</h2>
-          <div className="space-y-2">
-            {companiesWithDonations.map(company => (
-              <div key={company.id} className="flex items-center justify-between p-3 bg-bg-elevated rounded-lg">
-                <div>
-                  <div className="font-medium text-sm">{company.name}</div>
-                  <div className="text-xs text-text-muted">{company.sector} • {company.industry}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm font-medium text-rose">
-                    ₹{(company.politicalDonations?.reduce((sum, d) => sum + d.amount, 0) || 0 / 100).toFixed(0)} Cr
-                  </div>
-                  <div className="text-xs text-text-muted">
-                    {company.politicalDonations?.length} donations
-                  </div>
-                </div>
-              </div>
+          <ul className="space-y-1.5 mt-2">
+            {beneficiaries.map((n) => (
+              <li key={n!.id} className="text-[14px]">
+                <strong className="text-text">{n!.label}</strong>
+                {n!.sub && <span className="text-text-muted"> — {n!.sub}</span>}
+              </li>
             ))}
-          </div>
+          </ul>
+        </Callout>
+      </Section>
+
+      <Section title="Traced flows" note="Filter by instrument. Every row carries its tier and its source.">
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          <button
+            onClick={() => setPred('all')}
+            className={`font-mono text-[11px] px-2.5 py-1.5 rounded border transition-colors ${
+              pred === 'all' ? 'border-accent text-accent bg-accent/10' : 'border-border text-text-muted hover:text-text'
+            }`}
+          >
+            All ({EDGES.filter((e) => MONEY_PREDS.includes(e.pred)).length})
+          </button>
+          {MONEY_PREDS.filter((p) => EDGES.some((e) => e.pred === p)).map((p) => (
+            <button
+              key={p}
+              onClick={() => setPred(p)}
+              className={`font-mono text-[11px] px-2.5 py-1.5 rounded border transition-colors ${
+                pred === p ? 'border-accent text-accent bg-accent/10' : 'border-border text-text-muted hover:text-text'
+              }`}
+            >
+              {PRED_LABEL[p]} ({EDGES.filter((e) => e.pred === p).length})
+            </button>
+          ))}
         </div>
-      )}
-    </div>
+
+        <DataTable
+          columns={['From', 'Instrument', 'To', '₹ cr', 'Tier', 'Source']}
+          rows={flows.map((e, i) => [
+            <strong key="s" className="text-text">
+              {byId.get(e.s)?.label ?? e.s}
+            </strong>,
+            <span key="p" className="text-[12.5px]">
+              {PRED_LABEL[e.pred] ?? e.pred}
+              {e.lab && <span className="block text-[11.5px] text-text-muted">{e.lab}</span>}
+            </span>,
+            byId.get(e.t)?.label ?? e.t,
+            <span key="a" className="font-mono text-[12px] whitespace-nowrap">
+              {e.a ? e.a.toLocaleString('en-IN') : '—'}
+            </span>,
+            <TierChip key={`t${i}`} tier={e.tier} />,
+            e.srcs?.length ? (
+              <a key="src" href={e.srcs[0][1]} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-[12px]">
+                {e.srcs[0][0]}
+              </a>
+            ) : (
+              <span key="src" className="text-[12px] text-text-muted">
+                unsourced by design — {e.tier}
+              </span>
+            ),
+          ])}
+        />
+      </Section>
+
+      <Section title="What each edge type is worth" note="Discriminating power, with published denominators">
+        <div className="space-y-4">
+          {BASE_RATES.filter((b) => b.id !== 'br-shared-state').map((b) => (
+            <div key={b.id} className="border-l-2 border-border-light pl-4">
+              <p className="font-medium text-[15px]">“{b.claim}”</p>
+              <p className="text-[13.5px] text-text-muted mt-1 max-w-[68ch] leading-relaxed">{b.reading}</p>
+              <p className="font-mono text-[10.5px] mt-1.5">
+                <span className={b.discrimination === 'high' ? 'text-sage' : b.discrimination === 'moderate' ? 'text-teal' : 'text-text-muted'}>
+                  {(b.rate * 100).toFixed(1)}% base rate · {b.discrimination} discriminating power
+                </span>
+              </p>
+              <Cite srcs={b.srcs} />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Footnote>
+        <p>
+          <strong>Coverage.</strong> Donation edges exist only in the case-study subgraph, which covers the
+          ministries of one Union minister. There is no platform-wide donations dataset yet — that is a
+          coverage gap, and treating this page as a national picture would be a category error.
+        </p>
+        <p>
+          <strong>Standing.</strong> Money flows between corporate entities, parties and funds are recorded
+          as published. Nothing here asserts a quid pro quo, and no edge on this page adjudicates one.
+        </p>
+      </Footnote>
+    </article>
   );
 }

@@ -1,239 +1,177 @@
-# India Corporate Intelligence Platform (ICIP)
+# India Corporate Intelligence Platform
 
-> A comprehensive web application for tracking all NSE and BSE listed companies with interactive maps, corporate network graphs, political connections, media ownership analysis, and deep-dive document reviews.
+A map of India's listed corporate landscape joined to a **provenance-bearing knowledge graph** of
+political and ownership connections — built so that every claim carries its evidence tier, and every
+pattern carries its denominator.
 
-## 🌐 Live Demo
-
-**Coming soon** - Deployed via GitHub Pages
-
-## 🎯 Vision
-
-The India Corporate Intelligence Platform aims to map the entire corporate landscape of India — from small-cap enterprises to mega-conglomerates — revealing the hidden networks of ownership, political influence, and media control that shape the Indian economy.
-
-### Key Features
-
-- **📊 Dashboard**: Overview of all tracked companies, market statistics, and recent activity
-- **🗺️ Map Explorer**: Interactive India map showing company headquarters, resources, and regional distribution
-- **🏢 Company Profiles**: Deep-dive pages with financials, leadership, subsidiaries, and timeline
-- **🕸️ Network View**: Interactive D3.js force-directed graphs showing corporate connections
-- **🏭 Industry View**: Sector clustering and industry analysis
-- **🏛️ Political Connections**: Corporate donations, political affiliations, and influence tracking
-- **📺 Media Landscape**: Cross-media ownership analysis and coverage patterns
-- **🔍 Full-Text Search**: Search companies, persons, sectors, and locations
-- **🔖 Watchlist**: Track specific companies for updates and changes
-
-## 🏗️ Architecture
-
-### Frontend Stack
-
-- **React 18** + **TypeScript** - Type-safe component architecture
-- **Vite** - Fast development and optimized builds
-- **Tailwind CSS v4** - Utility-first styling with custom dark theme
-- **React Router DOM v7** - Client-side routing with HashRouter
-- **D3.js** - Interactive network graphs and data visualizations
-- **Mapbox GL JS** - Interactive maps (requires token)
-- **Lucide React** - Consistent iconography
-- **Framer Motion** - Smooth animations and transitions
-
-### Data Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    ICIP Frontend                         │
-│  ┌─────────────┐ ┌─────────────┐ ┌──────────────────┐  │
-│  │  Dashboard  │ │  Map View   │ │  Network Graph   │  │
-│  └─────────────┘ └─────────────┘ └──────────────────┘  │
-│  ┌─────────────┐ ┌─────────────┐ ┌──────────────────┐  │
-│  │   Search    │ │  Watchlist  │ │ Company Profile  │  │
-│  └─────────────┘ └─────────────┘ └──────────────────┘  │
-├─────────────────────────────────────────────────────────┤
-│                  React Context API                       │
-│         (DataContext with useReducer pattern)            │
-├─────────────────────────────────────────────────────────┤
-│               Data Sources (Planned)                     │
-│  • NSE/BSE APIs (stock prices, market data)             │
-│  • MCA (Ministry of Corporate Affairs) filings          │
-│  • SEBI disclosures                                     │
-│  • Election Commission donation records                 │
-│  • Registrar of Newspapers (RNI)                        │
-│  • Company annual reports (5-year analysis)             │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Planned Repositories
-
-1. **`india-corporate-intelligence`** (main) - React web application
-2. **`icip-data-pipeline`** - Data scraping and ingestion pipeline
-3. **`icip-network-engine`** - Graph analysis and network algorithms
-
-## 🎨 Design System
-
-### Color Palette
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-bg` | `#0a0a0c` | Main background |
-| `--color-bg-card` | `#121214` | Card surfaces |
-| `--color-bg-elevated` | `#1a1a1e` | Elevated elements |
-| `--color-border` | `rgba(255,255,255,0.06)` | Borders |
-| `--color-text` | `#e8e2d9` | Primary text |
-| `--color-text-secondary` | `#b8b0a4` | Secondary text |
-| `--color-text-muted` | `#6b6560` | Muted text |
-| `--color-accent` | `#c9a86c` | Gold accent |
-| `--color-sage` | `#7a9e7e` | Success/growth |
-| `--color-rose` | `#c45b5a` | Alerts/danger |
-| `--color-purple` | `#8b7ec4` | Media/info |
-
-### Typography
-
-- **Editorial Headlines**: Playfair Display (via Google Fonts)
-- **UI Text**: Inter (system fallback)
-
-## 📱 Mobile First
-
-The platform is designed with a mobile-first approach:
-- Touch-optimized interactions (44px minimum tap targets)
-- Responsive layouts that adapt from mobile to desktop
-- Bottom navigation on mobile, side navigation on desktop
-- Swipeable cards and collapsible sections
-
-## 🚀 Development
-
-### Prerequisites
-
-```bash
-node >= 20.0.0
-npm >= 10.0.0
-```
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/occult-kranti/india-corporate-intelligence.git
-cd india-corporate-intelligence
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-### Environment Variables
-
-Create a `.env` file:
-
-```bash
-# Mapbox token (required for map functionality)
-VITE_MAPBOX_TOKEN=your_mapbox_token_here
-```
-
-## 📊 Data Model
-
-### Company
-
-```typescript
-interface Company {
-  id: string;              // CIN (Corporate Identification Number)
-  name: string;
-  isin: string;
-  nseSymbol?: string;
-  bseCode?: string;
-  sector: string;
-  industry: string;
-  marketCap?: number;       // In Crores
-  revenue?: number;         // In Crores
-  profit?: number;          // In Crores
-  employees?: number;
-  founded?: string;
-  website?: string;
-  hqLocation: Location;
-  registeredAddress: Address;
-  directors: Director[];
-  promoters: Promoter[];
-  subsidiaries: Subsidiary[];
-  politicalDonations?: PoliticalDonation[];
-  timeline: TimelineEvent[];
-}
-```
-
-### Network Graph
-
-```typescript
-interface NetworkNode {
-  id: string;
-  type: 'company' | 'person';
-  label: string;
-  data: Company | Person;
-}
-
-interface NetworkEdge {
-  id: string;
-  source: string;
-  target: string;
-  type: string;
-  label?: string;
-}
-```
-
-## 🗺️ Roadmap
-
-### Phase 1: Foundation ✅
-- [x] Project scaffolding with Vite + React + TypeScript
-- [x] Dark theme design system
-- [x] Layout with responsive navigation
-- [x] Core pages structure
-- [x] Sample data seeding
-
-### Phase 2: Core Features (In Progress)
-- [ ] Complete all page implementations
-- [ ] Interactive network graph with D3.js
-- [ ] Map visualization with Mapbox
-- [ ] Full-text search with Fuse.js
-- [ ] Watchlist functionality
-
-### Phase 3: Data Pipeline
-- [ ] NSE/BSE data scraper
-- [ ] MCA filing parser
-- [ ] SEBI disclosure aggregator
-- [ ] Election Commission donation scraper
-- [ ] Annual report analyzer (5-year review)
-
-### Phase 4: Advanced Analytics
-- [ ] Network analysis algorithms
-- [ ] Political influence scoring
-- [ ] Media ownership concentration analysis
-- [ ] Industry clustering and visualization
-- [ ] Predictive alerts and notifications
-
-### Phase 5: Scale
-- [ ] Populate all ~5,000+ BSE/NSE companies
-- [ ] Real-time data updates
-- [ ] User accounts and personalization
-- [ ] API for third-party access
-
-## 🤝 Contributing
-
-This is a research and transparency project. Contributions are welcome:
-
-1. Data accuracy improvements
-2. New data sources
-3. UI/UX enhancements
-4. Performance optimizations
-5. Documentation
-
-## 📜 License
-
-MIT License - See LICENSE file for details.
-
-## ⚠️ Disclaimer
-
-This platform is for research and educational purposes. All data is sourced from public records and disclosures. The analysis represents interpretation of public information and should not be considered financial or legal advice.
+The platform is as interested in what it cannot show as in what it can.
 
 ---
 
-Built with ❤️ for corporate transparency in India.
+## Why it is built this way
+
+Two projects merged here from opposite ends.
+
+**ICIP** started from **breadth** — map every NSE/BSE company, every state, every industry, every
+political and media connection. Breadth without an evidence discipline produces exactly the artefact
+this project exists to avoid: a dense, alarming-looking web whose edges are near-universal and
+therefore measure nothing.
+
+**The Money-Trail Atlas** started from **depth** — one minister, ~70 entities, ~106 relationships,
+every one a sourced claim with an evidence tier. Its limit was that it kept hitting the same wall:
+*is this edge unusual?* It could not answer, because it had no population to compare against.
+
+**The integration:** the Atlas supplies the epistemics, ICIP supplies the population. The Atlas's four
+invariants become the *schema* of the graph, enforced in CI. ICIP's several-hundred-company dataset
+**is** the reference class that gives Atlas claims their denominators. The base-rate check stops being
+a manual footnote and becomes a query.
+
+Full reasoning: [`docs/CUSTOM_PLAN.md`](docs/CUSTOM_PLAN.md).
+
+---
+
+## The four invariants
+
+Enforced by `npm run validate`, which CI runs. These are build steps, not conventions.
+
+| Invariant | Meaning |
+|---|---|
+| **Provenance** | Every edge carries `srcs`, **or** is tier `alleged`/`analytic`. No exceptions. Never invent a source, figure, date, quote, ticker or CIN. |
+| **Resolution** | One real-world entity, one canonical node, aliases on the node. Identity is confirmed by DIN, constituency, office-with-dates or DOB — never by name match. A node with `resolved: false` **may not be an endpoint of any edge**. |
+| **Supersession** | When a fact changes, the old claim is retained and stays addressable. Nothing is ever deleted from the graph. |
+| **Contradiction** | Denials and counter-evidence are first-class `contra` edges, rendered as prominently as the claims they answer. |
+
+### Evidence tiers
+
+Line style in every graph carries the tier. It is semantic and is never restyled for looks.
+
+| Tier | Bar |
+|---|---|
+| `documented` | A primary record says so — gazette, filing, court order, audit report, RTI reply, official portal. Or two independent credible sources. |
+| `reported` | A credible outlet with named sourcing or published underlying documents. |
+| `alleged` | A named party asserts it. Ships with the denial alongside. |
+| `analytic` | Our own comparison. Carries no causal claim. Ships with a mandatory `innocentReading`. |
+
+---
+
+## Pages
+
+**Markets** — `/` dashboard · `/map` the NSE/BSE map · `/industries` sector concentration ·
+`/conglomerates` the ten largest groups · `/states/:code` per-state drill-down · `/company/:id`
+
+**Power** — `/cabinet` the Union Council of Ministers · `/network` the merged connection graph ·
+`/atlas` the Money-Trail case study · `/political` money to parties · `/media` ownership
+
+**Method** — `/patterns` why every large network looks like a conspiracy · `/evidence` the tiering
+procedure applied claim by claim · `/base-rates` compared to what? · `/method` how this is built,
+with a live integrity check
+
+---
+
+## The map
+
+`src/data/india-geo.json` — 36 real state and UT boundary paths at `viewBox 0 0 612 696`.
+
+- Label anchors are the **pole of inaccessibility** of each state's largest sub-polygon — the interior
+  point furthest from any edge. Bounding-box centres fall outside Gujarat, Kerala, Odisha and West
+  Bengal, so they are not used anywhere.
+- `clearance` is the label-fit budget. Below 8 units a state gets an outboard label with an elbowed
+  leader line into the nearest gutter.
+- West Bengal has 63 sub-polygons, Gujarat 17, the Andamans 36. Islands and enclaves are drawn.
+- Choropleth defaults to **quantile** bins: Indian state market cap is extremely heavy-tailed, and a
+  linear ramp renders thirty states identical.
+- **No data ≠ zero.** Unmeasured states render as an unmistakable hatch with an explicit legend entry.
+  The lowest colour step is deliberately well clear of the page background so "small" can never be
+  confused with "unmeasured".
+- Entity marks are placed on a golden-angle spiral **within** a state — not geocoded, and the UI says
+  so wherever marks appear.
+
+---
+
+## Data
+
+`research/raw/` is a **quarantine zone**. Research agents with web access write there; nothing in it is
+trusted. Promotion into `src/data/` and `src/graph/` happens only after the grounding checks pass,
+which means a hallucinating researcher cannot corrupt the graph without passing a gate.
+
+| Dataset | Records | Notes |
+|---|---|---|
+| `cabinet.json` | 69 ministers | Portfolios date-ranged; departures recorded, not deleted |
+| `companies-by-state.json` | 259 companies | 26 states covered; 10 states explicitly recorded as having no listed HQ |
+| `state-economy.json` | 36 states/UTs | GSDP where verifiable, null otherwise |
+| `conglomerates.json` | 10 groups, 64 listed entities | The two Ambani groups separated **structurally**, not just in prose |
+| `pattern-matching-epistemics.md` | literature review | Every citation checked; unverifiable items listed and not asserted |
+
+Every figure is stamped `asOf` and is as-of-a-date, never current. Companies are attributed to their
+**registered** headquarters — Coal India is Kolkata-registered though the coal is in Jharkhand and
+Chhattisgarh. Conflating registered with operational HQ is the most common error in state-wise
+corporate maps.
+
+---
+
+## Agents and skills
+
+`.claude/agents/` — six agents, each hired for a bounded job with an explicit refusal surface.
+
+| Agent | Refuses to |
+|---|---|
+| `graph-cartographer` | Create a node on a name match; delete a superseded fact |
+| `evidence-auditor` | Soften a COLLAPSES verdict; publish an allegation without its denial |
+| `base-rate-statistician` | Report a numerator without a denominator |
+| `market-cartographer` | Conflate registered with operational HQ; conflate the two Ambani groups |
+| `polity-analyst` | Record a portfolio without a date range |
+| `viz-engineer` | Draw a state as a rectangle; restyle a tier for aesthetics |
+
+`.claude/skills/` — `evidence-tiering`, `pattern-discipline`, `india-map`, `graph-schema`.
+
+---
+
+## Development
+
+```bash
+npm install
+npm run dev        # vite dev server
+npm run validate   # data-integrity gate — the four invariants
+npm run build      # tsc -b && vite build
+npm run smoke      # headless render of all 17 routes (needs a preview server)
+npm run check      # validate + build + smoke
+```
+
+`npm run smoke` expects a server at `http://127.0.0.1:4173` — run `npx vite preview` first, or pass a
+base URL as the first argument. It uses the environment's pinned Chromium; override with
+`PLAYWRIGHT_CHROMIUM_PATH`.
+
+### Stack
+
+React 18 · TypeScript · Vite 6 · Tailwind CSS v4 · d3-force · hand-written SVG cartography.
+No map SDK, no external runtime dependencies, no network calls at runtime. Fonts are progressive
+enhancement — every family has a system fallback, so the platform renders correctly offline.
+
+---
+
+## What this platform will not do
+
+- Assert that any named person committed an offence.
+- Publish a private individual's details, or any allegation about a person with no public role.
+- Link entities on name similarity.
+- Render a pattern as a finding without its denominator, its innocent reading, and its kill condition.
+- Present a self-declared affidavit figure as an audited one, or an asset trajectory without its peer
+  baseline.
+- Draw an edge between a minister and a company on the basis of shared state or shared sector.
+  Co-location is context; it is never a relationship.
+
+---
+
+## Standing
+
+This platform maps public records and published claims about the conduct of public offices, and is a
+matter of legitimate public interest. It asserts no guilt. Allegations are identified as allegations,
+attributed, and paired with the response of those they concern. No node adjudicates a quid pro quo.
+
+The **documented void** — the largest beneficiaries in the case-study graph carrying no traceable
+political donations at all — is rendered as loudly as any flow. A graph that can only show what exists
+systematically overstates the case.
+
+## Licence
+
+MIT.

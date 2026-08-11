@@ -1,181 +1,172 @@
-import { useState, useMemo } from 'react';
-import { useData } from '../context/DataContext';
-import { Search, Building2, Users, X, Filter } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Kicker, PageTitle, Standfirst, Section, Callout } from '../components/Editorial';
+import { useData } from '../context/DataContext';
+import { STATE_NAMES, STATES } from '../data/geo';
+import { RANK_LABEL } from '../data/politics';
 
-export default function SearchPage() {
-  const { companies, persons } = useData();
-  const [query, setQuery] = useState('');
-  const [filterType, setFilterType] = useState<'all' | 'companies' | 'persons'>('all');
+/**
+ * Universal search.
+ *
+ * Matching is literal substring, deliberately. Fuzzy matching is exactly how
+ * unrelated entities with similar names get fused into a single apparent network —
+ * the primary defamation risk in a platform like this — so results are grouped by
+ * what kind of thing they are and never merged.
+ */
 
-  const results = useMemo(() => {
-    if (!query.trim()) return { companies: [], persons: [] };
-    
-    const lowerQuery = query.toLowerCase();
-    
-    const filteredCompanies = filterType === 'all' || filterType === 'companies'
-      ? companies.filter(c => 
-          c.name.toLowerCase().includes(lowerQuery) ||
-          c.nseSymbol?.toLowerCase().includes(lowerQuery) ||
-          c.sector.toLowerCase().includes(lowerQuery) ||
-          c.industry.toLowerCase().includes(lowerQuery) ||
-          c.hqLocation.city.toLowerCase().includes(lowerQuery)
-        )
-      : [];
-    
-    const filteredPersons = filterType === 'all' || filterType === 'persons'
-      ? persons.filter(p => 
-          p.name.toLowerCase().includes(lowerQuery)
-        )
-      : [];
-    
-    return { companies: filteredCompanies, persons: filteredPersons };
-  }, [query, companies, persons, filterType]);
+type Hit =
+  | { kind: 'company'; id: string; title: string; sub: string; to: string }
+  | { kind: 'minister'; id: string; title: string; sub: string; to: string }
+  | { kind: 'group'; id: string; title: string; sub: string; to: string }
+  | { kind: 'state'; id: string; title: string; sub: string; to: string }
+  | { kind: 'entity'; id: string; title: string; sub: string; to: string };
 
-  const hasResults = results.companies.length > 0 || results.persons.length > 0;
+const KIND_LABEL: Record<Hit['kind'], string> = {
+  company: 'Listed companies',
+  minister: 'Union ministers',
+  group: 'Conglomerate groups',
+  state: 'States and UTs',
+  entity: 'Graph entities',
+};
+
+export default function Search() {
+  const [q, setQ] = useState('');
+  const { companies, ministers, groups, nodes } = useData();
+
+  const hits = useMemo((): Hit[] => {
+    const needle = q.trim().toLowerCase();
+    if (needle.length < 2) return [];
+    const out: Hit[] = [];
+
+    for (const c of companies) {
+      const hay = `${c.name} ${c.shortName} ${c.nse ?? ''} ${c.bse ?? ''} ${c.isin ?? ''} ${c.hqCity} ${c.industry} ${c.group ?? ''}`.toLowerCase();
+      if (hay.includes(needle)) {
+        out.push({
+          kind: 'company',
+          id: c.id,
+          title: c.shortName || c.name,
+          sub: `${c.nse ?? c.bse ?? 'unlisted ticker'} · ${c.industry} · ${c.hqCity}, ${STATE_NAMES[c.stateCode]}`,
+          to: `/company/${c.id}`,
+        });
+      }
+    }
+
+    for (const m of ministers) {
+      const hay = `${m.name} ${m.party} ${m.constituency ?? ''} ${m.state} ${m.portfolios.join(' ')}`.toLowerCase();
+      if (hay.includes(needle)) {
+        out.push({
+          kind: 'minister',
+          id: m.id,
+          title: m.name,
+          sub: `${RANK_LABEL[m.rank]} · ${m.portfolios[0]} · ${m.constituency ?? m.state}`,
+          to: '/cabinet',
+        });
+      }
+    }
+
+    for (const g of groups) {
+      const hay = `${g.name} ${g.promoterFamily} ${g.sectors.join(' ')} ${g.listedEntities.map((e) => e.name).join(' ')}`.toLowerCase();
+      if (hay.includes(needle)) {
+        out.push({
+          kind: 'group',
+          id: g.id,
+          title: g.name,
+          sub: `${g.listedEntities.length} listed entities · ${g.hqCity}, ${g.state}`,
+          to: '/conglomerates',
+        });
+      }
+    }
+
+    for (const s of STATES) {
+      if (s.name.toLowerCase().includes(needle) || s.id === needle) {
+        out.push({ kind: 'state', id: s.id, title: s.name, sub: 'state or union territory', to: `/states/${s.id}` });
+      }
+    }
+
+    const seen = new Set(out.map((h) => h.title.toLowerCase()));
+    for (const n of nodes) {
+      const hay = `${n.label} ${n.sub ?? ''} ${(n.al ?? []).join(' ')}`.toLowerCase();
+      if (hay.includes(needle) && !seen.has(n.label.toLowerCase())) {
+        out.push({
+          kind: 'entity',
+          id: n.id,
+          title: n.label,
+          sub: `${n.sub ?? n.ty}${n.al?.length ? ` · also known as ${n.al.slice(0, 2).join(', ')}` : ''}`,
+          to: n.id.startsWith('co:') || n.id.startsWith('grp:') ? '/network' : '/atlas',
+        });
+      }
+    }
+
+    return out;
+  }, [q, companies, ministers, groups, nodes]);
+
+  const grouped = useMemo(() => {
+    const m = new Map<Hit['kind'], Hit[]>();
+    for (const h of hits) {
+      if (!m.has(h.kind)) m.set(h.kind, []);
+      m.get(h.kind)!.push(h);
+    }
+    return m;
+  }, [hits]);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="heading-editorial text-3xl font-bold">Search</h1>
-        <p className="text-text-secondary mt-1">Search companies, persons, sectors, and locations</p>
-      </div>
+    <article className="pb-20">
+      <header className="pt-2 pb-6 border-b-2 border-border-light">
+        <Kicker>Search</Kicker>
+        <PageTitle>Find an entity</PageTitle>
+        <Standfirst>
+          Companies, ministers, conglomerate groups, states, and every node in the graph — including
+          aliases. Results are grouped by what kind of thing they are and are never merged across kinds.
+        </Standfirst>
+      </header>
 
-      {/* Search Bar */}
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+      <div className="my-6">
+        <label htmlFor="q" className="sr-only">
+          Search
+        </label>
         <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search by company name, symbol, sector, or person..."
-          className="input-field pl-12 pr-12 py-4 text-lg"
+          id="q"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          autoFocus
+          placeholder="company, ticker, ISIN, minister, group, state, alias…"
+          className="input-field !text-base !py-3"
         />
-        {query && (
-          <button
-            onClick={() => setQuery('')}
-            className="absolute right-4 top-1/2 -translate-y-1/2"
-          >
-            <X className="w-5 h-5 text-text-muted hover:text-text" />
-          </button>
-        )}
+        <p className="font-mono text-[10.5px] text-text-muted mt-2">
+          {q.trim().length < 2 ? 'type at least two characters' : `${hits.length} result${hits.length === 1 ? '' : 's'}`}
+        </p>
       </div>
 
-      {/* Filters */}
-      <div className="flex items-center gap-2">
-        <Filter className="w-4 h-4 text-text-muted" />
-        {(['all', 'companies', 'persons'] as const).map(type => (
-          <button
-            key={type}
-            onClick={() => setFilterType(type)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              filterType === type 
-                ? 'bg-accent/20 text-accent border border-accent/30' 
-                : 'bg-bg-card text-text-secondary border border-border'
-            }`}
-          >
-            {type.charAt(0).toUpperCase() + type.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      {/* Results */}
-      {query.trim() ? (
-        hasResults ? (
-          <div className="space-y-6">
-            {/* Companies */}
-            {results.companies.length > 0 && (
-              <div>
-                <h2 className="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-3">
-                  Companies ({results.companies.length})
-                </h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {results.companies.map(company => (
-                    <Link
-                      key={company.id}
-                      to={`/company/${company.id}`}
-                      className="card-surface p-4 hover:border-accent/30 transition-all"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-                            <Building2 className="w-5 h-5 text-accent" />
-                          </div>
-                          <div>
-                            <h3 className="font-medium">{company.name}</h3>
-                            <p className="text-xs text-text-muted">
-                              {company.nseSymbol} • {company.sector} • {company.industry}
-                            </p>
-                          </div>
-                        </div>
-                        {company.marketCap && (
-                          <span className="text-sm text-accent">
-                            ₹{(company.marketCap / 1000).toFixed(0)}K Cr
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-4 mt-3 text-xs text-text-muted">
-                        <span>{company.hqLocation.city}, {company.hqLocation.state}</span>
-                        <span>{company.exchanges.join('/')}</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Persons */}
-            {results.persons.length > 0 && (
-              <div>
-                <h2 className="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-3">
-                  Persons ({results.persons.length})
-                </h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {results.persons.map(person => (
-                    <div key={person.id} className="card-surface p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-sage/10 flex items-center justify-center">
-                          <Users className="w-5 h-5 text-sage" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium">{person.name}</h3>
-                          <p className="text-xs text-text-muted">
-                            {person.currentDirectorships.length} directorships
-                          </p>
-                        </div>
-                      </div>
-                      <div className="mt-3 space-y-1">
-                        {person.currentDirectorships.slice(0, 3).map((dir, i) => (
-                          <div key={i} className="text-xs text-text-secondary">
-                            {dir.designation} at {dir.companyName}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="card-surface p-8 text-center">
-            <Search className="w-12 h-12 text-text-muted mx-auto mb-4" />
-            <h2 className="text-lg font-semibold">No results found</h2>
-            <p className="text-text-secondary text-sm mt-2">
-              Try searching with different keywords or check your spelling.
-            </p>
-          </div>
-        )
-      ) : (
-        <div className="card-surface p-8 text-center">
-          <Search className="w-12 h-12 text-text-muted mx-auto mb-4" />
-          <h2 className="text-lg font-semibold">Start Searching</h2>
-          <p className="text-text-secondary text-sm mt-2 max-w-md mx-auto">
-            Search for companies by name, NSE/BSE symbol, sector, or location. 
-            You can also search for directors and key personnel.
+      {q.trim().length >= 2 && hits.length === 0 && (
+        <Callout label="No match" tone="note">
+          <p>
+            Nothing in the dataset matches “{q.trim()}”. Matching is literal substring rather than fuzzy,
+            deliberately: approximate name matching is how unrelated people and companies get fused into
+            one apparent network. If you expected a match, the entity is probably not in the dataset yet —
+            which is a coverage gap, not a finding.
           </p>
-        </div>
+        </Callout>
       )}
-    </div>
+
+      {[...grouped.entries()].map(([kind, list]) => (
+        <Section key={kind} title={KIND_LABEL[kind]} note={`${list.length} match${list.length === 1 ? '' : 'es'}`}>
+          <ul className="space-y-1.5">
+            {list.slice(0, 60).map((h) => (
+              <li key={`${h.kind}-${h.id}`}>
+                <Link to={h.to} className="block card-surface px-4 py-3">
+                  <span className="text-[15px] text-text">{h.title}</span>
+                  <span className="block text-[12.5px] text-text-muted mt-0.5">{h.sub}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {list.length > 60 && (
+            <p className="font-mono text-[10.5px] text-text-muted mt-2">
+              Showing 60 of {list.length}. Narrow the query — nothing is silently dropped from the count.
+            </p>
+          )}
+        </Section>
+      ))}
+    </article>
   );
 }
