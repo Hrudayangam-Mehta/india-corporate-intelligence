@@ -1,112 +1,134 @@
 # India Corporate Intelligence Platform (ICIP)
 
-> A comprehensive web application for tracking all NSE and BSE listed companies with interactive maps, corporate network graphs, political connections, media ownership analysis, and deep-dive document reviews.
+> **Uncovering the networks of power, ownership, and influence in Indian business.**
 
-## 🌐 Live Demo
+[![Live Site](https://img.shields.io/badge/Live%20Site-ICIP-gold)](https://occult-kranti.github.io/india-corporate-intelligence/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 
-**Coming soon** - Deployed via GitHub Pages
+---
 
-## 🎯 Vision
+## Quick Links
 
-The India Corporate Intelligence Platform aims to map the entire corporate landscape of India — from small-cap enterprises to mega-conglomerates — revealing the hidden networks of ownership, political influence, and media control that shape the Indian economy.
+| Resource | URL |
+|----------|-----|
+| **Live Application** | https://occult-kranti.github.io/india-corporate-intelligence/ |
+| **Main Repository** | https://github.com/occult-kranti/india-corporate-intelligence |
+| **Data Pipeline** | https://github.com/occult-kranti/icip-data-pipeline |
+| **Network Engine** | https://github.com/occult-kranti/icip-network-engine |
+| **Documentation** | https://github.com/occult-kranti/icip-docs |
 
-### Key Features
+---
 
-- **📊 Dashboard**: Overview of all tracked companies, market statistics, and recent activity
-- **🗺️ Map Explorer**: Interactive India map showing company headquarters, resources, and regional distribution
-- **🏢 Company Profiles**: Deep-dive pages with financials, leadership, subsidiaries, and timeline
-- **🕸️ Network View**: Interactive D3.js force-directed graphs showing corporate connections
-- **🏭 Industry View**: Sector clustering and industry analysis
-- **🏛️ Political Connections**: Corporate donations, political affiliations, and influence tracking
-- **📺 Media Landscape**: Cross-media ownership analysis and coverage patterns
-- **🔍 Full-Text Search**: Search companies, persons, sectors, and locations
-- **🔖 Watchlist**: Track specific companies for updates and changes
+## What is ICIP?
 
-## 🏗️ Architecture
+ICIP is a comprehensive intelligence platform for tracking and analyzing:
 
-### Frontend Stack
+- **5,000+ NSE/BSE listed companies** — with deep profiles, financials, and connections
+- **Corporate networks** — ownership structures, subsidiary mappings, board interlocks
+- **Political connections** — electoral bonds, donation flows, policy influence
+- **Media ownership** — cross-media holdings, editorial influence
+- **Global operations** — international subsidiaries, FDI flows, port networks
+- **Industry clustering** — sector analysis, competitive landscapes
 
-- **React 18** + **TypeScript** - Type-safe component architecture
-- **Vite** - Fast development and optimized builds
-- **Tailwind CSS v4** - Utility-first styling with custom dark theme
-- **React Router DOM v7** - Client-side routing with HashRouter
-- **D3.js** - Interactive network graphs and data visualizations
-- **Mapbox GL JS** - Interactive maps (requires token)
-- **Lucide React** - Consistent iconography
-- **Framer Motion** - Smooth animations and transitions
+### Current Coverage
 
-### Data Architecture
+| Entity Type | Count | Status |
+|-------------|-------|--------|
+| Companies | 80 | Sample data (NSE 50 + BSE 30) |
+| Deep-dive profiles | 2 | Reliance, Adani |
+| Network nodes | 15 | Sample relationships |
+| Political donations | 12 | Sample records |
+
+---
+
+## Features
+
+### Maps
+- **Interactive India Map** — State-wise company distribution with choropleth heatmap
+- **NSE/BSE Maps** — Exchange-specific geographic views
+- **World Map** — Global operations with connection lines (Reliance & Adani)
+- **City-level clustering** — Mumbai, Delhi, Bangalore hubs
+
+### Company Profiles
+- **Basic Info** — CIN, ISIN, sector, market cap, listing details
+- **Deep Dive Pages** — For major conglomerates (Reliance, Adani)
+- **Global Presence** — Subsidiaries, offices, factories, ports on world map
+- **Ownership Tree** — Group structure with percentage holdings
+- **Key People** — Board members, executives, tenure tracking
+
+### Analytics
+- **Network Graph** — D3.js force-directed graph of corporate connections
+- **NIFTY 50 Dashboard** — Index stats, sector allocation, sparkline cards
+- **Political Donations** — Party-wise breakdown, temporal analysis
+- **Media Coverage** — Sentiment analysis, owned outlets
+- **Risk Indicators** — Red flags, regulatory issues, controversies
+
+### Data Views
+- **Industry Clustering** — Sector-wise company groupings
+- **Search** — Full-text search across companies, persons, CIN
+- **Watchlist** — Track favorite companies
+- **Timeline** — Historical events, acquisitions, legal proceedings
+
+---
+
+## Repository Structure
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    ICIP Frontend                         │
-│  ┌─────────────┐ ┌─────────────┐ ┌──────────────────┐  │
-│  │  Dashboard  │ │  Map View   │ │  Network Graph   │  │
-│  └─────────────┘ └─────────────┘ └──────────────────┘  │
-│  ┌─────────────┐ ┌─────────────┐ ┌──────────────────┐  │
-│  │   Search    │ │  Watchlist  │ │ Company Profile  │  │
-│  └─────────────┘ └─────────────┘ └──────────────────┘  │
-├─────────────────────────────────────────────────────────┤
-│                  React Context API                       │
-│         (DataContext with useReducer pattern)            │
-├─────────────────────────────────────────────────────────┤
-│               Data Sources (Planned)                     │
-│  • NSE/BSE APIs (stock prices, market data)             │
-│  • MCA (Ministry of Corporate Affairs) filings          │
-│  • SEBI disclosures                                     │
-│  • Election Commission donation records                 │
-│  • Registrar of Newspapers (RNI)                        │
-│  • Company annual reports (5-year analysis)             │
-└─────────────────────────────────────────────────────────┘
+india-corporate-intelligence/
+├── src/
+│   ├── components/          # Reusable UI components
+│   │   ├── Layout.tsx       # App shell with navigation
+│   │   ├── IndiaMap.tsx     # SVG India map component
+│   │   ├── RealisticIndiaMap.tsx  # Enhanced map with city clusters
+│   │   ├── WorldMap.tsx     # World map with connection lines
+│   │   ├── NetworkGraph.tsx # D3.js force graph
+│   │   ├── Sparkline.tsx    # SVG sparkline charts
+│   │   └── ...
+│   ├── pages/               # Route-level pages
+│   │   ├── Dashboard.tsx
+│   │   ├── MapExplorer.tsx
+│   │   ├── CompanyProfile.tsx
+│   │   ├── RelianceDeepDive.tsx   # Deep-dive: Reliance
+│   │   ├── AdaniDeepDive.tsx      # Deep-dive: Adani Group
+│   │   ├── Nifty50.tsx
+│   │   ├── NetworkView.tsx
+│   │   └── ...
+│   ├── context/
+│   │   └── DataContext.tsx  # Global state management
+│   ├── types/
+│   │   └── index.ts         # TypeScript interfaces
+│   ├── data/
+│   │   └── exchangeData.ts  # NSE/BSE company datasets
+│   └── App.tsx              # Route configuration
+├── docs/
+│   ├── MASTER_PLAN.md       # Architecture & roadmap
+│   ├── MASTER_TRACKER.md    # Progress tracker
+│   ├── STATUS_REPORT.md     # Current status
+│   └── TASK_INDEX.md        # 99 indexed tasks
+├── skills/                  # OpenClaw agent skills
+│   ├── icip-data-scout/
+│   ├── icip-doc-analyzer/
+│   ├── icip-network-mapper/
+│   ├── icip-political-analyst/
+│   ├── icip-media-tracker/
+│   ├── icip-frontend-dev/
+│   └── icip-backend-dev/
+└── public/
+    └── 404.html             # SPA redirect for GitHub Pages
 ```
 
-### Planned Repositories
+---
 
-1. **`india-corporate-intelligence`** (main) - React web application
-2. **`icip-data-pipeline`** - Data scraping and ingestion pipeline
-3. **`icip-network-engine`** - Graph analysis and network algorithms
-
-## 🎨 Design System
-
-### Color Palette
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-bg` | `#0a0a0c` | Main background |
-| `--color-bg-card` | `#121214` | Card surfaces |
-| `--color-bg-elevated` | `#1a1a1e` | Elevated elements |
-| `--color-border` | `rgba(255,255,255,0.06)` | Borders |
-| `--color-text` | `#e8e2d9` | Primary text |
-| `--color-text-secondary` | `#b8b0a4` | Secondary text |
-| `--color-text-muted` | `#6b6560` | Muted text |
-| `--color-accent` | `#c9a86c` | Gold accent |
-| `--color-sage` | `#7a9e7e` | Success/growth |
-| `--color-rose` | `#c45b5a` | Alerts/danger |
-| `--color-purple` | `#8b7ec4` | Media/info |
-
-### Typography
-
-- **Editorial Headlines**: Playfair Display (via Google Fonts)
-- **UI Text**: Inter (system fallback)
-
-## 📱 Mobile First
-
-The platform is designed with a mobile-first approach:
-- Touch-optimized interactions (44px minimum tap targets)
-- Responsive layouts that adapt from mobile to desktop
-- Bottom navigation on mobile, side navigation on desktop
-- Swipeable cards and collapsible sections
-
-## 🚀 Development
+## Getting Started
 
 ### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Git
 
-```bash
-node >= 20.0.0
-npm >= 10.0.0
-```
-
-### Setup
+### Local Development
 
 ```bash
 # Clone the repository
@@ -121,119 +143,210 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Preview production build
+npm run preview
 ```
 
-### Environment Variables
-
-Create a `.env` file:
-
-```bash
-# Mapbox token (required for map functionality)
-VITE_MAPBOX_TOKEN=your_mapbox_token_here
-```
-
-## 📊 Data Model
-
-### Company
-
-```typescript
-interface Company {
-  id: string;              // CIN (Corporate Identification Number)
-  name: string;
-  isin: string;
-  nseSymbol?: string;
-  bseCode?: string;
-  sector: string;
-  industry: string;
-  marketCap?: number;       // In Crores
-  revenue?: number;         // In Crores
-  profit?: number;          // In Crores
-  employees?: number;
-  founded?: string;
-  website?: string;
-  hqLocation: Location;
-  registeredAddress: Address;
-  directors: Director[];
-  promoters: Promoter[];
-  subsidiaries: Subsidiary[];
-  politicalDonations?: PoliticalDonation[];
-  timeline: TimelineEvent[];
-}
-```
-
-### Network Graph
-
-```typescript
-interface NetworkNode {
-  id: string;
-  type: 'company' | 'person';
-  label: string;
-  data: Company | Person;
-}
-
-interface NetworkEdge {
-  id: string;
-  source: string;
-  target: string;
-  type: string;
-  label?: string;
-}
-```
-
-## 🗺️ Roadmap
-
-### Phase 1: Foundation ✅
-- [x] Project scaffolding with Vite + React + TypeScript
-- [x] Dark theme design system
-- [x] Layout with responsive navigation
-- [x] Core pages structure
-- [x] Sample data seeding
-
-### Phase 2: Core Features (In Progress)
-- [ ] Complete all page implementations
-- [ ] Interactive network graph with D3.js
-- [ ] Map visualization with Mapbox
-- [ ] Full-text search with Fuse.js
-- [ ] Watchlist functionality
-
-### Phase 3: Data Pipeline
-- [ ] NSE/BSE data scraper
-- [ ] MCA filing parser
-- [ ] SEBI disclosure aggregator
-- [ ] Election Commission donation scraper
-- [ ] Annual report analyzer (5-year review)
-
-### Phase 4: Advanced Analytics
-- [ ] Network analysis algorithms
-- [ ] Political influence scoring
-- [ ] Media ownership concentration analysis
-- [ ] Industry clustering and visualization
-- [ ] Predictive alerts and notifications
-
-### Phase 5: Scale
-- [ ] Populate all ~5,000+ BSE/NSE companies
-- [ ] Real-time data updates
-- [ ] User accounts and personalization
-- [ ] API for third-party access
-
-## 🤝 Contributing
-
-This is a research and transparency project. Contributions are welcome:
-
-1. Data accuracy improvements
-2. New data sources
-3. UI/UX enhancements
-4. Performance optimizations
-5. Documentation
-
-## 📜 License
-
-MIT License - See LICENSE file for details.
-
-## ⚠️ Disclaimer
-
-This platform is for research and educational purposes. All data is sourced from public records and disclosures. The analysis represents interpretation of public information and should not be considered financial or legal advice.
+The app will be available at `http://localhost:5173`.
 
 ---
 
-Built with ❤️ for corporate transparency in India.
+## Using the Repositories
+
+### 1. india-corporate-intelligence (Main Frontend)
+
+This is the main React application. Deployed to GitHub Pages.
+
+```bash
+cd india-corporate-intelligence
+
+# Development
+npm run dev
+
+# Build (creates dist/)
+npm run build
+
+# Deploy to GitHub Pages
+# The gh-pages branch is auto-deployed when you push built files
+```
+
+**Key routes:**
+- `/` — Dashboard
+- `/map` — Interactive India map
+- `/nse-map` — NSE company map
+- `/bse-map` — BSE company map
+- `/nifty50` — NIFTY 50 analytics
+- `/company/:id` — Company profile
+- `/company/reliance` — Reliance deep-dive
+- `/company/adani` — Adani deep-dive
+- `/network` — Corporate network graph
+- `/political` — Political connections
+- `/media` — Media ownership
+
+### 2. icip-data-pipeline (ETL & Scraping)
+
+Python-based data collection pipeline.
+
+```bash
+cd icip-data-pipeline
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Run scrapers
+python scrapers/nse_companies.py      # NSE listed companies
+python scrapers/bse_companies.py      # BSE listed companies
+python scrapers/mca_filings.py        # MCA company master data
+python scrapers/electoral_bonds.py    # Political donation data
+
+# Geocode addresses
+python geocoding/geocode_all.py
+
+# Export to database
+python etl/export_to_postgres.py
+```
+
+### 3. icip-network-engine (Graph Analytics)
+
+Graph database and analytics API.
+
+```bash
+cd icip-network-engine
+
+# Install dependencies
+npm install
+
+# Start GraphQL API
+npm start
+# API runs on http://localhost:4000
+
+# Build for production
+npm run build
+```
+
+### 4. icip-docs (Documentation)
+
+Project documentation and research notes.
+
+```bash
+cd icip-docs
+
+# Install mkdocs
+pip install mkdocs
+
+# Serve locally
+mkdocs serve
+
+# Build static site
+mkdocs build
+```
+
+---
+
+## Architecture
+
+### Frontend Stack
+- **React 18** — UI framework
+- **TypeScript** — Type safety
+- **Vite** — Build tool
+- **Tailwind CSS** — Styling
+- **React Router** — Client-side routing (HashRouter for GitHub Pages)
+- **D3.js** — Network graph visualization
+- **Lucide React** — Icons
+
+### Data Flow (Planned)
+```
+┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│  Data Sources   │────▶│  icip-data-pipe  │────▶│   PostgreSQL    │
+│  (NSE, BSE, MCA)│     │  (Python ETL)    │     │   (Main DB)     │
+└─────────────────┘     └──────────────────┘     └─────────────────┘
+                                                          │
+                           ┌──────────────────┐          │
+                           │  icip-network    │◀─────────┘
+                           │  (GraphQL API)   │
+                           └──────────────────┘
+                                    │
+                           ┌──────────────────┐
+                           │  React Frontend  │
+                           │  (GitHub Pages)  │
+                           └──────────────────┘
+```
+
+---
+
+## Development Roadmap
+
+### Phase 1: MVP ✅
+- [x] Dark theme UI
+- [x] Sample data (3 companies)
+- [x] Static India SVG map
+- [x] D3 network graph
+- [x] All 10 view pages
+- [x] GitHub Pages deployment
+
+### Phase 2: Realistic Maps ✅
+- [x] Realistic India map with state boundaries
+- [x] City-level clustering
+- [x] World map with connection lines
+- [x] Reliance & Adani deep-dive pages
+
+### Phase 3: Real Data (In Progress)
+- [ ] Scrape NSE/BSE company lists
+- [ ] Geocode all addresses
+- [ ] PostgreSQL database
+- [ ] API layer
+
+### Phase 4: Network Intelligence
+- [ ] Political donation flows
+- [ ] Media ownership mapping
+- [ ] Community detection
+- [ ] Anomaly detection
+
+### Phase 5: Advanced Features
+- [ ] PWA + offline support
+- [ ] Mobile app (Capacitor)
+- [ ] Export reports (PDF)
+- [ ] API for researchers
+
+---
+
+## Contributing
+
+This is a research project. Contributions welcome in:
+- Data scraping scripts
+- Geocoding accuracy
+- Network graph algorithms
+- UI/UX improvements
+- Documentation
+
+---
+
+## Data Sources
+
+| Source | Data | License |
+|--------|------|---------|
+| NSE India | Listed companies, prices | Public |
+| BSE India | Listed companies, prices | Public |
+| MCA | Company Master Data | Public |
+| ECI | Electoral Bonds | Public |
+| OpenStreetMap | Geocoding | ODbL |
+
+---
+
+## License
+
+MIT License — See [LICENSE](LICENSE) for details.
+
+---
+
+## Acknowledgments
+
+- Built with [OpenClaw](https://openclaw.ai) agent framework
+- Maps inspired by [Mapbox](https://mapbox.com) cartography
+- Network visualization powered by [D3.js](https://d3js.org)
+
+---
+
+*Last Updated: 2026-08-11*
+*Maintained by: @tryclaw*
