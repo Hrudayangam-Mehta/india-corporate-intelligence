@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ForceGraph, { FAMILY_COLOR, FAMILY_LABEL, type GraphFilter } from './ForceGraph';
-import { TIERS, TIER_ORDER, type GNode, type GEdge, type Tier, type NodeFamily } from '../../graph/schema';
+import { TIERS, TIER_ORDER, type GNode, type GEdge, type NodeFamily } from '../../graph/schema';
 import { TierChip, DataTable } from '../Editorial';
 import { STATE_NAMES } from '../../data/geo';
 
@@ -45,24 +46,61 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
   const families = useMemo(() => [...new Set(nodes.map((n) => n.fam))] as NodeFamily[], [nodes]);
   const preds = useMemo(() => [...new Set(edges.map((e) => e.pred))].sort(), [edges]);
 
-  const [tiers, setTiers] = useState<Set<Tier>>(new Set(TIER_ORDER));
-  const [fams, setFams] = useState<Set<NodeFamily>>(new Set(families));
-  const [activePreds, setActivePreds] = useState<Set<string>>(new Set());
-  const [query, setQuery] = useState(defaultQuery);
-  const [minAmount, setMinAmount] = useState(0);
+  // Filter state lives in the URL so a view can be shared or cited. Anything the
+  // reader can see, they can hand to someone else exactly as they saw it.
+  const [params, setParams] = useSearchParams();
+  const setParam = useCallback(
+    (k: string, v: string | null) => {
+      const next = new URLSearchParams(params);
+      if (v == null || v === '') next.delete(k);
+      else next.set(k, v);
+      setParams(next, { replace: true });
+    },
+    [params, setParams],
+  );
+
+  const listParam = <T extends string>(k: string, fallback: T[]): Set<T> => {
+    const raw = params.get(k);
+    if (raw == null) return new Set(fallback);
+    return new Set(raw.split(',').filter(Boolean) as T[]);
+  };
+
+  const tiers = useMemo(() => listParam('tier', TIER_ORDER), [params]);
+  const fams = useMemo(() => listParam('fam', families), [params, families]);
+  const activePreds = useMemo(() => listParam<string>('pred', []), [params]);
+  const query = params.get('q') ?? defaultQuery;
+  const minAmount = Number(params.get('min') ?? 0);
+  const from = params.get('from') ?? '';
+  const to = params.get('to') ?? '';
+
   const [selected, setSelected] = useState<string | null>(null);
   const [showTable, setShowTable] = useState(false);
 
+  // The date span actually present in the data, so the slider cannot promise a
+  // range the graph does not cover.
+  const dated = useMemo(() => {
+    const ds = edges.flatMap((e) => [e.from, e.to].filter(Boolean) as string[]).sort();
+    return ds.length ? { min: ds[0].slice(0, 10), max: ds[ds.length - 1].slice(0, 10), count: ds.length } : null;
+  }, [edges]);
+
   const filter: GraphFilter = useMemo(
-    () => ({ tiers, families: fams, preds: activePreds, query, minAmount }),
-    [tiers, fams, activePreds, query, minAmount],
+    () => ({
+      tiers,
+      families: fams,
+      preds: activePreds,
+      query,
+      minAmount,
+      from: from || undefined,
+      to: to || undefined,
+    }),
+    [tiers, fams, activePreds, query, minAmount, from, to],
   );
 
-  const toggle = <T,>(set: Set<T>, v: T, apply: (s: Set<T>) => void) => {
+  const toggle = <T extends string>(set: Set<T>, v: T, key: string) => {
     const next = new Set(set);
     if (next.has(v)) next.delete(v);
     else next.add(v);
-    apply(next);
+    setParam(key, [...next].join(','));
   };
 
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
@@ -102,7 +140,7 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
           <input
             id="gq"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => setParam('q', e.target.value)}
             placeholder="name, ticker, alias…"
             className="input-field"
           />
@@ -118,7 +156,7 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
                 <input
                   type="checkbox"
                   checked={tiers.has(t)}
-                  onChange={() => toggle(tiers, t, setTiers)}
+                  onChange={() => toggle(tiers, t, 'tier')}
                   className="accent-accent"
                 />
                 <TierChip tier={t} />
@@ -136,7 +174,7 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
           <div className="space-y-1.5">
             {families.map((f) => (
               <label key={f} className="flex items-center gap-2.5 cursor-pointer text-[13px]">
-                <input type="checkbox" checked={fams.has(f)} onChange={() => toggle(fams, f, setFams)} className="accent-accent" />
+                <input type="checkbox" checked={fams.has(f)} onChange={() => toggle(fams, f, 'fam')} className="accent-accent" />
                 <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: FAMILY_COLOR[f] }} />
                 <span className="text-text-secondary">{FAMILY_LABEL[f]}</span>
               </label>
@@ -154,7 +192,7 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
                 <input
                   type="checkbox"
                   checked={activePreds.has(p)}
-                  onChange={() => toggle(activePreds, p, setActivePreds)}
+                  onChange={() => toggle(activePreds, p, 'pred')}
                   className="accent-accent"
                 />
                 <span className="text-text-secondary">{PRED_LABEL[p] ?? p}</span>
@@ -162,7 +200,7 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
             ))}
           </div>
           {activePreds.size > 0 && (
-            <button onClick={() => setActivePreds(new Set())} className="btn-ghost mt-2 !py-1 !px-2 !text-[11px]">
+            <button onClick={() => setParam('pred', null)} className="btn-ghost mt-2 !py-1 !px-2 !text-[11px]">
               clear — show all
             </button>
           )}
@@ -180,15 +218,67 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
               max={1000}
               step={25}
               value={minAmount}
-              onChange={(e) => setMinAmount(Number(e.target.value))}
+              onChange={(e) => setParam('min', e.target.value === '0' ? null : e.target.value)}
               className="w-full accent-accent"
             />
           </div>
         )}
 
-        <button onClick={() => setShowTable((s) => !s)} className="btn-ghost w-full !text-[12px]">
-          {showTable ? 'Hide' : 'Show'} table view
-        </button>
+        {dated && (
+          <fieldset>
+            <legend className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted mb-2">
+              Time range
+            </legend>
+            <div className="space-y-2">
+              <label className="block">
+                <span className="text-[11px] text-text-muted">from</span>
+                <input
+                  type="date"
+                  value={from}
+                  min={dated.min}
+                  max={dated.max}
+                  onChange={(e) => setParam('from', e.target.value)}
+                  className="input-field !py-1.5 !text-[12px]"
+                />
+              </label>
+              <label className="block">
+                <span className="text-[11px] text-text-muted">to</span>
+                <input
+                  type="date"
+                  value={to}
+                  min={dated.min}
+                  max={dated.max}
+                  onChange={(e) => setParam('to', e.target.value)}
+                  className="input-field !py-1.5 !text-[12px]"
+                />
+              </label>
+            </div>
+            <p className="text-[11px] text-text-muted mt-2 leading-snug">
+              {dated.count} of {edges.length * 2} possible date fields are populated. Undated relationships
+              are <strong>never</strong> hidden by this filter — absence of a date is not evidence about
+              when something happened.
+            </p>
+          </fieldset>
+        )}
+
+        <div className="space-y-1.5">
+          <button onClick={() => setShowTable((s) => !s)} className="btn-ghost w-full !text-[12px]">
+            {showTable ? 'Hide' : 'Show'} table view
+          </button>
+          {[...params.keys()].length > 0 && (
+            <>
+              <button
+                onClick={() => navigator.clipboard?.writeText(window.location.href)}
+                className="btn-ghost w-full !text-[12px]"
+              >
+                copy link to this view
+              </button>
+              <button onClick={() => setParams(new URLSearchParams(), { replace: true })} className="btn-ghost w-full !text-[12px]">
+                reset filters
+              </button>
+            </>
+          )}
+        </div>
       </aside>
 
       {/* ---- graph + detail ---- */}

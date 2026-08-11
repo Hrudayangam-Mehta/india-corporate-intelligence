@@ -18,6 +18,7 @@ import {
   Ruler,
   BookOpen,
   Waypoints,
+  Users,
 } from 'lucide-react';
 import { COMPANIES, COMPANIES_AS_OF } from '../data/companies';
 import { MINISTERS } from '../data/politics';
@@ -31,6 +32,7 @@ const navGroups: { label: string; items: { path: string; label: string; icon: ty
       { path: '/map', label: 'NSE / BSE map', icon: Map },
       { path: '/industries', label: 'Industries', icon: Factory },
       { path: '/conglomerates', label: 'Conglomerates', icon: Building2 },
+      { path: '/interlocks', label: 'Interlocks', icon: Users },
     ],
   },
   {

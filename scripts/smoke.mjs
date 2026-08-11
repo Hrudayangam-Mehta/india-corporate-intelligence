@@ -37,6 +37,7 @@ const ROUTES = [
   ['/search', 'search'],
   ['/watchlist', 'watchlist'],
   ['/motifs', 'motifs'],
+  ['/interlocks', 'interlocks'],
 ];
 
 const failures = [];
