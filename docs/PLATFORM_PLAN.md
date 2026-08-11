@@ -245,6 +245,43 @@ Toggle **Centre** / **State** / **Both**.
 Nodes: awarding bodies, ministries, states, winning companies, promoter groups.
 Edges: `award` (tiered, valued, dated).
 
+### 6.4 What the state sweep established, and what it forecloses
+
+The state procurement research came back, and its central result is negative and
+load-bearing. It should be read before building anything in §6.
+
+| Measure | Result |
+|---|---|
+| Awards recovered | 37, across 11 of 13 states in scope |
+| States with a **machine-readable** procurement portal | **0 of 13** |
+| Awards carrying a sourced rupee value | **5 of 37** |
+| Awards carrying a **bidder count** | **0 of 37** |
+| Awards sourced from the *awarding state* | **0** — every one came from the winner's own disclosures or trade press |
+
+Eight state portals were reached and are all running the same NIC GePNIC build:
+tender-by-tender web UI, an MIS-report link, no API, no bulk export. Five more
+refused connection and are recorded `portalFound: false` with an explicit
+*unverified, not established absent* note rather than as absence.
+
+**Telangana and West Bengal show zero awards, and that is a disclosure fact rather
+than an activity fact.** Telangana announces allotments to "70 companies" and "113
+firms" without naming one; WBIDC's dashboard publishes application counts, not
+allottees. Chhattisgarh is documented-negative: the state utility refused an RTI for
+a mining MDO agreement and the State Information Commission had to order disclosure
+in 2019.
+
+**The foreclosure: zero bidder counts means no state-level concentration claim is
+available at all.** §6.3 below requires bidder counts on the edge, because a
+sole-bidder award and a twelve-bidder award are identical in a network diagram and
+completely different facts. That requirement cannot be met from state data. So the
+state tender graph ships as a **coverage map** — who publishes what, and who
+publishes nothing — and not as a concentration analysis. Anything stronger would be
+asserting structure the data cannot carry.
+
+That is not a disappointing result. *No Indian state publishes queryable procurement
+data* is a more useful finding than a ranked list of who won most, and it is the
+kind of claim the transparency map can make honestly.
+
 **What this graph must do to be worth building:**
 
 - Report **bidder counts** on the edge. A sole-bidder award and a twelve-bidder

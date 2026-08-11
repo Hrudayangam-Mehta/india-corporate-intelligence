@@ -183,6 +183,10 @@
       "https://en.wikipedia.org/wiki/Adani_Group"
     ],
     [
+      "Wikipedia - HAL Tejas (Indian Air Force Mk1A production orders: values, dates and clearing authority, with citations to the underlying announcements)",
+      "https://en.wikipedia.org/wiki/HAL_Tejas"
+    ],
+    [
       "Wind Insider - SECI Tranche-XIX wind auction: Waaree, KP Energy and Vena Energy among seven winners of 1.2 GW",
       "https://windinsider.com/2026/02/05/seci-tranche-xix-wind-auction-waaree-kp-energy-vena-energy-among-winners-in-1-2-gw-ists-auction/"
     ]
@@ -2365,6 +2369,52 @@
           "https://api.bseindia.com/BseIndiaAPI/api/AnnSubCategoryGetData/w?strScrip=541019&strPrevDate=20230330&strToDate=20230402"
         ]
       ]
+    },
+    {
+      "id": "def-hal-tejas-mk1a-83",
+      "awardingBody": "Ministry of Defence",
+      "ministry": "Ministry of Defence",
+      "sector": "defence",
+      "winner": "Hindustan Aeronautics Limited",
+      "winnerGroup": "PSU-GoI",
+      "winnerNse": "HAL",
+      "what": "Contract for 83 Tejas Mk1A light combat aircraft for the Indian Air Force",
+      "valueCr": 48000.0,
+      "awardDate": "2021-02-03",
+      "processType": "unknown",
+      "bidders": null,
+      "soleBidder": null,
+      "tier": "reported",
+      "notes": "Procurement cleared by the Cabinet Committee on Security; contract signed by the Ministry of Defence with HAL. THE DECISIVE FACT IS MISSING: no source fetched states whether this was a single-vendor placement with the aircraft's design authority or a competitive procurement, so processType is recorded as 'unknown' and NOT as 'nomination'. Do not use this row to characterise how the Ministry of Defence awards contracts generally - it is one contract with no denominator. MoD's total capital-acquisition contract count and value per financial year, and the split between nomination to defence PSUs and competitive tender, could not be sourced: mod.gov.in did not respond to fetches from this environment.",
+      "srcs": [
+        [
+          "Wikipedia - HAL Tejas (Indian Air Force Mk1A production orders: values, dates and clearing authority, with citations to the underlying announcements)",
+          "https://en.wikipedia.org/wiki/HAL_Tejas"
+        ]
+      ]
+    },
+    {
+      "id": "def-hal-tejas-mk1a-97",
+      "awardingBody": "Ministry of Defence",
+      "ministry": "Ministry of Defence",
+      "sector": "defence",
+      "winner": "Hindustan Aeronautics Limited",
+      "winnerGroup": "PSU-GoI",
+      "winnerNse": "HAL",
+      "what": "Follow-on contract for 97 Tejas Mk1A light combat aircraft, placed under the Buy (Indian-IDDM) category",
+      "valueCr": 62370.0,
+      "awardDate": "2025-09-25",
+      "processType": "unknown",
+      "bidders": null,
+      "soleBidder": null,
+      "tier": "reported",
+      "notes": "Same caveat as the 83-aircraft contract: the source records the acquisition category as Buy (Indian-IDDM) but does not state whether the award was competitive or single-vendor, so processType is 'unknown'. These two rows are the only defence entries in this file. They are not a sample of MoD procurement and must not be aggregated into any share - see the defence entry in gaps.",
+      "srcs": [
+        [
+          "Wikipedia - HAL Tejas (Indian Air Force Mk1A production orders: values, dates and clearing authority, with citations to the underlying announcements)",
+          "https://en.wikipedia.org/wiki/HAL_Tejas"
+        ]
+      ]
     }
   ],
   "byMinistry": [
@@ -2409,6 +2459,13 @@
       "totalValueCr": 26155.0,
       "distinctWinners": 3,
       "note": "Covers ISTS transmission awarded under tariff-based competitive bidding, plus renewable generation auctions run by NHPC and NTPC as intermediary procurers. Values for the transmission rows are project costs attributed to the National Committee on Transmission, not bid tariffs."
+    },
+    {
+      "ministry": "Ministry of Defence",
+      "awardCount": 2,
+      "totalValueCr": 110370.0,
+      "distinctWinners": 1,
+      "note": "Two rows only, both placed with the same company for the same aircraft type. This is not a sample of Ministry of Defence procurement and no ministry-level share, ranking or trend may be computed from it. The fact that would make defence rows analysable - the split between contracts awarded on nomination to defence public sector undertakings and those awarded by competitive tender, against MoD's annual total - is absent from this file."
     }
   ],
   "concentration": [
@@ -2552,11 +2609,11 @@
     },
     {
       "claim": "Share of the 259-company universe appearing as a named winner anywhere in this file (all ten priority sectors, all years covered)",
-      "rate": 8.11,
-      "numerator": 21,
+      "rate": 8.49,
+      "numerator": 22,
       "denominator": 259,
       "denominatorLabel": "the 259 large listed Indian companies in research/raw/companies-by-state.json",
-      "reading": "A FLOOR, not a base rate. It measures how many universe companies this particular search surfaced, which is bounded by how much searching was done and which sectors were chosen. It is reported so that the file's own coverage is legible: the overwhelming majority of the 259 companies do not appear here, and that is a statement about this file, not about those companies. Companies matched: ADANIENSOL, ADANIENT, ADANIGREEN, ADANIPOWER, AMBUJACEM, BHARTIARTL, COALINDIA, DBL, GMDCLTD, HINDALCO, IDEA, JKCEMENT, JPPOWER, JSWSTEEL, LLOYDSME, NLCINDIA, NTPC, RELIANCE, SARDAEN, ULTRACEMCO, VEDL.",
+      "reading": "A FLOOR, not a base rate. It measures how many universe companies this particular search surfaced, which is bounded by how much searching was done and which sectors were chosen. It is reported so that the file's own coverage is legible: the overwhelming majority of the 259 companies do not appear here, and that is a statement about this file, not about those companies. Companies matched: ADANIENSOL, ADANIENT, ADANIGREEN, ADANIPOWER, AMBUJACEM, BHARTIARTL, COALINDIA, DBL, GMDCLTD, HAL, HINDALCO, IDEA, JKCEMENT, JPPOWER, JSWSTEEL, LLOYDSME, NLCINDIA, NTPC, RELIANCE, SARDAEN, ULTRACEMCO, VEDL.",
       "srcs": [
         [
           "ICIP company universe used as the matching set (259 large listed Indian companies)",
@@ -2616,11 +2673,11 @@
     },
     {
       "claim": "Share of awards in this file for which a number of competing bidders could be sourced",
-      "rate": 18.6,
+      "rate": 18.18,
       "numerator": 16,
-      "denominator": 86,
-      "denominatorLabel": "all 86 awards recorded in this file",
-      "reading": "16 of 86 awards carry a bidder count; 70 do not. This is the file's most important self-diagnostic. A sole-bidder award and a twelve-bidder award are entirely different facts, and Indian central procurement publishes the winner far more reliably than it publishes the field. Where bidder counts are absent the award tells you who won and nothing about whether anyone else tried. The bidders field counts COMPANIES THAT COMPETED, never companies that won: several multi-winner rows in this file name five or eleven winners, and in every such case the bidders field is deliberately null because the size of the competing field is unpublished. Conflating the two would have raised this rate from 18.6% to 38.4% while measuring nothing. Not one of the 34 coal rows has a bidder count, and only one of the 13 roads rows does; the sectors where bidder counts do exist are airports, telecom spectrum and power transmission.",
+      "denominator": 88,
+      "denominatorLabel": "all 88 awards recorded in this file",
+      "reading": "16 of 88 awards carry a bidder count; 72 do not. This is the file's most important self-diagnostic. A sole-bidder award and a twelve-bidder award are entirely different facts, and Indian central procurement publishes the winner far more reliably than it publishes the field. Where bidder counts are absent the award tells you who won and nothing about whether anyone else tried. The bidders field counts COMPANIES THAT COMPETED, never companies that won: several multi-winner rows in this file name five or eleven winners, and in every such case the bidders field is deliberately null because the size of the competing field is unpublished. Conflating the two would have raised this rate from 18.6% to 38.4% while measuring nothing. Not one of the 34 coal rows has a bidder count, and only one of the 13 roads rows does; the sectors where bidder counts do exist are airports, telecom spectrum and power transmission.",
       "srcs": []
     },
     {
@@ -2653,7 +2710,7 @@
     "NHAI TOT bundles 1 through 10: no winner, value or bidder count could be sourced for any of them. The TOT concentration row is therefore a window (bundles 11-19), not the programme.",
     "Winners of NHAI TOT bundles 11, 12 and 16 (Rs 13,245 crore combined) are not named in any source fetched. They are carried as null-winner rows so the denominator is not understated.",
     "PORTS: no rows. Major-port PPP terminal concessions under the Ministry of Ports, Shipping and Waterways were not reached in this pass. Needs: concession award records from shipmin.gov.in, sagarmala.gov.in and individual major port authority sites, for Adani Ports, JSW Infrastructure, DP World, PSA and J M Baxi, plus a count of how many major-port concessions were awarded in the period as the denominator.",
-    "DEFENCE: no rows. The decisive missing fact is the split between contracts awarded on NOMINATION to defence PSUs (HAL, BEL, BDL, Mazagon Dock, GRSE, Cochin Shipyard, BEML) and those awarded by competitive tender, together with MoD's total capital-acquisition contract count and value per financial year. Without that split, a list of DPSU contract wins would mislead: many are single-vendor by policy, not by competition.",
+    "DEFENCE: only two rows, both HAL Tejas Mk1A orders, and neither establishes the process basis. The decisive missing fact is the split between contracts awarded on NOMINATION to defence PSUs (HAL, BEL, BDL, Mazagon Dock, GRSE, Cochin Shipyard, BEML) and those awarded by competitive tender, together with MoD's total capital-acquisition contract count and value per financial year. Without that split, a list of DPSU contract wins would mislead: many are single-vendor by policy, not by competition. mod.gov.in did not respond to fetches from this environment, and the Wikipedia articles on Mazagon Dock and the submarine, frigate and destroyer programmes carry no contract values, dates or process basis, so nothing further could be added.",
     "RAILWAYS: no rows. Needs Vande Bharat trainset contract awards and bidder counts, the Siemens 9000HP locomotive contract, annual wagon procurement totals as a denominator for Titagarh / Jupiter Wagons / Texmaco shares, and the 2020-22 private passenger train tender, where the number of clusters offered against the number of bids received is a documented low-participation outcome worth recording.",
     "FOOD / FCI SILOS: no rows. Needs the count of silo locations tendered versus awarded under the DBFOT/DBFOO model, capacity per operator, and total FCI silo capacity as the denominator.",
     "Group attribution is unconfirmed for several winners. Mahan Energen Ltd, EMIL Mines and Mineral Resources, and Stratatech Mineral Resources appear in the Ministry of Coal file; press reporting associates some of them with the Adani group, but no fetched source establishes it, so winnerGroup is null for those rows. Likewise 'Reliance New Energy Solar Limited', 'Reliance New Solar Energy Limited', 'TP Solar Limited', 'JSW Renewable Technologies Limited' and 'JSW Energy Utkal Limited' are attributed by corporate name only. Under the project's identity test, name match alone is not sufficient; these need confirmation from a company filing or a registrar record.",
