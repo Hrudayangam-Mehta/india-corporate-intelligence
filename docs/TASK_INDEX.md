@@ -63,6 +63,9 @@
 | C021 | Build NIFTY 50 index page | P1 | [x] | @tryclaw | india-corporate-intelligence | C004 |
 | C022 | Build NIFTY 50 stock cards with sparklines | P1 | [x] | @tryclaw | india-corporate-intelligence | C021 |
 | C023 | Add sector allocation pie chart for NIFTY 50 | P2 | [ ] | - | india-corporate-intelligence | C021 |
+| C024 | Build Reliance deep-dive page with world map | P1 | [x] | @tryclaw | india-corporate-intelligence | C005 |
+| C025 | Build Adani Group deep-dive page with world map | P1 | [x] | @tryclaw | india-corporate-intelligence | C005 |
+| C026 | Create Sparkline component for stock trends | P1 | [x] | @tryclaw | india-corporate-intelligence | C022 |
 
 ## Section D: Frontend - Advanced Maps (D001-D099)
 
@@ -81,6 +84,8 @@
 | D011 | Create dedicated NSE map page | P1 | [x] | @tryclaw | india-corporate-intelligence | C006 |
 | D012 | Create dedicated BSE map page | P1 | [x] | @tryclaw | india-corporate-intelligence | C006 |
 | D013 | Add exchange filter to map explorer | P2 | [x] | @tryclaw | india-corporate-intelligence | D011,D012 |
+| D014 | Create RealisticIndiaMap with accurate boundaries | P1 | [x] | @tryclaw | india-corporate-intelligence | C006 |
+| D015 | Create WorldMap component with connection lines | P1 | [x] | @tryclaw | india-corporate-intelligence | D014 |
 
 ## Section E: Frontend - Network & Graph (E001-E099)
 
@@ -216,12 +221,13 @@
 | N006 | Create focus group transcripts | P2 | [ ] | - | icip-docs | - |
 | N007 | Write research ethics guidelines | P2 | [ ] | - | icip-docs | - |
 | N008 | Document deployment procedures | P2 | [ ] | - | icip-docs | A004 |
+| N009 | Write comprehensive README with repo usage | P1 | [x] | @tryclaw | india-corporate-intelligence | - |
 
 ---
 
 ## Active Tasks Summary
 
-**Completed:** A001-A003, B007, C001-C015, E001
+**Completed:** A001-A003, B007, C001-C026, D011-D015, E001, N009
 **In Progress:** B001, C013
 **Blocked:** -
 
