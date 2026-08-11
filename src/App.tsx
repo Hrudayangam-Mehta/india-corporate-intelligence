@@ -23,6 +23,7 @@ const CompanyProfile = lazy(() => import('./pages/CompanyProfile'));
 const NetworkView = lazy(() => import('./pages/NetworkView'));
 const GeoGraph = lazy(() => import('./pages/GeoGraph'));
 const Cabinet = lazy(() => import('./pages/Cabinet'));
+const Tenders = lazy(() => import('./pages/Tenders'));
 const Conglomerates = lazy(() => import('./pages/Conglomerates'));
 const GroupDeepDive = lazy(() => import('./pages/GroupDeepDive'));
 const Atlas = lazy(() => import('./pages/Atlas'));
@@ -70,6 +71,7 @@ function App() {
                     <Route path="/network" element={<NetworkView />} />
                     <Route path="/geograph" element={<GeoGraph />} />
                     <Route path="/cabinet" element={<Cabinet />} />
+                    <Route path="/tenders" element={<Tenders />} />
                     <Route path="/conglomerates" element={<Conglomerates />} />
                     <Route path="/conglomerates/:id" element={<GroupDeepDive />} />
                     <Route path="/atlas" element={<Atlas />} />

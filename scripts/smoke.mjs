@@ -85,6 +85,9 @@ const ROUTES = [
   ['/conglomerates/adani', 'deepdive-adani'],
   ['/conglomerates/tata', 'deepdive-nodata'],
   ['/provenance', 'provenance'],
+  ['/tenders', 'tenders'],
+  ['/tenders?view=map&scope=states', 'tenders-map'],
+  ['/tenders?view=graph&scope=centre', 'tenders-graph'],
   ['/geograph', 'geograph'],
   ['/geograph?mode=state-flows&layer=all', 'geograph-flows'],
 ];
