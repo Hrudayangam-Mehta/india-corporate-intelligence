@@ -17,6 +17,7 @@ import {
   Scale,
   Ruler,
   BookOpen,
+  Waypoints,
 } from 'lucide-react';
 import { COMPANIES, COMPANIES_AS_OF } from '../data/companies';
 import { MINISTERS } from '../data/politics';
@@ -45,6 +46,7 @@ const navGroups: { label: string; items: { path: string; label: string; icon: ty
     label: 'Method',
     items: [
       { path: '/patterns', label: 'Pattern discipline', icon: Ruler },
+      { path: '/motifs', label: 'Motif engine', icon: Waypoints },
       { path: '/evidence', label: 'Evidence audit', icon: Scale },
       { path: '/base-rates', label: 'Base rates', icon: BookOpen },
       { path: '/method', label: 'How this is built', icon: BookOpen },

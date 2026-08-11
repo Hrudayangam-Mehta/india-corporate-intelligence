@@ -36,6 +36,7 @@ const ROUTES = [
   ['/media', 'media'],
   ['/search', 'search'],
   ['/watchlist', 'watchlist'],
+  ['/motifs', 'motifs'],
 ];
 
 const failures = [];

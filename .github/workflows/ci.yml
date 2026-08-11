@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      # The four invariants. This is the gate that makes them true by
+      # construction rather than by author care: every edge carries sources or is
+      # tier alleged/analytic, every analytic edge carries an innocent reading,
+      # no unresolved entity holds an edge, every superseded fact stays
+      # addressable, and every motif census has a denominator.
+      - name: Data integrity
+        run: npm run validate
+
+      - name: Typecheck and build
+        run: npm run build
+
+      - name: Install Chromium for the render smoke test
+        run: npx playwright install --with-deps chromium
+
+      - name: Headless render smoke test
+        run: |
+          npx vite preview --port 4173 --host 127.0.0.1 &
+          npx wait-on --timeout 60000 http://127.0.0.1:4173
+          node scripts/smoke.mjs http://127.0.0.1:4173

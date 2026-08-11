@@ -17,6 +17,7 @@ import Cabinet from './pages/Cabinet';
 import Conglomerates from './pages/Conglomerates';
 import Atlas from './pages/Atlas';
 import Method from './pages/Method';
+import Motifs from './pages/Motifs';
 import { DataProvider } from './context/DataContext';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/patterns" element={<Patterns />} />
             <Route path="/evidence" element={<EvidenceAudit />} />
             <Route path="/base-rates" element={<BaseRates />} />
+            <Route path="/motifs" element={<Motifs />} />
             <Route path="/method" element={<Method />} />
             <Route path="/industries" element={<IndustryView />} />
             <Route path="/political" element={<PoliticalView />} />
