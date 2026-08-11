@@ -48,7 +48,7 @@
  */
 
 import type { GNode, GEdge, Predicate } from './schema';
-import { rewire, type RawEdge } from './nullModel';
+import { rewire, rewireStratified, type RawEdge } from './nullModel';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -74,8 +74,10 @@ export interface Candidate {
 }
 
 export interface ScoredCandidate extends Candidate {
-  /** BH-adjusted q-value across the declared family. */
+  /** BY-adjusted q-value across the declared family. This is the one that decides. */
   q: number;
+  /** BH-adjusted, shown only to expose what the weaker independence assumption buys. */
+  qBH: number;
   survivesFDR: boolean;
   /** Present in both halves of the split-half test. */
   replicated: boolean | null;
@@ -94,6 +96,12 @@ export interface ShapeResult {
   /** Shape-level motif significance against a degree-preserving rewiring. */
   shapeZ: number | null;
   shapeNullMean: number | null;
+  /**
+   * The same statistic against a null that also preserves the sector x state mixing
+   * matrix. Lower than `shapeZ` means part of the signal was co-location, not structure.
+   */
+  shapeZStratified: number | null;
+  shapeNullMeanStratified: number | null;
   /** True when the shape was too large to afford a rewiring ensemble. Reported, not hidden. */
   nullSkipped?: boolean;
   shuffles: number;
@@ -173,6 +181,38 @@ export function benjaminiHochbergQ(pValues: number[], familySize: number): numbe
     q[i] = Math.min(1, prev);
   }
   return q;
+}
+
+/**
+ * The BY dependence penalty, c(n) = sum_{i=1..n} 1/i.
+ * Grows like ln(n) + 0.577, so a family of 2,180 costs a factor of about 8.2.
+ */
+export function harmonicPenalty(n: number): number {
+  let c = 0;
+  for (let i = 1; i <= n; i++) c += 1 / i;
+  return c;
+}
+
+/**
+ * Benjamini–Yekutieli — BH scaled by the harmonic penalty, valid under ARBITRARY
+ * dependence between tests.
+ *
+ * This is the q-value the prospector reports, and plain BH is shown beside it only
+ * so the cost of the weaker assumption is visible. BH requires independence or
+ * positive dependence, and on a graph neither holds:
+ *
+ *  - Ginoza & Mugler (2010) show the edge-swapping randomisation ITSELF induces
+ *    correlations between subgraph counts, with no guarantee of sign.
+ *  - Fodor et al. (2020) measure correlations between motif frequencies reaching
+ *    -0.999 in a real network.
+ *
+ * Negative dependence is exactly the case BH is not proved for, so using it here
+ * would be assuming away the one property the literature says is violated.
+ */
+export function benjaminiYekutieliQ(pValues: number[], familySize: number): number[] {
+  const n = Math.max(familySize, pValues.length);
+  const c = harmonicPenalty(n);
+  return benjaminiHochbergQ(pValues, familySize).map((q) => Math.min(1, q * c));
 }
 
 // ---------------------------------------------------------------------------
@@ -462,6 +502,14 @@ export function prospect(nodes: GNode[], edges: GEdge[], opts: ProspectOptions =
   const shuffles = opts.shuffles ?? 60;
   const topN = opts.topN ?? 12;
 
+  // The stratum is what the second null holds fixed. `fam` is the closest thing this
+  // schema has to a sector and `st` is geography, so `fam x state` is the corporate
+  // analogue of the spatial clustering Artzy-Randrup showed a plain null is blind to.
+  // Nodes with no state (persons, laws, mechanisms) form their own stratum rather
+  // than being silently pooled with one.
+  const stratumById = new Map(nodes.map((n) => [n.id, `${n.fam}:${n.st ?? 'none'}`]));
+  const stratumOf = (id: string) => stratumById.get(id) ?? 'unknown';
+
   const ctx = buildCtx(nodes, edges);
   const [halfA, halfB] = splitHalves(ctx.edges);
   const ctxA = buildCtx(nodes, halfA);
@@ -484,6 +532,8 @@ export function prospect(nodes: GNode[], edges: GEdge[], opts: ProspectOptions =
         replicated: 0,
         shapeZ: null,
         shapeNullMean: null,
+        shapeZStratified: null,
+        shapeNullMeanStratified: null,
         nullSkipped: false,
         shuffles,
         top: [],
@@ -492,11 +542,10 @@ export function prospect(nodes: GNode[], edges: GEdge[], opts: ProspectOptions =
       continue;
     }
 
-    // 2. CORRECT across the whole declared family.
-    const qs = benjaminiHochbergQ(
-      candidates.map((x) => x.p),
-      enumerated,
-    );
+    // 2. CORRECT across the whole declared family, under arbitrary dependence.
+    const ps = candidates.map((x) => x.p);
+    const qs = benjaminiYekutieliQ(ps, enumerated);
+    const qsBH = benjaminiHochbergQ(ps, enumerated);
 
     // 3. REPLICATE — does the candidate survive in both halves independently?
     const inA = new Set(shape.enumerate(ctxA).filter((x) => x.p < q).map((x) => x.id));
@@ -505,6 +554,7 @@ export function prospect(nodes: GNode[], edges: GEdge[], opts: ProspectOptions =
     const scored: ScoredCandidate[] = candidates.map((cand, i) => ({
       ...cand,
       q: qs[i],
+      qBH: qsBH[i],
       survivesFDR: qs[i] <= q,
       replicated: opts.requireReplication === false ? null : inA.has(cand.id) && inB.has(cand.id),
     }));
@@ -515,12 +565,13 @@ export function prospect(nodes: GNode[], edges: GEdge[], opts: ProspectOptions =
     // Above the budget below this runs for minutes in a browser, and a z-score nobody
     // waits for is worth less than an honest "not computed" — so the guard reports
     // that rather than silently thinning the ensemble to something meaningless.
+    // Two nulls now, so the budget covers both ensembles.
     const ENUMERATION_BUDGET = 40_000;
-    const affordable = enumerated * shuffles <= ENUMERATION_BUDGET;
+    const affordable = enumerated * shuffles * 2 <= ENUMERATION_BUDGET;
 
-    let nullMean = 0;
-    let sd = 0;
     const observedCount = scored.filter((s) => s.p < q).length;
+    let plain: { mean: number; sd: number } | null = null;
+    let strat: { mean: number; sd: number } | null = null;
 
     if (affordable) {
       const raw: RawEdge[] = ctx.edges.map((e) => ({ s: e.s, t: e.t, pred: e.pred }));
@@ -528,11 +579,20 @@ export function prospect(nodes: GNode[], edges: GEdge[], opts: ProspectOptions =
         const fake: GEdge[] = es.map((e) => ({ s: e.s, t: e.t, pred: e.pred as Predicate, tier: 'documented' }));
         return shape.enumerate(buildCtx(nodes, fake)).filter((x) => x.p < q).length;
       };
-      const samples: number[] = [];
-      for (let i = 0; i < shuffles; i++) samples.push(countFn(rewire(raw, i + 1)));
-      nullMean = samples.reduce((a, b) => a + b, 0) / Math.max(1, samples.length);
-      const variance = samples.reduce((a, b) => a + (b - nullMean) ** 2, 0) / Math.max(1, samples.length - 1);
-      sd = Math.sqrt(variance);
+      const moments = (samples: number[]) => {
+        const mean = samples.reduce((a, b) => a + b, 0) / Math.max(1, samples.length);
+        const v = samples.reduce((a, b) => a + (b - mean) ** 2, 0) / Math.max(1, samples.length - 1);
+        return { mean, sd: Math.sqrt(v) };
+      };
+
+      const plainSamples: number[] = [];
+      const stratSamples: number[] = [];
+      for (let i = 0; i < shuffles; i++) {
+        plainSamples.push(countFn(rewire(raw, i + 1)));
+        stratSamples.push(countFn(rewireStratified(raw, stratumOf, i + 1)));
+      }
+      plain = moments(plainSamples);
+      strat = moments(stratSamples);
     }
 
     const survivors = scored
@@ -547,8 +607,10 @@ export function prospect(nodes: GNode[], edges: GEdge[], opts: ProspectOptions =
       nonTrivial: scored.filter((s) => s.observed > s.expected).length,
       survivedFDR: scored.filter((s) => s.survivesFDR).length,
       replicated: survivors.length,
-      shapeZ: !affordable || sd === 0 ? null : (observedCount - nullMean) / sd,
-      shapeNullMean: affordable ? nullMean : null,
+      shapeZ: !plain || plain.sd === 0 ? null : (observedCount - plain.mean) / plain.sd,
+      shapeNullMean: plain ? plain.mean : null,
+      shapeZStratified: !strat || strat.sd === 0 ? null : (observedCount - strat.mean) / strat.sd,
+      shapeNullMeanStratified: strat ? strat.mean : null,
       nullSkipped: !affordable,
       shuffles,
       top: survivors.slice(0, topN),

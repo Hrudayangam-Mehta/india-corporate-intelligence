@@ -59,21 +59,57 @@ denominator and inflates every q-value that survives.
 The count from step 2 **is** the multiple-comparison family. Record it before any
 candidate is scored. This is the number that makes the correction honest.
 
-### 4. Score against a degree-aware null
+### 4. Score against a degree-aware null — and know that one null is not enough
 
 Every candidate gets a p-value from a null that knows the degree sequence — a
 configuration model analytically, or a degree-preserving rewiring empirically. Hubs
 connect to things; that is what hubs are. A null that does not know this will hand you
 every hub as a discovery.
 
+**Take the p-value from the ensemble, not from the z-score.** Motif counts are often
+Poisson, binomial or multimodal, so converting z to p through a normal tail is
+frequently unjustified — Fodor et al. (2020) document a z of 2011.9 implying
+p ≈ 10⁻⁸⁵⁸⁹⁵⁹ where theory bounds it at 10⁻²⁰⁵³⁸. Use `(atLeast + 1) / (shuffles + 1)`.
+
+**A degree-preserving null is a floor, not a control.** Artzy-Randrup et al. (2004)
+built a purely spatial random network with no motif selection whatsoever and recovered
+the same "significant" motifs Milo et al. found in *C. elegans*. The corporate analogue
+is exact and unavoidable: companies in the same state, sector, size band and
+incorporation vintage share directors, auditors and addresses at elevated rates for
+reasons involving no coordination at all. **A degree-preserving null will report those
+as findings.**
+
+So run two nulls and report both:
+
+| Null | Rules out | Blind to |
+|---|---|---|
+| Degree-preserving | "this is just hubs" | sector, state, size, vintage, regulation |
+| Degree-preserving **and attribute-stratified** | the above, plus co-location and co-sector | anything not in the strata |
+
+**The gap between the two is the diagnostic.** A candidate significant under the plain
+null and not under the stratified one has been explained by sector and geography — that
+is a result, and it belongs in the report.
+
+For a bipartite structure (companies × directors, companies × contracts), rewire the
+bipartite graph itself. **Projecting to one mode and then rewiring destroys the
+constraint that produced the structure** and manufactures motifs.
+
 ### 5. Correct across the whole family
 
-Benjamini–Hochberg at a declared q. FDR rather than family-wise error, because this is
-a discovery pipeline: the question is *what proportion of what I report will be
-wrong*, not *what is the chance I make any error at all*.
+FDR rather than family-wise error, because this is a discovery pipeline: the question
+is *what proportion of what I report will be wrong*, not *what is the chance I make any
+error at all*.
 
 Correct over the **declared family**, not over the survivors, and not per-shape unless
 each shape was declared as its own family in advance.
+
+**Use Benjamini–Yekutieli, not plain Benjamini–Hochberg.** BH assumes independence or
+positive dependence. Neither holds here: Ginoza & Mugler (2010) show the edge-swapping
+randomisation *itself* induces correlations between subgraph counts, of unknown sign,
+and Fodor et al. measure correlations between motif frequencies reaching −0.999. BY
+pays a log-factor penalty — Σ(1/i) over the family — and is valid under arbitrary
+dependence. Report both q-values; the BH column shows what the looser assumption would
+have bought you.
 
 ### 6. Replicate on a split
 
@@ -89,6 +125,40 @@ The headline output is:
 
 A list of survivors without N is exactly the artefact this platform exists not to
 produce. The funnel is the finding; the survivors are the *questions*.
+
+Call this the **discovery funnel** or **survival funnel**. Do not call it a
+"significance funnel" — that term is taken, and means something else: Mathur &
+VanderWeele's (2020) publication-bias diagnostic separating affirmative from
+non-affirmative studies in a meta-analysis, implemented as `significance_funnel()` in
+the R package `PublicationBias`.
+
+## Known limits of this method — state them, do not bury them
+
+Three, and the third is the one that matters most.
+
+1. **No published method applies FDR to a subgraph census.** Correcting across an
+   enumerated motif family is defensible and standard *in spirit*, but the motif
+   literature never validated it — faced with the dependence problem, the field moved
+   to MDL/compression (Bénichou et al. 2024) and ERGMs (Stivala & Lomi 2021) instead
+   of correcting per-subgraph tests. We are extrapolating. Say so.
+2. **The switching null gives non-reproducible p-values.** Fodor et al. report the same
+   network yielding p from 0.011 to 10⁻²⁹ across runs. Seed the RNG, ship the seed, and
+   treat any candidate whose verdict moves across seeds as failed.
+3. **The confidence ceiling is lower here than in GWAS, and for a specific reason.**
+   In GWAS the correlation between tests is measurable and local — linkage
+   disequilibrium decays with distance — and the null is grounded in mechanism
+   (Hardy-Weinberg plus population structure). On a graph, the correlation is global,
+   of unknown sign, and *partly induced by the null process itself*; the degree-
+   preserving null is a convention, not a mechanism. The enumeration discipline
+   transfers. **The confidence does not.** Which is why the output is ranked questions
+   and the evidential weight sits on replication and documentary corroboration, never
+   on the q-value.
+
+If enumeration is unaffordable, **sub-sample the enumeration tree uniformly with a
+declared fraction** (Wernicke's RAND-ESU: attach p_d to each depth, every leaf reached
+with probability ∏p_d, family size recoverable as N_sampled / q). Never prune
+heuristically — a biased sampler cannot produce an honest family size, and an honest
+family size is the whole basis of the method.
 
 ## What the output is, and is not
 

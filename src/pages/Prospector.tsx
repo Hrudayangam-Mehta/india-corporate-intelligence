@@ -84,6 +84,24 @@ function ShapeBlock({ r }: { r: ShapeResult }) {
         )}
       </p>
 
+      {/* The second null is the one that matters most on corporate data, so it is not
+          tucked into a tooltip. A drop from the plain z to the stratified z is the
+          share of the signal that was sector and geography. */}
+      {r.shapeZ != null && r.shapeZStratified != null && (
+        <p className="font-mono text-[10.5px] mt-1">
+          <span className={Math.abs(r.shapeZStratified) >= 2 ? 'text-accent' : 'text-sage'}>
+            stratified z = {r.shapeZStratified.toFixed(2)} holding the sector × state mixing matrix fixed
+            (null mean {r.shapeNullMeanStratified?.toFixed(1)})
+          </span>
+          {Math.abs(r.shapeZ) >= 2 && Math.abs(r.shapeZStratified) < 2 && (
+            <span className="block text-amber mt-0.5">
+              ↳ significant under the plain null and not under the stratified one — co-location
+              explains it, not structure
+            </span>
+          )}
+        </p>
+      )}
+
       <p className="text-[12.5px] text-text-muted mt-2.5 border-l-2 border-border-light pl-3 max-w-[72ch] leading-relaxed">
         {r.caveat}
       </p>
@@ -104,6 +122,7 @@ function ShapeBlock({ r }: { r: ShapeResult }) {
                 observed {cand.observed} · expected {cand.expected.toFixed(2)} · {cand.edges.length} edge
                 {cand.edges.length === 1 ? '' : 's'}
                 {cand.replicated === true ? ' · replicated in both halves' : ''}
+                {' · '}q<sub>BY</sub> {cand.q.toExponential(1)} vs q<sub>BH</sub> {cand.qBH.toExponential(1)}
               </span>
             </li>
           ))}
@@ -357,9 +376,39 @@ export default function Prospector() {
           <strong>Method.</strong> Enumeration is exhaustive over each declared shape, including
           candidates that will score badly — they are part of the denominator, and dropping them
           before correction inflates every q-value that survives. Per-candidate p-values come
-          from a configuration-model null computed from the degree sequence; correction is
-          Benjamini–Hochberg across the whole declared family; replication is a deterministic
-          split-half requiring the candidate to clear the threshold in both halves independently.
+          from a configuration-model null computed from the degree sequence; correction is{' '}
+          <strong>Benjamini–Yekutieli</strong> across the whole declared family; replication is a
+          deterministic split-half requiring the candidate to clear the threshold in both halves
+          independently.
+        </p>
+        <p>
+          <strong>Why Yekutieli and not plain Hochberg.</strong> BH is valid under independence
+          or positive dependence. Neither holds on a graph: the edge-swapping randomisation
+          itself induces correlations between subgraph counts, of unknown sign, and measured
+          correlations between motif frequencies in real networks reach −0.999. Negative
+          dependence is precisely the case BH is not proved for, so using it would mean assuming
+          away the one property the literature says is violated. BY pays a harmonic-number
+          penalty — a factor of about 8 on a family of 2,000 — and holds under arbitrary
+          dependence. Both q-values are printed on every survivor so the cost is visible.
+        </p>
+        <p>
+          <strong>Two nulls, because one is not a control.</strong> A degree-preserving null
+          rules out "this is just hubs" and nothing else. Artzy-Randrup and colleagues built a
+          purely spatial random network with no rule selecting for any motif and recovered the
+          same "significant" motifs that had been reported in <em>C. elegans</em>. The corporate
+          analogue is exact — firms sharing a state and a sector share directors, auditors and
+          counterparties at elevated rates with no coordination whatever. So every shape is also
+          scored against a null that holds the sector × state mixing matrix fixed. A candidate
+          significant under the first and not the second has been explained by co-location, and
+          that is reported on the shape, not buried.
+        </p>
+        <p>
+          <strong>An honest limit.</strong> No published method establishes FDR control over a
+          subgraph census; faced with the dependence problem the motif literature moved to
+          description-length and ERGM approaches rather than correcting per-subgraph tests. The
+          correction here is standard in spirit and not directly validated for this object, which
+          is the main reason the evidential weight sits on replication and on documents rather
+          than on the q-value.
         </p>
         <p>
           <strong>Structural voids carry a specific warning.</strong> An absence in the dataset

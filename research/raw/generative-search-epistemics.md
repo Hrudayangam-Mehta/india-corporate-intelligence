@@ -4,7 +4,7 @@
 
 **Status:** research note / literature review. Companion to `pattern-matching-epistemics.md`, which documents the *failure* side — apophenia, base-rate neglect, the garden of forking paths. This document is its constructive counterpart: the disciplines that make large-scale pattern generation legitimate rather than pathological.
 
-Every citation below was checked against a primary or authoritative secondary source. Items that could not be confirmed are listed in the **UNVERIFIED** section (§11) and are not asserted as fact elsewhere.
+Every citation below was checked against a primary or authoritative secondary source. Items that could not be confirmed are listed in the **UNVERIFIED** section (§13) and are not asserted as fact elsewhere.
 
 ---
 
@@ -194,7 +194,7 @@ Network-specific evidence that this is not hypothetical: Burkhardt & Gießing (2
 
 ### 3.2 Specification-curve analysis — the multiverse of models, with a significance test
 
-Simonsohn, Simmons & Nelson (2020), "Specification curve analysis," *Nature Human Behaviour*, 4(11), 1208–1214 ([DOI: 10.1038/s41562-020-0912-z](https://doi.org/10.1038/s41562-020-0912-z); [author-hosted PDF](https://urisohn.com/sohn_files/wp/wordpress/wp-content/uploads/specification-curve-published-hand-corrected.pdf)). *(A Publisher Correction exists: 4(11), 1215, [DOI: 10.1038/s41562-020-00974-w](https://doi.org/10.1038/s41562-020-00974-w); its content is listed as UNVERIFIED in §11.)*
+Simonsohn, Simmons & Nelson (2020), "Specification curve analysis," *Nature Human Behaviour*, 4(11), 1208–1214 ([DOI: 10.1038/s41562-020-0912-z](https://doi.org/10.1038/s41562-020-0912-z); [author-hosted PDF](https://urisohn.com/sohn_files/wp/wordpress/wp-content/uploads/specification-curve-published-hand-corrected.pdf)). *(A Publisher Correction exists: 4(11), 1215, [DOI: 10.1038/s41562-020-00974-w](https://doi.org/10.1038/s41562-020-00974-w); its content is listed as UNVERIFIED in §13.)*
 
 SCA adds to multiverse analysis the thing a generator most needs: **joint inference across the whole set of specifications**. The three steps, from the abstract:
 
@@ -335,7 +335,7 @@ Their rationale for the normalisation is directly relevant to comparing corporat
 
 **An important caveat they state themselves:** for four-node subgraphs the normalised Z-scores "show a significant dependence on the network size," so they abandon Z-scores there and use a **subgraph ratio profile (SRP)** built on Δᵢ = (N_real,ᵢ − ⟨N_rand,ᵢ⟩)/(N_real,ᵢ + ⟨N_rand,ᵢ⟩ + ε) with ε = 4, again normalised to unit length. In the main text the tetrad analysis covers the six non-directed connected tetrads.
 
-The superfamilies they identify are a useful reminder that motif profiles are a *classification* tool, not a detection tool: rate-limited sensory transcription networks (dominated by the feed-forward loop, triad 7); non-rate-limited biological information processing; WWW plus social networks (dominated by transitive triads 9, 10, 12, 13); word-adjacency networks (characterised by *under*-representation of triads 7–13); and a geometric group covering power grids and protein-structure networks.
+The superfamilies they identify — rate-limited transcription networks dominated by the feed-forward loop; WWW plus social networks dominated by transitive triads; word-adjacency networks characterised by *under*-representation of triangle triads; a geometric group covering power grids and protein structures — are a reminder that motif profiles are a *classification* tool, not a detection tool.
 
 **The transferable idea for this platform:** the right output of a corporate-graph census is a *profile* compared against profiles of comparable registers — an opposition-governed state, a rival conglomerate, an earlier period — not a verdict about a single motif. That is the `pattern-discipline` symmetry check expressed as a statistic.
 
@@ -393,7 +393,7 @@ The single most important implementation detail is theirs: swaps rejected becaus
 
 **The modern treatment.** Fosdick, Larremore, Nishimura & Ugander (2018), "Configuring random graph models with fixed degree sequences," *SIAM Review*, 60(2), 315–355 ([DOI: 10.1137/16M1087175](https://doi.org/10.1137/16M1087175)) is the right primary citation. They lay out **eight** distinct graph spaces from three binary choices — self-loops allowed or not, multi-edges allowed or not, and vertex-labelled versus stub-labelled. Their key structural result: the labelling choice is immaterial for simple graphs but **material for multigraphs and loopy graphs, where the field's stub-labelled default systematically inflates self-loops and multi-edges.** They prove uniformity of the double-edge-swap chain via double stochasticity, irreducibility and aperiodicity on the graph of graphs; for stub-labelled spaces the plain algorithm suffices, but for **vertex-labelled** spaces regularity fails and a Metropolis-style accept/reject correction keyed to edge multiplicities and self-loops is required. They are explicit that mixing-time theory for the non-simple spaces is poorly developed.
 
-Supporting classics: Bollobás (1980), *European Journal of Combinatorics*, 1(4), 311–316 ([DOI: 10.1016/S0195-6698(80)80030-8](https://doi.org/10.1016/S0195-6698(80)80030-8)) for the configuration/stub-matching construction; Molloy & Reed (1995), *Random Structures & Algorithms*, 6(2–3), 161–180 ([DOI: 10.1002/rsa.3240060204](https://doi.org/10.1002/rsa.3240060204)); Newman, Strogatz & Watts (2001), *Physical Review E*, 64, 026118 ([DOI: 10.1103/PhysRevE.64.026118](https://doi.org/10.1103/PhysRevE.64.026118)); and Kannan, Tetali & Vempala (1999), *Random Structures & Algorithms*, 14(4), 293–308 ([DOI](https://doi.org/10.1002/(SICI)1098-2418(199907)14:4%3C293::AID-RSA1%3E3.0.CO;2-G)) for rigorous rapid-mixing bounds on the switch chain.
+Supporting classics for the configuration model and switch-chain mixing — Bollobás (1980), Molloy & Reed (1995), Newman, Strogatz & Watts (2001), Kannan, Tetali & Vempala (1999) — are listed in §12.
 
 Also relevant to a *bipartite* corporate graph (companies × directors, companies × contracts): the same machinery applies, but the space and its swap moves must be defined on the bipartite structure, not on a projection. **Projecting a bipartite graph to one mode and then rewiring destroys the constraint that produced the structure**, and will manufacture apparent motifs.
 
@@ -414,10 +414,9 @@ Two further sources on the dependence structure:
 
 **The field's response has been to abandon per-subgraph testing rather than to correct it**, and this is worth knowing before building anything:
 
-- **MDL / compression:** Bénichou, Masson & Vestergaard (2024), "Compression-based inference of network motif sets," *PLOS Computational Biology*, 20(10), e1012460 ([DOI: 10.1371/journal.pcbi.1012460](https://doi.org/10.1371/journal.pcbi.1012460)) name the problem directly — "accounting for the large number of possible motifs and their potential correlations in statistical testing" — and offer a minimum-description-length method that "inherently accounts for multiple testing and correlations between subgraphs."
+- **MDL / compression:** Bénichou, Masson & Vestergaard (2024), *PLOS Computational Biology*, 20(10), e1012460 ([DOI: 10.1371/journal.pcbi.1012460](https://doi.org/10.1371/journal.pcbi.1012460)) name the problem directly — "accounting for the large number of possible motifs and their potential correlations in statistical testing" — and offer a minimum-description-length method that "inherently accounts for multiple testing and correlations between subgraphs."
 - **ERGM:** Stivala & Lomi (2021), *Applied Network Science*, 6(1), 91 ([DOI: 10.1007/s41109-021-00434-y](https://doi.org/10.1007/s41109-021-00434-y)) estimate all configurations simultaneously, each conditional on the others, so dependence is *modelled* rather than corrected.
-- **Motif-constrained ensembles:** Fischer, Leitão, Peixoto & Altmann (2015), "Sampling motif-constrained ensembles of networks," *Physical Review Letters*, 115(18), 188701 ([DOI: 10.1103/PhysRevLett.115.188701](https://doi.org/10.1103/PhysRevLett.115.188701)).
-- **Analytic distribution theory** replacing the normality assumption: Picard, Daudin, Koskas, Schbath & Robin (2008), "Assessing the exceptionality of network motifs," *Journal of Computational Biology*, 15(1), 1–20 ([DOI: 10.1089/cmb.2007.0137](https://doi.org/10.1089/cmb.2007.0137)), which derives exact mean and variance under exchangeable random graph models and shows a compound Poisson approximation beats the Gaussian one.
+- **Analytic distribution theory** replacing the normality assumption: Picard, Daudin, Koskas, Schbath & Robin (2008), *Journal of Computational Biology*, 15(1), 1–20 ([DOI: 10.1089/cmb.2007.0137](https://doi.org/10.1089/cmb.2007.0137)) derive exact mean and variance under exchangeable random graph models and show a compound Poisson approximation beats the Gaussian one. See also Fischer et al. (2015) on motif-constrained ensembles.
 
 **Honest statement of the limit.** There is, as far as this review could establish, **no published method whose primary contribution is FDR or Bonferroni correction over the triad or tetrad census.** A graph engine applying Benjamini–Hochberg across an enumerated motif family is therefore doing something defensible and standard in spirit but not directly validated in the motif literature. The correct posture is:
 
@@ -441,6 +440,8 @@ Two further sources on the dependence structure:
 The last row is the operative one. The method is sound; the confidence it can deliver on registry data is materially lower than what GWAS delivers on genotype data, and any engine built on it should be calibrated to that.
 
 
+---
+
 ## 6. Link prediction, and why its evaluation is where generators go wrong
 
 A system that "generates connections to look further into" is doing **link prediction**, whether or not it uses the term. Every suggested connection is an implicit prediction that an edge exists (or is missing from the record). That reframing is useful because link prediction is a mature subfield with a well-documented evaluation trap that a naive connection generator will fall straight into.
@@ -460,7 +461,7 @@ They set the problem up properly: given a snapshot of a co-authorship network at
 
 So: structural prediction beats chance by one to two orders of magnitude, and is still wrong roughly five times out of six on its own top predictions. **That is the accuracy profile of a well-built connection generator.** Any engine claiming better on registry data should be assumed broken until audited.
 
-Clauset, Moore & Newman (2008), "Hierarchical structure and the prediction of missing links in networks," *Nature*, 453(7191), 98–101 ([DOI: 10.1038/nature06830](https://doi.org/10.1038/nature06830)) is the other landmark, and its methodological move is one this platform should copy: rather than fitting a single best hierarchical decomposition, they observe that real networks admit many roughly equally likely hierarchies, sample an *ensemble* by MCMC, and average predictions over the ensemble. **Averaging over an ensemble of equally defensible models instead of picking the best-fitting one is multiverse analysis (§3) arriving independently in network science.**
+Clauset, Moore & Newman (2008), *Nature*, 453(7191), 98–101 ([DOI: 10.1038/nature06830](https://doi.org/10.1038/nature06830)) is the other landmark, and its methodological move is one this platform should copy: rather than fitting a single best hierarchical decomposition, they observe that real networks admit many roughly equally likely hierarchies, sample an *ensemble* by MCMC, and average predictions over it. **Averaging over an ensemble of equally defensible models instead of picking the best-fitting one is multiverse analysis (§3) arriving independently in network science.** (They evaluate by AUC/ROC — the metric §6.3 argues against for this task.)
 
 ### 6.2 The base-rate problem: extreme class imbalance
 
@@ -544,10 +545,9 @@ Their Figure 1 addresses optional stopping specifically, and the numbers there a
 
 Sequential testing has a rigorous version, developed for clinical trials where interim looks are ethically mandatory.
 
-- **Wald (1945)**, "Sequential tests of statistical hypotheses," *Annals of Mathematical Statistics*, 16(2), 117–186 ([DOI: 10.1214/aoms/1177731118](https://doi.org/10.1214/aoms/1177731118)) — the sequential probability ratio test, the origin of the field.
-- **Pocock (1977)**, "Group sequential methods in the design and analysis of clinical trials," *Biometrika*, 64(2), 191–199 ([DOI: 10.1093/biomet/64.2.191](https://doi.org/10.1093/biomet/64.2.191)) — a constant, adjusted nominal significance level at each of K equally spaced interim looks.
-- **O'Brien & Fleming (1979)**, "A multiple testing procedure for clinical trials," *Biometrics*, 35(3), 549–556 ([DOI: 10.2307/2530245](https://doi.org/10.2307/2530245)) — very stringent early boundaries that relax toward the final analysis, so early stopping requires an overwhelming result.
-- **Lan & DeMets (1983)**, "Discrete sequential boundaries for clinical trials," *Biometrika*, 70(3), 659–663 ([DOI: 10.1093/biomet/70.3.659](https://doi.org/10.1093/biomet/70.3.659)) — the **alpha-spending function** α*(t), which "characterizes the rate at which the error level α is spent." Its practical virtue is that the number and timing of the looks need not be fixed in advance, only the spending schedule.
+- **Wald (1945)**, *Annals of Mathematical Statistics*, 16(2), 117–186 ([DOI: 10.1214/aoms/1177731118](https://doi.org/10.1214/aoms/1177731118)) — the sequential probability ratio test, the origin of the field.
+- **Pocock (1977)**, *Biometrika*, 64(2), 191–199 ([DOI: 10.1093/biomet/64.2.191](https://doi.org/10.1093/biomet/64.2.191)) — a constant adjusted nominal significance level at each of K equally spaced interim looks. **O'Brien & Fleming (1979)**, *Biometrics*, 35(3), 549–556 ([DOI: 10.2307/2530245](https://doi.org/10.2307/2530245)) — stringent early boundaries relaxing toward the final analysis.
+- **Lan & DeMets (1983)**, *Biometrika*, 70(3), 659–663 ([DOI: 10.1093/biomet/70.3.659](https://doi.org/10.1093/biomet/70.3.659)) — the **alpha-spending function** α*(t), which "characterizes the rate at which the error level α is spent." Its practical virtue is that the number and timing of the looks need not be fixed in advance, only the spending schedule.
 
 The concept that transfers: **you have a fixed budget of type-I error, and every look at the data spends some of it.** Peeking is not forbidden; peeking for free is.
 
@@ -574,6 +574,8 @@ This dissolves the stopping problem rather than solving it: there is no decision
 - **Re-run on a schedule, not on disappointment.** Re-run when the data changes (a new filing quarter, a new register), not when the result is boring. A time-triggered re-run is a genuine new sample; a disappointment-triggered re-run is optional stopping.
 - **Keep an append-only run log.** Every run, its declared family, its q, and its funnel — including the runs that found nothing. Without this the enumeration budget is a claim rather than a fact.
 - **If the schedule is frequent, spend alpha.** A quarterly re-run over the same growing register is a sequence of interim analyses, and Lan–DeMets alpha-spending is the appropriate correction; treating each quarter as a fresh independent test is not.
+
+---
 
 ## 8. What the output of a generator should look like
 
@@ -610,12 +612,9 @@ The underlying accounting logic *is* borrowed from a real place: it is the GWAS 
 
 ### 8.4 Why the survival rate is the finding
 
-Consider two runs over the same corporate graph.
+Two runs over the same corporate graph. Run A: 4 candidate patterns published, no denominator. Run B: **1,284,000 enumerated → 9,100 beat the degree-preserving null at p < 0.05 → 61 survived BH at q = 0.05 → 4 replicated on the held-out edge split.**
 
-- Run A: 4 candidate patterns published, no denominator.
-- Run B: **1,284,000 enumerated → 9,100 beat the degree-preserving null at p < 0.05 → 61 survived BH at q = 0.05 → 4 replicated on the held-out edge split.**
-
-The published output is identical — four patterns. But Run B tells you that the graph is overwhelmingly explained by its degree sequence, that the four survivors are approximately 1 in 300,000 candidates, and that roughly 3 of the 61 FDR survivors were expected to be false at q = 0.05 before replication cut them to 4. Run A tells you nothing at all, and is compatible with a generator that examined exactly four candidates and published all of them.
+The published output is identical — four patterns. But Run B tells you the graph is overwhelmingly explained by its degree sequence, that the four survivors are roughly 1 in 300,000 candidates, and that about 3 of the 61 FDR survivors were expected false at q = 0.05 before replication cut them to 4. Run A tells you nothing, and is compatible with a generator that examined exactly four candidates and published all of them.
 
 Ioannidis (2005), "Why most published research findings are false," *PLoS Medicine*, 2(8), e124 ([DOI: 10.1371/journal.pmed.0020124](https://doi.org/10.1371/journal.pmed.0020124)) gives the underlying result: the positive predictive value of a claimed finding depends on the pre-study odds, the power, and the bias in the field — not on the p-value alone. A survival funnel is a direct, empirical statement of pre-study odds for that run. It is the number that lets a reader do the Ioannidis calculation instead of guessing.
 
@@ -647,7 +646,7 @@ Mayo (2018), *Statistical Inference as Severe Testing: How to Get Beyond the Sta
 
 **The strong severity principle:** "We have evidence for a claim C just to the extent it survives a stringent scrutiny. If C passes a test that was highly capable of finding flaws or discrepancies from C, and yet none or few are found, then the passing result, x, is evidence for C."
 
-*(Page numbers for these passages are UNVERIFIED — see §12.)*
+*(Page numbers for these passages are UNVERIFIED — see §13.)*
 
 The severity criterion is the sharpest available diagnosis of what a naive connection generator does wrong. **A search that only looks for evidence of coordination is practically guaranteed to find agreement with the coordination hypothesis**, because a large graph contains instances of every shape (Ramsey theory; see the companion dossier §5.2). Such a search has no capability of finding flaws in the hypothesis, so its output is not evidence — regardless of how many connections it produces or how striking they look.
 
@@ -754,3 +753,147 @@ This is the procedure the platform's `pattern-prospecting` skill and `src/graph/
 23. **Name nothing and no one.** Every survivor is a question that has earned someone's time. It hands off to the evidence-auditor for the date test, the identity test and the denial capture. The verb is "worth asking about" — never "shows," "reveals," or "raises questions about."
 24. **Log the run append-only**, including its declared family, q, seed and funnel. Without the log, the enumeration budget is a claim rather than a fact. *(§7.4)*
 
+---
+
+## 12. References
+
+**Exploratory vs confirmatory; preregistration**
+
+- Tukey, J. W. (1977). *Exploratory Data Analysis*. Reading, MA: Addison-Wesley. ISBN 0-201-07616-0.
+- Tukey, J. W. (1980). We need both exploratory and confirmatory. *The American Statistician*, 34(1), 23–25. https://doi.org/10.1080/00031305.1980.10482706
+- Kerr, N. L. (1998). HARKing: Hypothesizing after the results are known. *Personality and Social Psychology Review*, 2(3), 196–217. https://doi.org/10.1207/s15327957pspr0203_4
+- Nosek, B. A., Ebersole, C. R., DeHaven, A. C., & Mellor, D. T. (2018). The preregistration revolution. *PNAS*, 115(11), 2600–2606. https://doi.org/10.1073/pnas.1708274114
+- Chambers, C. D. (2013). Registered Reports: A new publishing initiative at Cortex. *Cortex*, 49(3), 609–610. https://doi.org/10.1016/j.cortex.2012.12.016
+- Scheel, A. M., Schijen, M. R. M. J., & Lakens, D. (2021). An excess of positive results: Comparing the standard psychology literature with Registered Reports. *Advances in Methods and Practices in Psychological Science*, 4(2). https://doi.org/10.1177/25152459211007467
+
+**Candidate genes, GWAS, and the replication contrast**
+
+- Ioannidis, J. P. A., Ntzani, E. E., Trikalinos, T. A., & Contopoulos-Ioannidis, D. G. (2001). Replication validity of genetic association studies. *Nature Genetics*, 29(3), 306–309. https://pubmed.ncbi.nlm.nih.gov/11600885/
+- Duncan, L. E., & Keller, M. C. (2011). A critical review of the first 10 years of candidate gene-by-environment interaction research in psychiatry. *American Journal of Psychiatry*, 168(10), 1041–1049. https://doi.org/10.1176/appi.ajp.2011.11020191
+- Border, R., Johnson, E. C., Evans, L. M., Smolen, A., Berley, N., Sullivan, P. F., & Keller, M. C. (2019). No support for historical candidate gene or candidate gene-by-interaction hypotheses for major depression across multiple large samples. *American Journal of Psychiatry*, 176(5), 376–387. https://doi.org/10.1176/appi.ajp.2018.18070881
+- Chabris, C. F., Hebert, B. M., Benjamin, D. J., et al. (2012). Most reported genetic associations with general intelligence are probably false positives. *Psychological Science*, 23(11), 1314–1323. https://doi.org/10.1177/0956797611435528
+- Risch, N., Herrell, R., Lehner, T., et al. (2009). Interaction between the serotonin transporter gene (5-HTTLPR), stressful life events, and risk of depression: A meta-analysis. *JAMA*, 301(23), 2462–2471. https://pubmed.ncbi.nlm.nih.gov/19531786/
+- Culverhouse, R. C., Saccone, N. L., Horton, A. C., et al. (2018). Collaborative meta-analysis finds no evidence of a strong interaction between stress and 5-HTTLPR genotype contributing to the development of depression. *Molecular Psychiatry*, 23(1), 133–142. https://pubmed.ncbi.nlm.nih.gov/28373689/
+- Wellcome Trust Case Control Consortium (2007). Genome-wide association study of 14,000 cases of seven common diseases and 3,000 shared controls. *Nature*, 447(7145), 661–678. https://doi.org/10.1038/nature05911
+- Pe'er, I., Yelensky, R., Altshuler, D., & Daly, M. J. (2008). Estimation of the multiple testing burden for genomewide association studies of nearly all common variants. *Genetic Epidemiology*, 32(4), 381–385. https://doi.org/10.1002/gepi.20303
+- Dudbridge, F., & Gusnanto, A. (2008). Estimation of significance thresholds for genomewide association scans. *Genetic Epidemiology*, 32(3), 227–234. https://doi.org/10.1002/gepi.20297
+- NCI-NHGRI Working Group on Replication in Association Studies (Chanock, S. J., et al.) (2007). Replicating genotype–phenotype associations. *Nature*, 447(7145), 655–660. https://doi.org/10.1038/447655a
+- Visscher, P. M., Wray, N. R., Zhang, Q., Sklar, P., McCarthy, M. I., Brown, M. A., & Yang, J. (2017). 10 years of GWAS discovery: Biology, function, and translation. *American Journal of Human Genetics*, 101(1), 5–22. https://doi.org/10.1016/j.ajhg.2017.06.005
+- Marigorta, U. M., Rodríguez, J. A., Gibson, G., & Navarro, A. (2018). Replicability and prediction: Lessons and challenges from GWAS. *Trends in Genetics*, 34(7), 504–517. https://doi.org/10.1016/j.tig.2018.03.005
+- Sollis, E., Mosaku, A., Abid, A., et al. (2023). The NHGRI-EBI GWAS Catalog: Knowledgebase and deposition resource. *Nucleic Acids Research*, 51(D1), D977–D985. https://doi.org/10.1093/nar/gkac1010
+- NHGRI-EBI GWAS Catalog release statistics (release dated 2 August 2026). https://www.ebi.ac.uk/gwas/api/search/stats
+
+**Specification curve, multiverse, vibration of effects**
+
+- Simonsohn, U., Simmons, J. P., & Nelson, L. D. (2020). Specification curve analysis. *Nature Human Behaviour*, 4(11), 1208–1214. https://doi.org/10.1038/s41562-020-0912-z (Publisher Correction: 4(11), 1215. https://doi.org/10.1038/s41562-020-00974-w)
+- Steegen, S., Tuerlinckx, F., Gelman, A., & Vanpaemel, W. (2016). Increasing transparency through a multiverse analysis. *Perspectives on Psychological Science*, 11(5), 702–712. https://doi.org/10.1177/1745691616658637
+- Durante, K. M., Rae, A., & Griskevicius, V. (2013). The fluctuating female vote: Politics, religion, and the ovulatory cycle. *Psychological Science*, 24(6), 1007–1016. https://doi.org/10.1177/0956797612466416
+- Patel, C. J., Burford, B., & Ioannidis, J. P. A. (2015). Assessment of vibration of effects due to model specification can demonstrate the instability of observational associations. *Journal of Clinical Epidemiology*, 68(9), 1046–1058. https://doi.org/10.1016/j.jclinepi.2015.05.029
+- Burkhardt, M., & Gießing, C. (2026). The Comet Toolbox: Improving robustness in network neuroscience through multiverse analysis. *Imaging Neuroscience*, 4. https://doi.org/10.1162/IMAG.a.1122
+- Gelman, A., & Loken, E. (2013). *The garden of forking paths: Why multiple comparisons can be a problem, even when there is no "fishing expedition" or "p-hacking" and the research hypothesis was posited ahead of time.* Unpublished manuscript, Department of Statistics, Columbia University (copy dated 14 Nov 2013). https://sites.stat.columbia.edu/gelman/research/unpublished/p_hacking.pdf
+- Gelman, A., & Loken, E. (2014). The statistical crisis in science. *American Scientist*, 102(6), 460. https://doi.org/10.1511/2014.111.460
+- Ioannidis, J. P. A. (2005). Why most published research findings are false. *PLoS Medicine*, 2(8), e124. https://doi.org/10.1371/journal.pmed.0020124
+
+**Multiple testing**
+
+- Benjamini, Y., & Hochberg, Y. (1995). Controlling the false discovery rate: A practical and powerful approach to multiple testing. *JRSS Series B*, 57(1), 289–300. https://doi.org/10.1111/j.2517-6161.1995.tb02031.x
+- Benjamini, Y., & Yekutieli, D. (2001). The control of the false discovery rate in multiple testing under dependency. *Annals of Statistics*, 29(4), 1165–1188. https://doi.org/10.1214/aos/1013699998
+- Storey, J. D. (2002). A direct approach to false discovery rates. *JRSS Series B*, 64(3), 479–498. https://doi.org/10.1111/1467-9868.00346
+- Storey, J. D., & Tibshirani, R. (2003). Statistical significance for genomewide studies. *PNAS*, 100(16), 9440–9445. https://doi.org/10.1073/pnas.1530509100
+- Efron, B. (2004). Large-scale simultaneous hypothesis testing: The choice of a null hypothesis. *JASA*, 99(465), 96–104. https://doi.org/10.1198/016214504000000089
+- Efron, B. (2007). Correlation and large-scale simultaneous significance testing. *JASA*, 102(477), 93–103. https://doi.org/10.1198/016214506000001211
+- Efron, B. (2008). Microarrays, empirical Bayes and the two-groups model. *Statistical Science*, 23(1), 1–22. https://doi.org/10.1214/07-STS236
+- Cheverud, J. M. (2001). A simple correction for multiple comparisons in interval mapping genome scans. *Heredity*, 87(1), 52–58. https://doi.org/10.1046/j.1365-2540.2001.00901.x
+- Nyholt, D. R. (2004). A simple correction for multiple testing for single-nucleotide polymorphisms in linkage disequilibrium with each other. *American Journal of Human Genetics*, 74(4), 765–769. https://doi.org/10.1086/383251
+- Li, J., & Ji, L. (2005). Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix. *Heredity*, 95(3), 221–227. https://doi.org/10.1038/sj.hdy.6800717
+
+**Network motifs, enumeration, null models**
+
+- Milo, R., Shen-Orr, S., Itzkovitz, S., Kashtan, N., Chklovskii, D., & Alon, U. (2002). Network motifs: Simple building blocks of complex networks. *Science*, 298(5594), 824–827. https://doi.org/10.1126/science.298.5594.824
+- Milo, R., Itzkovitz, S., Kashtan, N., Levitt, R., Shen-Orr, S., Ayzenshtat, I., Sheffer, M., & Alon, U. (2004). Superfamilies of evolved and designed networks. *Science*, 303(5663), 1538–1542. https://doi.org/10.1126/science.1089167
+- Artzy-Randrup, Y., Fleishman, S. J., Ben-Tal, N., & Stone, L. (2004). Comment on "Network motifs: Simple building blocks of complex networks" and "Superfamilies of evolved and designed networks." *Science*, 305(5687), 1107. https://doi.org/10.1126/science.1099334
+- Milo, R., Itzkovitz, S., Kashtan, N., Levitt, R., & Alon, U. (2004). Response to comment on "Network motifs" and "Superfamilies of evolved and designed networks." *Science*, 305(5687), 1107. https://doi.org/10.1126/science.1100519
+- Stone, L., Simberloff, D., & Artzy-Randrup, Y. (2019). Network motifs and their origins. *PLOS Computational Biology*, 15(4), e1006749. https://doi.org/10.1371/journal.pcbi.1006749
+- Kashtan, N., Itzkovitz, S., Milo, R., & Alon, U. (2004). Efficient sampling algorithm for estimating subgraph concentrations and detecting network motifs. *Bioinformatics*, 20(11), 1746–1758. https://doi.org/10.1093/bioinformatics/bth163
+- Wernicke, S. (2005). A faster algorithm for detecting network motifs. In *Algorithms in Bioinformatics (WABI 2005)*, LNBI 3692, 165–177. Springer. https://doi.org/10.1007/11557067_14
+- Wernicke, S. (2006). Efficient detection of network motifs. *IEEE/ACM Transactions on Computational Biology and Bioinformatics*, 3(4), 347–359. https://doi.org/10.1109/TCBB.2006.51
+- Wernicke, S., & Rasche, F. (2006). FANMOD: A tool for fast network motif detection. *Bioinformatics*, 22(9), 1152–1153. https://doi.org/10.1093/bioinformatics/btl038
+- Pržulj, N., Corneil, D. G., & Jurisica, I. (2004). Modeling interactome: Scale-free or geometric? *Bioinformatics*, 20(18), 3508–3515. https://doi.org/10.1093/bioinformatics/bth436
+- Pržulj, N. (2007). Biological network comparison using graphlet degree distribution. *Bioinformatics*, 23(2), e177–e183. https://doi.org/10.1093/bioinformatics/btl301
+- Pržulj, N. (2010). Erratum to "Biological network comparison using graphlet degree distribution." *Bioinformatics*, 26(6), 853–854. https://doi.org/10.1093/bioinformatics/btq091
+- Milo, R., Kashtan, N., Itzkovitz, S., Newman, M. E. J., & Alon, U. (2003/2004). *On the uniform generation of random graphs with prescribed degree sequences.* arXiv:cond-mat/0312028 (preprint; never journal-published). https://arxiv.org/abs/cond-mat/0312028
+- Fosdick, B. K., Larremore, D. B., Nishimura, J., & Ugander, J. (2018). Configuring random graph models with fixed degree sequences. *SIAM Review*, 60(2), 315–355. https://doi.org/10.1137/16M1087175
+- Bollobás, B. (1980). A probabilistic proof of an asymptotic formula for the number of labelled regular graphs. *European Journal of Combinatorics*, 1(4), 311–316. https://doi.org/10.1016/S0195-6698(80)80030-8
+- Molloy, M., & Reed, B. (1995). A critical point for random graphs with a given degree sequence. *Random Structures & Algorithms*, 6(2–3), 161–180. https://doi.org/10.1002/rsa.3240060204
+- Newman, M. E. J., Strogatz, S. H., & Watts, D. J. (2001). Random graphs with arbitrary degree distributions and their applications. *Physical Review E*, 64, 026118. https://doi.org/10.1103/PhysRevE.64.026118
+- Kannan, R., Tetali, P., & Vempala, S. (1999). Simple Markov-chain algorithms for generating bipartite graphs and tournaments. *Random Structures & Algorithms*, 14(4), 293–308. https://doi.org/10.1002/(SICI)1098-2418(199907)14:4<293::AID-RSA1>3.0.CO;2-G
+- Maslov, S., & Sneppen, K. (2002). Specificity and stability in topology of protein networks. *Science*, 296(5569), 910–913. https://doi.org/10.1126/science.1065103
+
+**Correlated motif tests and alternatives to per-subgraph testing**
+
+- Fodor, J., Brand, M., Stones, R. J., & Buckle, A. M. (2020). Intrinsic limitations in mainstream methods of identifying network motifs in biology. *BMC Bioinformatics*, 21(1), 165. https://doi.org/10.1186/s12859-020-3441-x
+- Ginoza, R., & Mugler, A. (2010). Network motifs come in sets: Correlations in the randomization process. *Physical Review E*, 82(1), 011921. https://doi.org/10.1103/PhysRevE.82.011921
+- Winkler, M., & Reichardt, J. (2013). Motifs in triadic random graphs based on Steiner triple systems. *Physical Review E*, 88(2), 022805. https://doi.org/10.1103/PhysRevE.88.022805
+- Bénichou, A., Masson, J.-B., & Vestergaard, C. L. (2024). Compression-based inference of network motif sets. *PLOS Computational Biology*, 20(10), e1012460. https://doi.org/10.1371/journal.pcbi.1012460
+- Stivala, A., & Lomi, A. (2021). Testing biological network motif significance with exponential random graph models. *Applied Network Science*, 6(1), 91. https://doi.org/10.1007/s41109-021-00434-y
+- Fischer, R., Leitão, J. C., Peixoto, T. P., & Altmann, E. G. (2015). Sampling motif-constrained ensembles of networks. *Physical Review Letters*, 115(18), 188701. https://doi.org/10.1103/PhysRevLett.115.188701
+- Picard, F., Daudin, J.-J., Koskas, M., Schbath, S., & Robin, S. (2008). Assessing the exceptionality of network motifs. *Journal of Computational Biology*, 15(1), 1–20. https://doi.org/10.1089/cmb.2007.0137
+
+**Link prediction and its evaluation**
+
+- Liben-Nowell, D., & Kleinberg, J. (2003). The link prediction problem for social networks. In *CIKM '03*, 556–559. https://doi.org/10.1145/956863.956972
+- Liben-Nowell, D., & Kleinberg, J. (2007). The link-prediction problem for social networks. *JASIST*, 58(7), 1019–1031. https://doi.org/10.1002/asi.20591
+- Clauset, A., Moore, C., & Newman, M. E. J. (2008). Hierarchical structure and the prediction of missing links in networks. *Nature*, 453(7191), 98–101. https://doi.org/10.1038/nature06830
+- Davis, J., & Goadrich, M. (2006). The relationship between Precision-Recall and ROC curves. In *ICML '06*, 233–240. https://doi.org/10.1145/1143844.1143874
+- Saito, T., & Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. *PLoS ONE*, 10(3), e0118432. https://doi.org/10.1371/journal.pone.0118432
+- Lichtenwalter, R., & Chawla, N. V. (2012). Link prediction: Fair and effective evaluation. In *ASONAM 2012*, 376–383. https://doi.org/10.1109/ASONAM.2012.68
+- Yang, Y., Lichtenwalter, R. N., & Chawla, N. V. (2015). Evaluating link prediction methods. *Knowledge and Information Systems*, 45(3), 751–782. https://doi.org/10.1007/s10115-014-0789-0
+- Kitsak, M., Voitalov, I., & Krioukov, D. (2020). Link prediction with hyperbolic geometry. *Physical Review Research*, 2(4), 043113. https://doi.org/10.1103/PhysRevResearch.2.043113
+- de Bruin, G. J., Veenman, C. J., van den Herik, H. J., & Takes, F. W. (2020). Experimental evaluation of train and test split strategies in link prediction. In *Complex Networks & Their Applications IX*, 79–91. Springer. https://doi.org/10.1007/978-3-030-65351-4_7
+
+**Stopping, sequential testing, anytime-valid inference**
+
+- Simmons, J. P., Nelson, L. D., & Simonsohn, U. (2011). False-positive psychology. *Psychological Science*, 22(11), 1359–1366. https://doi.org/10.1177/0956797611417632
+- Wald, A. (1945). Sequential tests of statistical hypotheses. *Annals of Mathematical Statistics*, 16(2), 117–186. https://doi.org/10.1214/aoms/1177731118
+- Pocock, S. J. (1977). Group sequential methods in the design and analysis of clinical trials. *Biometrika*, 64(2), 191–199. https://doi.org/10.1093/biomet/64.2.191
+- O'Brien, P. C., & Fleming, T. R. (1979). A multiple testing procedure for clinical trials. *Biometrics*, 35(3), 549–556. https://doi.org/10.2307/2530245
+- Lan, K. K. G., & DeMets, D. L. (1983). Discrete sequential boundaries for clinical trials. *Biometrika*, 70(3), 659–663. https://doi.org/10.1093/biomet/70.3.659
+- Grünwald, P., de Heide, R., & Koolen, W. (2024). Safe testing. *JRSS Series B*, 86(5), 1091–1128. https://doi.org/10.1093/jrsssb/qkae011
+- Ramdas, A., Grünwald, P., Vovk, V., & Shafer, G. (2023). Game-theoretic statistics and safe anytime-valid inference. *Statistical Science*, 38(4), 576–601. https://doi.org/10.1214/23-STS894
+
+**Severity, falsification, adversarial method**
+
+- Mayo, D. G. (2018). *Statistical Inference as Severe Testing: How to Get Beyond the Statistics Wars*. Cambridge University Press. https://doi.org/10.1017/9781107286184
+- Popper, K. R. (1959). *The Logic of Scientific Discovery*. London: Hutchinson.
+- Popper, K. R. (1963). *Conjectures and Refutations: The Growth of Scientific Knowledge*. London: Routledge & Kegan Paul.
+- Chamberlin, T. C. (1890). The method of multiple working hypotheses. *Science*, 15(366), 92–96. https://doi.org/10.1126/science.ns-15.366.92
+- Platt, J. R. (1964). Strong inference. *Science*, 146(3642), 347–353. https://doi.org/10.1126/science.146.3642.347
+
+**Generative discovery and its validation; funnel terminology**
+
+- Swanson, D. R. (1986). Fish oil, Raynaud's syndrome, and undiscovered public knowledge. *Perspectives in Biology and Medicine*, 30(1), 7–18.
+- DiGiacomo, R. A., Kremer, J. M., & Shah, D. M. (1989). Fish-oil dietary supplementation in patients with Raynaud's phenomenon: A double-blind, controlled, prospective study. *American Journal of Medicine*, 86(2), 158–164. https://pubmed.ncbi.nlm.nih.gov/2536517/
+- Mathur, M. B., & VanderWeele, T. J. (2020). Sensitivity analysis for publication bias in meta-analyses. *JRSS Series C*, 69(5), 1091–1119. https://doi.org/10.1111/rssc.12440
+- Egger, M., Davey Smith, G., Schneider, M., & Minder, C. (1997). Bias in meta-analysis detected by a simple, graphical test. *BMJ*, 315(7109), 629–634. https://doi.org/10.1136/bmj.315.7109.629
+
+---
+
+## 13. UNVERIFIED / could not confirm
+
+Listed so that nothing above reads as more certain than it is.
+
+1. **Mayo (2018) page numbers.** The severity quotations in §9.1 are reliable in wording — they are consistent across independent sources including Mayo's own posted excerpts of Excursion 1 (errorstatistics.com) — but the **book itself is paywalled and its pages were not retrieved**. Secondary sources variously cite p. 5, p. 14 and p. 23 for these passages. No pinpoint page citation is given here, and none should be published without checking a physical copy.
+2. **The Simonsohn, Simmons & Nelson (2020) Publisher Correction.** Its existence and citation (*Nature Human Behaviour*, 4(11), 1215, DOI 10.1038/s41562-020-00974-w) are confirmed; **its content was not retrievable** (Nature paywall). Nothing in §3.2 depends on it, but a reader implementing SCA should check what it corrects.
+3. **Tukey's exact wording.** The three quoted phrases in §1.1 ("an attitude, a flexibility, and a reliance on display, not a bundle of techniques"; "Neither exploratory nor confirmatory is sufficient alone. To try to replace either by the other is madness"; "forces us to notice what we never expected to see") are the standard renderings carried by secondary sources and by a scanned copy of the 1980 *American Statistician* paper. **The 1977 book was not read directly**, and the third phrase is attributed to the book in secondary literature rather than verified against it.
+4. **Liben-Nowell & Kleinberg per-cell improvement factors.** The prose figures quoted in §6.1 (0.15%–0.48% random baseline; ~16% best precision; 6.1×, 18.0–41.1×, 71.2×, 147.0×; "not more than about seven" on STOC/FOCS) are verified. The commonly-cited "40–50× random" figure is **not printed as such in the paper**; it is arithmetically consistent with the best result (~16% precision against a 0.341% baseline ≈ 47×) but that division is ours, not theirs. Individual results-table cells could not be reliably attributed to specific predictor/dataset pairs because of the PDF's column-major layout. Numeric detail is drawn from Kleinberg's posted extended manuscript, which corresponds to the JASIST version; the 4-page CIKM version does not contain it all.
+5. **Lichtenwalter & Chawla (2012), ASONAM full text.** The bibliographic record is confirmed; **the full text was not retrievable** (IEEE returned 403). All substantive claims attributed to this line of work in §6.3–6.4 are sourced from the 2015 *Knowledge and Information Systems* expansion, which the authors describe as "a substantial expansion" of the conference paper.
+6. **Lichtenwalter, Lussier & Chawla (2010), KDD '10, "New perspectives and methods in link prediction"** (DOI 10.1145/1835804.1835837) advertises "formal bounds on imbalance in sparse network link prediction," which would be the ideal citation for §6.2. **The full text was not retrievable and the bound was not read**, so the paper is mentioned here rather than cited in the body.
+7. **Milo et al. (2002) Supplementary Online Material** was not retrieved. No claim in §5.1 is sourced to it. The claims made about the 2002 method (P < 0.01, 1,000 randomisations, U ≥ 4 on disjoint node sets, nested null for tetrads, and the absence of the words "Bonferroni," "false discovery" or "correction") come from the main text.
+8. **Rao, Jana & Bandyopadhyay (1996)**, *Sankhyā Series A*, 58(2), 225–242 — the canonical original for the swap chain as an MCMC sampler with fixed margins. Authors, volume and pages are corroborated by the reference lists of Fosdick et al. (2018) and Milo et al. (arXiv:cond-mat/0312028), but the paper is **absent from CrossRef and OpenAlex and no stable URL was confirmed.** It is not cited in the body.
+9. **Swanson (1986) pagination.** *Perspectives in Biology and Medicine*, 30(1), 7–18 is the citation given consistently across the literature-based-discovery literature; the article itself was not retrieved and the volume/issue/pages are secondary-sourced. The subsequent trial (DiGiacomo et al., 1989) *is* verified.
+10. **"Significance funnel."** The term as used in the meta-analysis literature (Mathur & VanderWeele, 2020) is verified and means something different from the discovery funnel described in §8. **The terms "discovery funnel" and "survival funnel" are this platform's own coinages and carry no citation.** §8.3 says so explicitly; it is repeated here so the distinction survives any future editing.
+11. **No FDR-for-motif-census citation exists.** As stated in §5.6, this review could not locate a published method whose primary contribution is Benjamini–Hochberg or Bonferroni correction over the triad or tetrad census. The recommendation in §5.6 to apply Benjamini–Yekutieli over an enumerated motif family is **an inference from the general multiple-testing literature applied to this setting, not a cited practice.** It should be described that way in any published methodology.
+12. **Efron's empirical-null recommendation for graph statistics** (§4.5) is likewise an extrapolation. Efron's papers concern microarray z-values; the application to motif z-scores in a corporate register is ours, is well-motivated by Fodor et al. (2020)'s finding that the Gaussian approximation is often unjustified, but is **not a cited result**.
+13. **Attribute-stratified null models for corporate graphs** (§5.4, §9.2) are a recommendation derived from the Artzy-Randrup critique, not a method taken from a specific paper. The critique is verified; the corporate-registry implementation is a design proposal.
+14. **Kannan, Tetali & Vempala (1999) title.** The citation and DOI are verified via CrossRef; the exact title wording was not confirmed against the article itself.
+15. **Bollobás (1980) title.** As above — DOI and bibliographic record verified; title wording taken from the CrossRef record rather than the article.
