@@ -181,23 +181,51 @@ back *untestable*. Testing them properly needs the full award population, which 
 on the watchlist as computable-from-public-data-today. The engine surfacing its own
 limit is the intended behaviour.
 
-### Phase C — Ingestion
-- Extractor → resolver → grounder → assembler pipeline over `research/raw/`
-- Entity-resolution report: every merge with its rationale and confidence
-- Supersession log rendered as a visible changelog
+### Phase C — Ingestion ✅ *(pipeline and audit; codegen outstanding)*
+- [x] Extractor → resolver → grounder → assembler pipeline over `research/raw/`
+- [x] Entity-resolution report: every merge with its rationale and confidence, at `/provenance`
+- [x] Reproducible run id, hashed from the inputs rather than read from a clock
+- [x] Supersession events and documented voids carried into the report
+- [ ] Promotion *generates* `src/data/*.ts` rather than only auditing it
 
-**Acceptance:** every published claim traces to a source **and** a run id.
+**Acceptance met for the audit:** every published claim traces to a source **and** a
+run id. On the current data: 515 canonical entities from 561 records, 46 merges on
+strong keys only, **218 collision candidates refused** — including the two Reliance
+groups, whose fusion is a structural guard that fails the build — and 100
+weakly-identified records quarantined as `resolved: false`, taking no edges.
 
-*Currently the promotion from `research/raw/` into `src/data/` is manual and typed
-rather than pipelined. The quarantine boundary exists; the automation does not.*
+**Still manual:** the pipeline reports; it does not write the typed data modules.
+The boundary and the audit exist; the codegen does not.
 
-### Phase D — Depth and breadth
+### Phase D — Depth and breadth ✅ *(the visual half)*
 - [x] Interlocks analysis, with the false-positive demonstration and the family-control frame
 - [x] Time-range filter over edge windows, never hiding undated edges
 - [x] URL state for share/export; the WCAG-clean table twin of every graphic
+- [x] **Geographic network** — the map and the graph as one object, with a state-flow mode
+- [x] Flow-direction diagram, money-movement predicates only
 - [ ] Director interlocks keyed on DIN rather than declared key people
-- [ ] Promoter-holding time series; flow-direction (Sankey) mode
+- [ ] Promoter-holding time series
 - [ ] Media-ownership register
+
+**The geographic network is the phase's centrepiece** and its design problem was
+honesty, not layout: nothing is geocoded, most of the graph has no place at all, and
+registered is not operational. All three are surfaced on the page rather than
+quietly handled, and the arcs are fanned by a deterministic per-pair offset because
+Delhi originates most of them and a single curvature bundles them into a blob.
+
+### Phase E — What the build learned about itself
+
+Three results that should shape the next phase more than any feature list:
+
+1. **The motif engine reports most of its templates untestable.** The case-study
+   subgraph is star-shaped, so degree-preserving rewiring cannot vary it and the
+   null model has zero variance. This is not fixable with a better algorithm — it
+   needs the full award population.
+2. **Interlocks came back zero**, because the data is declared key people rather
+   than a directorship register. The fix is DIN-keyed data, not more scraping.
+3. **The surname-coincidence count is below chance.** 7 observed against ~19
+   predicted across 3,795 pairs. There is no excess to explain — which is exactly
+   the kind of result a platform like this exists to be able to report.
 
 ### Phase E — The investigative watchlist
 Carried from the Atlas analysis, as dated, checkable actions:
