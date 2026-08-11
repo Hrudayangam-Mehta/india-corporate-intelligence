@@ -307,9 +307,9 @@ TOOLS        Search · Donations · Watchlist
 | **P2** | Shared chrome components (§9) | All four domain pages |
 | **P3** | `/resources` — schema, two-layer map, regime split, competitive tension | The new domain |
 | **P4** | `/pmcares` — flow ledger with holes, contested panel, PMNRF control | The fund domain |
-| **P5** | `/tenders` deepening — single-bidder rate, concentration curve | Cross-register comparison |
-| **P6** | Group deep-dives — ownership tree replaces force layout | Fixes the wrong centre |
-| **P7** | `/media` rebuild on ownership distribution | Long-outstanding |
+| **P5** ✅ | `/tenders` deepening — competitive tension, concentration curve | Cross-register comparison |
+| **P6** ✅ | Group deep-dives — ownership tree replaces force layout | Fixes the wrong centre |
+| **P7** ✅ | `/media` rebuild on ownership distribution | Long-outstanding — done |
 | **P8** | Cross-register competitive-tension comparison page | Needs P3–P5 complete |
 
 **P2 before P3–P6.** Building the chrome four times is how four pages drift apart.
@@ -327,6 +327,7 @@ TOOLS        Search · Donations · Watchlist
 | 2026-08-11 | `fa26fa1` | P0 | Investigative desk: skill, agent, page; sequenced research plan | ✅ all four |
 | 2026-08-11 | `32e6859` | P0/P1/P2 | BY correction + stratified null; designer & developer roles; this plan; shared domain chrome | ✅ all four |
 | 2026-08-11 | `2c880e6` | P5/P6 | Competitive tension on `/tenders`; ownership tree replaces force layout on group deep-dives | ✅ all four |
+| 2026-08-11 | `c20ede7` | P7 | `/media` rebuilt on ownership distribution; lean-rating refusal published as the lead | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
