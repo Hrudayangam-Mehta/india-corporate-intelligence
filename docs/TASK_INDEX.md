@@ -80,7 +80,7 @@
 | D010 | Add trade route visualization | P3 | [ ] | - | india-corporate-intelligence | D009 |
 | D011 | Create dedicated NSE map page | P1 | [x] | @tryclaw | india-corporate-intelligence | C006 |
 | D012 | Create dedicated BSE map page | P1 | [x] | @tryclaw | india-corporate-intelligence | C006 |
-| D013 | **NEW: Add exchange filter to map explorer** | P2 | [ ] | - | india-corporate-intelligence | D011,D012 |
+| D013 | Add exchange filter to map explorer | P2 | [x] | @tryclaw | india-corporate-intelligence | D011,D012 |
 
 ## Section E: Frontend - Network & Graph (E001-E099)
 
