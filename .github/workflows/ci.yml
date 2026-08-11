@@ -1,9 +1,18 @@
 name: CI
 
 on:
+  # A branch with an open PR fires `pull_request`; the default branch fires
+  # `push`. Listening for pushes on every branch as well meant each PR commit ran
+  # the whole suite twice, for an identical result.
   push:
-    branches: ['**']
+    branches: [master]
   pull_request:
+
+# Supersede in-flight runs for the same branch. The suite installs a browser and
+# renders 21 routes, so a run made obsolete by the next push is worth cancelling.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   check:
