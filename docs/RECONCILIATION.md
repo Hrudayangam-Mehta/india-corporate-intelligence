@@ -100,14 +100,38 @@ rendering that quietly discards half its input is worse than one that errors.
 
 | From `main` | Disposition |
 |---|---|
-| `PieChart.tsx` | Kept, moved under `src/components/viz/`, wired to real sector market-cap data |
-| `Sparkline.tsx` | Kept, unwired. Lands when a real price series does |
+| `PieChart.tsx` | **Not ported — wrong form for this data.** See below |
+| `Sparkline.tsx` | **Not ported — no real series exists.** See below |
 | `WorldMap.tsx` | Concept kept, implementation rebuilt — it used `document.createElementNS` inside React, and `master` draws declarative SVG |
 | Deep-dive facility lists | Extracted, re-verified against sources, and rebuilt as `research/raw/global-footprint.json` |
 | `docs/TASK_INDEX.md`, `MASTER_TRACKER.md`, `STATUS_REPORT.md` | Kept. The ID-per-task tracking system is better than prose phases and is now the project's tracker |
 | `public/404.html` | Replaced. The original was the `spa-github-pages` redirect shim for BrowserRouter; `master` uses HashRouter, where it does nothing |
 
 ---
+
+### The two chart primitives, and why neither landed
+
+Both were well-written, theme-agnostic renderers. Neither was rejected for quality.
+
+**`PieChart`** is the wrong *form* for the data `master` holds. A part-to-whole
+circle is readable at a glance up to about six segments; past roughly seven colour
+classes carrying meaning, adjacent classes blur and the correct answer is a table or
+a bar. `master`'s sector breakdown has **twenty** sectors, and it already renders
+that as a sorted bar list on `/` and `/states/:code` — which is the right form for
+"compare magnitude, low to high". Adding a twenty-slice donut would have been a
+regression dressed as a feature.
+
+The one place a ≤6-segment part-to-whole applies is the evidence-tier census, which
+has four classes — and that is already a KPI row of stat tiles, which is what a
+handful of headline numbers should be.
+
+**`Sparkline`** needs a time series, and `master` has none. Every figure in the
+platform is a single stamped observation, not a history. Porting the component
+would have left it either unused or wired to invented data, and the version being
+replaced was wired to `Math.random()`.
+
+Both remain in git history. When a real price series lands, `Sparkline` is worth
+recovering rather than rewriting.
 
 ## What this cost
 
