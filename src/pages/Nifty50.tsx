@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { TrendingUp, TrendingDown, Activity, PieChart, BarChart3, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
+import { Sparkline } from '../components/Sparkline';
 
 interface NiftyStock {
   rank: number;
@@ -17,6 +18,25 @@ interface NiftyStock {
   high52: number;
   low52: number;
   avgVolume: number;
+}
+
+// Generate mock intraday price history for sparklines (30 data points = ~6.5 hours of trading)
+function generateSparkline(basePrice: number, changePercent: number): number[] {
+  const points = 30;
+  const trend = changePercent / 100;
+  const volatility = basePrice * 0.008; // 0.8% intraday volatility
+  const data: number[] = [];
+  
+  for (let i = 0; i < points; i++) {
+    const progress = i / (points - 1);
+    const trendComponent = basePrice * trend * progress;
+    const noise = (Math.random() - 0.5) * volatility * 2;
+    data.push(basePrice + trendComponent + noise);
+  }
+  
+  // Ensure last point matches current price
+  data[data.length - 1] = basePrice;
+  return data;
 }
 
 // NIFTY 50 constituents with weights (approximate)
@@ -89,8 +109,16 @@ const SECTOR_COLORS: Record<string, string> = {
 export const Nifty50Page: React.FC = () => {
   const [sortBy, setSortBy] = useState<'weight' | 'change' | 'pe'>('weight');
 
+  // Add sparkline data
+  const stocksWithSparklines = useMemo(() => {
+    return NIFTY_STOCKS.map(s => ({
+      ...s,
+      sparklineData: generateSparkline(s.price, s.changePercent),
+    }));
+  }, []);
+
   const sortedStocks = useMemo(() => {
-    const stocks = [...NIFTY_STOCKS];
+    const stocks = [...stocksWithSparklines];
     switch (sortBy) {
       case 'weight':
         return stocks.sort((a, b) => b.weight - a.weight);
@@ -168,6 +196,36 @@ export const Nifty50Page: React.FC = () => {
           <div className="text-[#7a7569] text-sm mb-1">Constituents</div>
           <div className="text-2xl font-bold text-[#f0e6d8]">50</div>
         </div>
+      </div>
+
+      {/* Sparkline Cards - Top 8 by Weight */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {sortedStocks.slice(0, 8).map(stock => (
+          <div
+            key={stock.symbol}
+            className="bg-[#161618] border border-[#f4f0e8]/10 rounded-lg p-4 hover:border-[#c9a86c]/30 transition-all"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[#c9a86c] font-mono text-sm font-semibold">{stock.symbol}</span>
+              <span
+                className={`text-xs font-medium flex items-center gap-0.5 ${
+                  stock.changePercent > 0 ? 'text-[#7a9e7e]' : 'text-[#c45b5a]'
+                }`}
+              >
+                {stock.changePercent > 0 ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                {Math.abs(stock.changePercent).toFixed(2)}%
+              </span>
+            </div>
+            <div className="text-[#f0e6d8] font-medium text-sm mb-1 truncate">{stock.name}</div>
+            <div className="text-[#7a7569] text-xs mb-3">₹{stock.price.toFixed(2)}</div>
+            <Sparkline
+              data={stock.sparklineData}
+              width={200}
+              height={50}
+              strokeWidth={2}
+            />
+          </div>
+        ))}
       </div>
 
       {/* Gainers/Losers + Sector Allocation */}
