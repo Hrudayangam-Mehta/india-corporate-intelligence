@@ -11,12 +11,18 @@ import {
   Bookmark, 
   Menu, 
   X,
-  Globe
+  Globe,
+  TrendingUp,
+  TrendingDown,
+  Activity
 } from 'lucide-react';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/map', label: 'Map', icon: Map },
+  { path: '/nse-map', label: 'NSE Map', icon: TrendingUp },
+  { path: '/bse-map', label: 'BSE Map', icon: TrendingDown },
+  { path: '/nifty50', label: 'NIFTY 50', icon: Activity },
   { path: '/network', label: 'Network', icon: Network },
   { path: '/industries', label: 'Industries', icon: Factory },
   { path: '/political', label: 'Political', icon: Landmark },

@@ -60,6 +60,9 @@
 | C018 | Add skeleton loading states | P2 | [ ] | - | india-corporate-intelligence | C004-C012 |
 | C019 | Implement error boundaries | P2 | [ ] | - | india-corporate-intelligence | C001 |
 | C020 | Add keyboard shortcuts | P3 | [ ] | - | india-corporate-intelligence | C004-C012 |
+| **C021** | **NEW: Build NIFTY 50 index page** | **P1** | **[~]** | **@tryclaw** | **india-corporate-intelligence** | **C004** |
+| **C022** | **NEW: Build NIFTY 50 stock cards with sparklines** | **P1** | **[ ]** | **-** | **india-corporate-intelligence** | **C021** |
+| **C023** | **NEW: Add sector allocation pie chart for NIFTY 50** | **P2** | **[ ]** | **-** | **india-corporate-intelligence** | **C021** |
 
 ## Section D: Frontend - Advanced Maps (D001-D099)
 
@@ -75,6 +78,9 @@
 | D008 | Add FDI flow visualization on world map | P2 | [ ] | - | india-corporate-intelligence | D001 |
 | D009 | Add port connection lines | P2 | [ ] | - | india-corporate-intelligence | D008 |
 | D010 | Add trade route visualization | P3 | [ ] | - | india-corporate-intelligence | D009 |
+| D011 | **NEW: Create dedicated NSE map page** | P1 | [~] | @tryclaw | india-corporate-intelligence | C006 |
+| D012 | **NEW: Create dedicated BSE map page** | P1 | [~] | @tryclaw | india-corporate-intelligence | C006 |
+| D013 | **NEW: Add exchange filter to map explorer** | P2 | [ ] | - | india-corporate-intelligence | D011,D012 |
 
 ## Section E: Frontend - Network & Graph (E001-E099)
 

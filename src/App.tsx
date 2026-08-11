@@ -9,6 +9,9 @@ import PoliticalView from './pages/PoliticalView';
 import MediaView from './pages/MediaView';
 import Search from './pages/Search';
 import Watchlist from './pages/Watchlist';
+import NSEMap from './pages/NSEMap';
+import BSEMap from './pages/BSEMap';
+import Nifty50 from './pages/Nifty50';
 import { DataProvider } from './context/DataContext';
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/map" element={<MapExplorer />} />
+            <Route path="/nse-map" element={<NSEMap />} />
+            <Route path="/bse-map" element={<BSEMap />} />
+            <Route path="/nifty50" element={<Nifty50 />} />
             <Route path="/company/:id" element={<CompanyProfile />} />
             <Route path="/network" element={<NetworkView />} />
             <Route path="/industries" element={<IndustryView />} />
