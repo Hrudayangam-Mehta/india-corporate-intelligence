@@ -24,6 +24,7 @@ import {
   Gavel,
   Telescope,
   Notebook,
+  Mountain,
 } from 'lucide-react';
 import { COMPANIES, COMPANIES_AS_OF } from '../data/companies';
 import { MINISTERS } from '../data/politics';
@@ -42,13 +43,23 @@ const navGroups: { label: string; items: { path: string; label: string; icon: ty
     ],
   },
   {
+    // The allocation registers sit together because they are the same KIND of thing —
+    // records of how public value was handed over — and the comparison across them is
+    // the point. Media is here as the coverage register: who owns the outlets that
+    // report on the other three.
+    label: 'Registers',
+    items: [
+      { path: '/tenders', label: 'Govt awards', icon: Gavel },
+      { path: '/resources', label: 'Natural resources', icon: Mountain },
+      { path: '/media', label: 'Media ownership', icon: Newspaper },
+    ],
+  },
+  {
     label: 'Power',
     items: [
       { path: '/cabinet', label: 'Union cabinet', icon: Landmark },
-      { path: '/tenders', label: 'Govt awards', icon: Gavel },
       { path: '/network', label: 'Connection graph', icon: Network },
       { path: '/atlas', label: 'Money-trail atlas', icon: GitBranch },
-      { path: '/media', label: 'Media', icon: Newspaper },
     ],
   },
   {

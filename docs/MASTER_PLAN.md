@@ -228,7 +228,20 @@ uses the same component over the 22 telecom circles rather than states — a dif
 geometry, the same idea.
 
 **The organising insight: 2014–15 is a natural experiment.** The Supreme Court cancelled
-204 of 218 coal allocations, and the MMDR amendment forced competitive auction.
+the Screening Committee allocations, and the MMDR amendment forced competitive auction.
+
+> **Correction, from the coal research.** An earlier draft of this plan said the Court
+> "cancelled 204 of 218 coal allocations". That is the figure in general circulation and
+> it is wrong. The 25 August 2014 judgment declared the allocations illegal and
+> expressly left the consequences open (para 157); the 24 September 2014 order did the
+> cancelling, and its own arithmetic is **46 blocks identified as producing or
+> ready-to-produce, 42 quashed, 4 saved**. Neither order uses the number 204 — the only
+> "204" in the September order is an interlocutory application number in a footnote.
+> **204 is statutory, not judicial**: it is the row count of Schedule I of the Coal
+> Mines (Special Provisions) Act 2015, defined more broadly than the order. 218 is the
+> Union's own affidavit figure of 216 plus 2 coal-to-liquid blocks mentioned orally.
+> Reports describing 25 August as cancelling 204 blocks compress two decisions a month
+> apart into one.
 **Every chart in this domain splits at that boundary** — before/after, same axes, same
 scale. A discretionary regime and an auction regime plotted as one continuous series is
 a chart that hides its own subject.
