@@ -561,7 +561,7 @@ tested* on its two most consequential pathways.
 | 2026-08-12 | `ff19658` | **SG1** | Chart layer + validated palette; spectrum as the fourth register; time series, distribution, scatter | ✅ all four |
 | 2026-08-12 | `006a138` | SG1 | Prospector run over the procurement graph — two bugs found in the analyser, both fixed | ✅ all four |
 | 2026-08-12 | `e11e8c7` | SG1 | Desk pass killed all five candidates; four were already live. Coal bid counts recovered (26 of 65 single-bid), spectrum band-comparable series, critical-minerals base rate, Assam like-for-like ladder, 14th-round flipped to signature-absent | ✅ all four |
-| 2026-08-12 | `_pending_` | SG5 | Shared graph camera (`viz/camera.tsx`): measured viewBox, exact drag, pan pad, maximise, node pinning — on BOTH the force graph and the map graph. New fifth gate `npm run viewport` measures it | ✅ **all five** |
+| 2026-08-12 | `d88de1b` | SG5 | Shared graph camera (`viz/camera.tsx`): measured viewBox, exact drag, pan pad, maximise, node pinning — on BOTH the force graph and the map graph. New fifth gate `npm run viewport` measures it | ✅ **all five** |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
