@@ -326,7 +326,31 @@ TOOLS        Search · Donations · Watchlist
 | **P8** ✅ | Cross-register competitive-tension comparison | Shipped inside `/resources` rather than as its own page — the comparison belongs beside the registers, not away from them |
 | **P9** ✅ | Connection graph made usable; `/capture` capture pathways | The adversarial half of the method |
 | **P10** ✅ | `/pmcares` — flow ledger with holes, PMNRF control | Shipped |
-| **P13** | Ingest a bulk tender dataset under the Stage 0 rule | Research running |
+| **P13** ✅ | Ingest a bulk tender dataset under the Stage 0 rule | Shipped as `/competition` |
+| **P14** | Wire the spectrum register into `/resources` | Dataset landed, page not yet updated |
+| **P15** | Verify the OCDS sample against the portals by hand | Blocked on captcha; the tool is built |
+| **P16** | The 4.5M-row CPPP scrape via HuggingFace (3.45 GB) | Found, not ingested |
+
+### What P13 established: the bid count exists, twice, and nowhere else
+
+| Source | Bid counts? | Verdict |
+|---|---|---|
+| CPPP results page | — | Zero rows behind a captcha |
+| CPPP dashboard JSON | — | HTTP 200, `application/json`, **0 bytes** |
+| GeM | — | TCP connection refused at the edge |
+| IREPS (Railways) | — | Anonymous search deliberately disabled |
+| State portals (5 checked) | — | Open tenders free; awards captcha-gated *and* need a tender ID |
+| **Himachal Pradesh OCDS** | **yes** | 3,771 tenders — via CivicDataLab, not the state |
+| **Assam OCDS** | **yes** | 34,224 tenders — via CivicDataLab, not the state |
+
+**Single-bidder: 3.39% (HP) against 16.18% (Assam)** — a factor of 4.8 between two
+states measured identically, which is why no national rate is computed. The value
+gradient — does single-bidding rise with contract size — comes back **flat in
+Himachal Pradesh, whose top value band contains zero single-bidder tenders.**
+
+Everything enters at `reported`, unverified, with the reason stated: award pages are
+captcha-gated and stored portal URLs are session-scoped, so a sample cannot be
+checked by automated retrieval.
 
 ### What P10 established: the control is the highest-yield check after the date test
 
@@ -415,6 +439,8 @@ tested* on its two most consequential pathways.
 | 2026-08-12 | `03cb045` | P9 | Connection graph pan/zoom/ego-focus; `/capture` capture pathways | ✅ all four |
 | 2026-08-12 | `5ab3966` | P12 | `/allocation` — four registers joined on winner name, tiered analytic throughout | ✅ all four |
 | 2026-08-12 | `7ffcc00` | P10 | `/pmcares` — control-first; INGESTION Stage 0 rule for third-party bulk data | ✅ all four |
+| 2026-08-12 | `18370c2` | P13 | `scripts/verify-sample.mjs` — the tool that makes Stage 0 enforceable | ✅ all four |
+| 2026-08-12 | `86902ec` | P13 | `/competition` — 37,995 tenders with real bid counts, from the only two Indian sources that publish them | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
