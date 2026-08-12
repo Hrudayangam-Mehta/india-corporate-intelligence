@@ -61,6 +61,8 @@ interface Props {
   selected?: string | null;
   onSelect?: (id: string | null) => void;
   height?: number;
+  /** Ego-network radius in hops. 0 draws the whole filtered graph. */
+  focusHops?: number;
 }
 
 /** ty → shape. Deliberately few shapes; more would be unreadable at this density. */
@@ -94,7 +96,25 @@ function within(e: GEdge, f: GraphFilter): boolean {
   return true;
 }
 
-export default function ForceGraph({ nodes, edges, filter, selected, onSelect, height = 620 }: Props) {
+export default function ForceGraph({
+  nodes,
+  edges,
+  filter,
+  selected,
+  onSelect,
+  height = 620,
+  /**
+   * Ego-network radius. When a node is selected, render only that node and
+   * everything within this many hops of it. 0 disables focus and draws the
+   * whole filtered graph.
+   *
+   * This is the single most important control on a dense graph. Nearly 800
+   * relationships in one frame is not a picture of a network, it is a texture;
+   * the question a reader actually has is "what is attached to THIS", and an
+   * ego view answers it where the full draw cannot.
+   */
+  focusHops = 0,
+}: Props) {
   const ref = useRef<SVGSVGElement>(null);
   const simRef = useRef<Simulation<SimNode, undefined> | null>(null);
   const [tick, setTick] = useState(0);
@@ -102,9 +122,14 @@ export default function ForceGraph({ nodes, edges, filter, selected, onSelect, h
   const W = 900;
   const H = height;
 
+  // Pan and zoom. Implemented directly rather than pulling in d3-zoom — it is a
+  // transform, a wheel handler and a drag, and the dependency budget is five.
+  const [view, setView] = useState({ k: 1, tx: 0, ty: 0 });
+  const dragRef = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
+
   const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-  const { simNodes, simLinks } = useMemo(() => {
+  const { simNodes, simLinks, hiddenByFocus } = useMemo(() => {
     const q = filter.query.trim().toLowerCase();
     const matches = (n: GNode) =>
       !q ||
@@ -116,7 +141,38 @@ export default function ForceGraph({ nodes, edges, filter, selected, onSelect, h
     const keep = new Set<string>();
     for (const n of nodes) if (filter.families.has(n.fam) && matches(n)) keep.add(n.id);
     // Keep an edge only when both endpoints survive the node filter.
-    const links = visibleEdges.filter((e) => keep.has(e.s) && keep.has(e.t));
+    let links = visibleEdges.filter((e) => keep.has(e.s) && keep.has(e.t));
+
+    // Ego-network restriction, applied AFTER the filters so the hop count is
+    // measured on the graph the reader is actually looking at.
+    let hidden = 0;
+    if (focusHops > 0 && selected && keep.has(selected)) {
+      const adj = new Map<string, string[]>();
+      for (const e of links) {
+        (adj.get(e.s) ?? adj.set(e.s, []).get(e.s)!).push(e.t);
+        (adj.get(e.t) ?? adj.set(e.t, []).get(e.t)!).push(e.s);
+      }
+      const reach = new Set<string>([selected]);
+      let frontier = [selected];
+      for (let hop = 0; hop < focusHops; hop++) {
+        const next: string[] = [];
+        for (const id of frontier) {
+          for (const nb of adj.get(id) ?? []) {
+            if (!reach.has(nb)) {
+              reach.add(nb);
+              next.push(nb);
+            }
+          }
+        }
+        frontier = next;
+        if (!frontier.length) break;
+      }
+      const before = keep.size;
+      for (const id of [...keep]) if (!reach.has(id)) keep.delete(id);
+      hidden = before - keep.size;
+      links = links.filter((e) => keep.has(e.s) && keep.has(e.t));
+    }
+
     // Drop isolated nodes only when a query is active; otherwise the population matters.
     const connected = new Set<string>();
     for (const l of links) {
@@ -130,8 +186,9 @@ export default function ForceGraph({ nodes, edges, filter, selected, onSelect, h
     return {
       simNodes: finalNodes,
       simLinks: links.filter((e) => byId.has(e.s) && byId.has(e.t)).map<SimLink>((e) => ({ source: e.s, target: e.t, e })),
+      hiddenByFocus: hidden,
     };
-  }, [nodes, edges, filter]);
+  }, [nodes, edges, filter, focusHops, selected]);
 
   useEffect(() => {
     simRef.current?.stop();
@@ -175,21 +232,59 @@ export default function ForceGraph({ nodes, edges, filter, selected, onSelect, h
     return s;
   }, [hover, selected, simLinks]);
 
+  /** Zoom about the cursor, so the thing under the pointer stays under the pointer. */
+  const onWheel = (ev: React.WheelEvent<SVGSVGElement>) => {
+    ev.preventDefault();
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const px = ((ev.clientX - rect.left) / rect.width) * W;
+    const py = ((ev.clientY - rect.top) / rect.height) * H;
+    setView((v) => {
+      const k = Math.min(6, Math.max(0.35, v.k * (ev.deltaY < 0 ? 1.15 : 1 / 1.15)));
+      return { k, tx: px - ((px - v.tx) / v.k) * k, ty: py - ((py - v.ty) / v.k) * k };
+    });
+  };
+
+  const onPointerDown = (ev: React.PointerEvent<SVGSVGElement>) => {
+    if (ev.button !== 0) return;
+    dragRef.current = { x: ev.clientX, y: ev.clientY, tx: view.tx, ty: view.ty };
+    (ev.target as Element).setPointerCapture?.(ev.pointerId);
+  };
+  const onPointerMove = (ev: React.PointerEvent<SVGSVGElement>) => {
+    const d = dragRef.current;
+    if (!d) return;
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const sx = W / rect.width;
+    const sy = H / rect.height;
+    setView((v) => ({ ...v, tx: d.tx + (ev.clientX - d.x) * sx, ty: d.ty + (ev.clientY - d.y) * sy }));
+  };
+  const endDrag = () => {
+    dragRef.current = null;
+  };
+
   return (
-    <svg
-      ref={ref}
-      viewBox={`0 0 ${W} ${H}`}
-      style={{ width: '100%', height }}
-      role="img"
-      aria-label={`Connection graph: ${simNodes.length} entities, ${simLinks.length} relationships. A table view of the same data is available below.`}
-      data-tick={tick}
-    >
+    <div className="relative">
+      <svg
+        ref={ref}
+        viewBox={`0 0 ${W} ${H}`}
+        style={{ width: '100%', height, touchAction: 'none', cursor: dragRef.current ? 'grabbing' : 'grab' }}
+        role="img"
+        aria-label={`Connection graph: ${simNodes.length} entities, ${simLinks.length} relationships. Scroll to zoom, drag to pan. A table view of the same data is available below.`}
+        data-tick={tick}
+        onWheel={onWheel}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+      >
       <defs>
         <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
           <path d="M 0 0 L 8 4 L 0 8 z" fill="rgba(232,228,220,0.35)" />
         </marker>
       </defs>
 
+      <g transform={`translate(${view.tx},${view.ty}) scale(${view.k})`}>
       <g>
         {simLinks.map((l, i) => {
           const s = l.source as SimNode;
@@ -272,11 +367,37 @@ export default function ForceGraph({ nodes, edges, filter, selected, onSelect, h
         })}
       </g>
 
+      </g>
+
       {!simNodes.length && (
         <text x={W / 2} y={H / 2} textAnchor="middle" fill="rgba(232,228,220,0.4)" fontSize="13">
           No entities match these filters.
         </text>
       )}
-    </svg>
+      </svg>
+
+      <div className="absolute top-2 right-2 flex items-center gap-1.5">
+        {(view.k !== 1 || view.tx !== 0 || view.ty !== 0) && (
+          <button
+            onClick={() => setView({ k: 1, tx: 0, ty: 0 })}
+            className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-border-light bg-bg/85 text-text-muted hover:text-accent"
+          >
+            reset view
+          </button>
+        )}
+        <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-border bg-bg/85 text-text-muted tabular-nums">
+          {view.k.toFixed(1)}×
+        </span>
+      </div>
+
+      <div className="absolute bottom-2 left-2 font-mono text-[10px] text-text-muted bg-bg/80 px-1.5 py-0.5 rounded">
+        scroll to zoom · drag to pan
+        {focusHops > 0 && selected && hiddenByFocus > 0 && (
+          <span className="text-accent">
+            {' '}· {hiddenByFocus} entities outside {focusHops} hop{focusHops === 1 ? '' : 's'} hidden
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
