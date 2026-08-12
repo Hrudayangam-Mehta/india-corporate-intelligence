@@ -209,6 +209,30 @@ const doc = {
     `${asStat.singleBidderPctOfContested}% in ${asStat.jurisdiction} (${asStat.singleBidder} of ${asStat.tendersThatDrewBids}), ` +
     `measured identically over tenders that drew at least one bid. Neither state published the data itself.`,
 
+  // Top level, not nested: scripts/promote.mjs treats a file with no top-level
+  // `sources` as a FATAL rejection — claims in it cannot be traced. `validate`
+  // only warns about it, which is how two files shipped that promote refuses.
+  sources: [
+    {
+      publisher: 'Open Contracting Partnership data registry',
+      title: 'Publication 77 — Himachal Pradesh (CivicDataLab), full.jsonl.gz',
+      url: 'https://data.open-contracting.org/en/publication/77/download?name=full.jsonl.gz',
+      retrieved: '2026-08-12',
+      readAs: 'gzipped JSON Lines, downloaded with curl and parsed line by line',
+      bytes: hp.bytes,
+      sha256_16: hp.sha256_16,
+    },
+    {
+      publisher: 'Open Contracting Partnership data registry',
+      title: 'Publication 131 — Assam (CivicDataLab), full.jsonl.gz',
+      url: 'https://data.open-contracting.org/en/publication/131/download?name=full.jsonl.gz',
+      retrieved: '2026-08-12',
+      readAs: 'gzipped JSON Lines, downloaded with curl and parsed line by line',
+      bytes: assam.bytes,
+      sha256_16: assam.sha256_16,
+    },
+  ],
+
   provenance: {
     tier: 'reported',
     tierReason:
@@ -216,26 +240,6 @@ const doc = {
     transformedBy: 'CivicDataLab',
     registeredWith: 'Open Contracting Partnership data registry',
     standard: 'Open Contracting Data Standard 1.1, compiled releases',
-    sources: [
-      {
-        publisher: 'Open Contracting Partnership data registry',
-        title: 'Publication 77 — Himachal Pradesh (CivicDataLab), full.jsonl.gz',
-        url: 'https://data.open-contracting.org/en/publication/77/download?name=full.jsonl.gz',
-        retrieved: '2026-08-12',
-        readAs: 'gzipped JSON Lines, downloaded with curl and parsed line by line',
-        bytes: hp.bytes,
-        sha256_16: hp.sha256_16,
-      },
-      {
-        publisher: 'Open Contracting Partnership data registry',
-        title: 'Publication 131 — Assam (CivicDataLab), full.jsonl.gz',
-        url: 'https://data.open-contracting.org/en/publication/131/download?name=full.jsonl.gz',
-        retrieved: '2026-08-12',
-        readAs: 'gzipped JSON Lines, downloaded with curl and parsed line by line',
-        bytes: assam.bytes,
-        sha256_16: assam.sha256_16,
-      },
-    ],
   },
 
   verification: {

@@ -34,7 +34,7 @@ export default function Competition() {
 
   const ledger: LedgerEntry[] = useMemo(
     () =>
-      PROCUREMENT.provenance.sources.map((s) => ({
+      PROCUREMENT.sources.map((s) => ({
         label: `${s.publisher} — ${s.title}`,
         url: s.url,
         establishes: `${s.readAs}. ${s.bytes.toLocaleString('en-IN')} bytes, sha256 ${s.sha256_16}.`,

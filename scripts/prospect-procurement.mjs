@@ -245,6 +245,22 @@ if (qFloorAtRank1 > Q) {
 
 const out = {
   asOf: '2026-08-12',
+
+  // Required at the TOP LEVEL by scripts/promote.mjs — a file without it is a
+  // fatal rejection, because a claim that cannot be traced cannot be promoted.
+  // This file observes nothing of its own; it analyses one publication, and
+  // that publication is what it cites.
+  sources: [
+    {
+      publisher: 'Open Contracting Partnership data registry',
+      title: 'Publication 77 — Himachal Pradesh (CivicDataLab), full.jsonl.gz',
+      url: 'https://data.open-contracting.org/en/publication/77/download?name=full.jsonl.gz',
+      retrieved: '2026-08-12',
+      readAs:
+        'gzipped JSON Lines, downloaded with curl and parsed line by line; this file is a derived analysis of that publication, produced by scripts/prospect-procurement.mjs. It introduces no observation of its own.',
+    },
+  ],
+
   scope: 'Himachal Pradesh public procurement, buyer-level award concentration.',
 
   refusal: {

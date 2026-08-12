@@ -60,6 +60,13 @@ export interface Jurisdiction {
 
 const doc = raw as unknown as {
   asOf: string;
+  /**
+   * Top level, not nested under `provenance`. `scripts/promote.mjs` treats a raw
+   * file with no top-level `sources` as a FATAL rejection — a claim that cannot
+   * be traced cannot be promoted — while `validate` only warns. This file shipped
+   * with the sources one level too deep, and the warning was read past for a day.
+   */
+  sources: { publisher: string; title: string; url: string; retrieved: string; readAs: string; bytes: number; sha256_16: string }[];
   scope: string;
   headline: string;
   provenance: {
@@ -68,7 +75,6 @@ const doc = raw as unknown as {
     transformedBy: string;
     registeredWith: string;
     standard: string;
-    sources: { publisher: string; title: string; url: string; retrieved: string; readAs: string; bytes: number; sha256_16: string }[];
   };
   verification: { status: string; why: string; plan: string; consequence: string };
   freshness: Record<string, string>;
