@@ -156,18 +156,34 @@ export default function ForceGraph({
   const cam = useCamera(ref, W, H);
   const { fitTo, expanded, toLocal } = cam;
 
+  /**
+   * Measure the frame.
+   *
+   * The state update is deferred to the next frame ON PURPOSE. A ResizeObserver
+   * callback that writes state synchronously can re-enter layout inside the same
+   * delivery, and the browser reports that as an uncaught
+   * "ResizeObserver loop completed with undelivered notifications" — a CONSOLE
+   * ERROR, which is a hard failure of the render smoke gate. It is also
+   * intermittent, which is the worst kind of gate failure to inherit: it passed
+   * three runs out of four before this comment existed.
+   */
   useEffect(() => {
     const el = wrapRef.current;
     if (!el || typeof ResizeObserver === 'undefined') return;
+    let frame = 0;
     const ro = new ResizeObserver((entries) => {
       const r = entries[0]?.contentRect;
       if (!r) return;
       const w = Math.max(240, Math.round(r.width));
       const h = Math.max(240, Math.round(r.height));
-      setSize((s) => (s.w === w && s.h === h ? s : { w, h }));
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setSize((s) => (s.w === w && s.h === h ? s : { w, h })));
     });
     ro.observe(el);
-    return () => ro.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+    };
     // Re-observed when the frame moves between inline and overlay, since React
     // remounts the wrapper at the new position in the tree.
   }, [expanded]);
@@ -266,6 +282,7 @@ export default function ForceGraph({
       .force('x', forceX<SimNode>((d) => (d.n.fam === 'state' ? -BAND : d.n.fam === 'capital' ? BAND : 0)).strength(0.09))
       .force('y', forceY<SimNode>(0).strength(0.05));
 
+    let settle = 0;
     if (reduced) {
       sim.stop();
       for (let i = 0; i < 260; i++) sim.tick();
@@ -275,13 +292,16 @@ export default function ForceGraph({
       sim.on('tick', () => setTick((t) => t + 1));
       sim.alpha(1).restart();
       // Freeze once settled — a graph that jitters under the cursor is unreadable.
-      window.setTimeout(() => {
+      settle = window.setTimeout(() => {
         sim.alphaTarget(0).stop();
         setSettledAt((n) => n + 1);
       }, 4200);
     }
     simRef.current = sim;
     return () => {
+      // The timer is cleared, not merely orphaned: it outlived the component
+      // otherwise, and fired a refit into a layout that had already been replaced.
+      window.clearTimeout(settle);
       sim.stop();
     };
   }, [simNodes, simLinks, reduced]);
