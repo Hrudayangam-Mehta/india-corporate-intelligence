@@ -84,6 +84,7 @@ const ROUTES = [
   ['/desk', 'desk'],
   ['/capture', 'capture'],
   ['/allocation', 'allocation'],
+  ['/pmcares', 'pmcares'],
   ['/allocation?min=3', 'allocation-three'],
   ['/interlocks', 'interlocks'],
   ['/conglomerates/reliance', 'deepdive-reliance'],
