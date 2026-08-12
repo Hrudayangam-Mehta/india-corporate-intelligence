@@ -558,7 +558,7 @@ tested* on its two most consequential pathways.
 | 2026-08-12 | `7ffcc00` | P10 | `/pmcares` — control-first; INGESTION Stage 0 rule for third-party bulk data | ✅ all four |
 | 2026-08-12 | `18370c2` | P13 | `scripts/verify-sample.mjs` — the tool that makes Stage 0 enforceable | ✅ all four |
 | 2026-08-12 | `86902ec` | P13 | `/competition` — 37,995 tenders with real bid counts, from the only two Indian sources that publish them | ✅ all four |
-| 2026-08-12 | *pending* | **SG1** | Chart layer + validated palette; spectrum as the fourth register; time series, distribution, scatter | ✅ all four |
+| 2026-08-12 | `ff19658` | **SG1** | Chart layer + validated palette; spectrum as the fourth register; time series, distribution, scatter | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
