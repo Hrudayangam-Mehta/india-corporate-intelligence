@@ -149,6 +149,50 @@ export const COAL_AS_OF = coal.asOf;
 export const COAL_HEADLINE = coal.denominators.theHeadlineDenominator;
 export const COAL_WINNERS = coal.winnerFrequencyDistribution;
 
+/**
+ * Coal bid counts, recovered by the desk from PIB bid-opening releases.
+ *
+ * The coal register was built from the Nominated Authority's result sheets, which
+ * publish reserve price, final offer and winner and never the number of bids — and
+ * the platform reported that as "0 of 133 blocks carry a bid count", on four pages,
+ * as the sharpest disclosure hole it had found.
+ *
+ * That was wrong about the ministry. Its PIB bid-opening releases carry a table
+ * headed "Mine-wise list of bids received", with columns for mine name, round and
+ * number of bids. Five such releases yield 65 mine-level observations.
+ *
+ * The correction cuts both ways and the second half matters more: 26 of those 65
+ * mines drew exactly one bid. Under the auction rules a mine with fewer than two
+ * technically qualified bidders is annulled, so those 26 could not proceed.
+ *
+ * READ THE DENOMINATOR. These tables list mines that drew AT LEAST ONE bid. Mines
+ * that drew none never appear, so 40% is a share of mines that attracted a bidder
+ * and NOT a share of mines offered. It is not comparable with the state
+ * public-works rates on /competition, which are computed the same way but over a
+ * population that includes far more small, routine lots.
+ */
+export const COAL_PIB_BIDS = {
+  observations: 65,
+  singleBidMines: 26,
+  singleBidSharePct: 40,
+  meanBids: 3.22,
+  rounds: 'rounds 9–12, plus second attempts of rounds 7–11 run alongside them',
+  releasesOpened: 6,
+  releasesCarryingTheTable: 5,
+  denominatorWarning:
+    'Mines that drew no bid at all are absent from these tables, so this is a share of mines that attracted a bidder, not of mines offered.',
+  ruleNote:
+    'Under the auction rules a mine with fewer than two technically qualified bidders is annulled, so a single-bid mine could not proceed.',
+  absentFrom: 'The 14th round bid-opening release (23 Dec 2025) carries no such table.',
+  srcs: [
+    ['PIB 2007501 — 9th round bid opening, 20 Feb 2024', 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2007501'],
+    ['PIB 2066781 — 10th round bid opening, 21 Oct 2024', 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2066781'],
+    ['PIB 2099232 — 11th round bid opening', 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2099232'],
+    ['PIB 2136757 — 12th round bid opening', 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2136757'],
+    ['PIB 2137313 — 12th round underground blocks, named bidder table', 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2137313'],
+  ] as [string, string][],
+} as const;
+
 /** State names as printed by the Ministry, mapped to the platform's state codes. */
 const STATE_CODE_BY_NAME: Record<string, StateCode> = {
   Chhattisgarh: 'ct',
@@ -604,7 +648,14 @@ export function spectrumUnsoldSeries(): {
   return spectrum.unsoldShareSeries.series
     .map((s) => {
       const year = Number((s.date ?? s.auction).slice(0, 4));
-      const comparable = !s.auction.includes('2022');
+      // CORRECTED 2026-08-12. This originally excluded only 2022. The desk showed
+      // 2024 has the SAME defect and worse: 26 GHz was 82.68% of its offered MHz and
+      // 2.84% of its reserve valuation, and with 3300 MHz the two bands are 93.23%
+      // of the denominator — both sold in bulk 22 months earlier, in 2022. A ratio
+      // whose denominator is 93% of the previous auction's residue measures what was
+      // left over, not what the market wanted. Excluding one and plotting the other
+      // was inconsistent, and it flattered the very reading the caption warned about.
+      const comparable = !s.auction.includes('2022') && !s.auction.includes('2024');
       return {
         year,
         auction: s.auction,
@@ -612,7 +663,9 @@ export function spectrumUnsoldSeries(): {
         comparable,
         note: comparable
           ? undefined
-          : 'Roughly 87% of what was offered was 26 GHz mmWave. Not comparable with the sub-3 GHz auctions before it; the sub-3 GHz share was 27.96%.',
+          : s.auction.includes('2022')
+            ? 'Roughly 87% of what was offered was 26 GHz mmWave. Not comparable with the sub-3 GHz auctions before it; on a band-comparable basis the figure is 27.96%.'
+            : '26 GHz was 82.68% of the offered MHz and 2.84% of the reserve valuation; with 3300 MHz the two are 93.23% of the denominator, and both had been sold in bulk 22 months earlier. The 1.34% headline measures leftovers. On a band-comparable basis the figure is 19.85%.',
       };
     })
     .sort((a, b) => a.year - b.year);
@@ -661,6 +714,23 @@ export function twoGDetail(rec: Record<string, unknown>, maxDepth = 2): { key: s
   walk(rec, 0);
   return out;
 }
+
+/**
+ * The band-comparable series — what the unsold share looks like once the bands that
+ * are not comparable across auctions are taken out.
+ *
+ * This is the series the platform should have plotted from the start. The raw
+ * share-sold figure is dominated by whichever high-bandwidth band happened to be on
+ * offer, so 2022 looks strong (71%) and 2024 looks catastrophic (1.34%) for the same
+ * reason: millimetre wave. On like-for-like bands the trend is a steady decline and
+ * far less dramatic than either headline.
+ */
+export const SPECTRUM_BAND_COMPARABLE: { year: number; pct: number }[] = [
+  { year: 2016, pct: 40.97 },
+  { year: 2021, pct: 37.06 },
+  { year: 2022, pct: 27.96 },
+  { year: 2024, pct: 19.85 },
+];
 
 /** Operators bidding per auction. Bidders per LOT is published nowhere, ever. */
 export function spectrumBidders(): { year: number; auction: string; bidders: number | null; winners: number | null }[] {
@@ -716,8 +786,14 @@ export function registerTension(): RegisterTension[] {
       register: 'Coal blocks',
       route: '/resources?register=coal',
       unit: 'block',
-      biddersPerLot: null,
-      biddersNote: `0 of ${COAL_BLOCKS.length} rows carry a bid count — the Ministry of Coal publishes reserve price, final offer and winner, never the number of bids`,
+      // CORRECTED 2026-08-12. This previously read "0 of 133 rows carry a bid count —
+      // the Ministry of Coal ... never [publishes] the number of bids". That was true
+      // of the Nominated Authority's result sheets, which is what the register was
+      // built from, and FALSE as a statement about the ministry. Its PIB bid-opening
+      // releases carry a table headed "Mine-wise list of bids received", and five of
+      // them yield 65 mine-level bid counts across rounds 9 to 12.
+      biddersPerLot: COAL_PIB_BIDS.meanBids,
+      biddersNote: `not in the ${COAL_BLOCKS.length} Nominated Authority rows, but ${COAL_PIB_BIDS.observations} mine-level counts are published in PIB bid-opening releases for rounds 9–12`,
       offered: coalTake.offered || null,
       taken: coalTake.auctioned || null,
       asOf: COAL_AS_OF,

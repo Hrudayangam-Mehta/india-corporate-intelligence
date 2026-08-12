@@ -2,7 +2,7 @@ import {
   COAL_BLOCKS, COAL_HEADLINE, COAL_WINNERS, COAL_TRANCHES,
   coalIdentifierCoverage, coalTakeRate,
   MINERAL_BLOCKS, mineralAnnulment, mineralQuoteCoverage,
-  hydrocarbonSingleBid,
+  hydrocarbonSingleBid, COAL_PIB_BIDS,
 } from './resources';
 import { ALL_AWARDS, competitionEvidence, disclosureBySector } from './tenders';
 import { pooled as procurementPooled } from './procurement';
@@ -103,7 +103,10 @@ export function capturePathways(): CapturePathway[] {
         `disagree with each other by a factor of nearly five, so the range matters more than the midpoint. ` +
         `Against that, hydrocarbons is stark: single-bid share runs from ${minSingle?.pct.toFixed(1)}% in ` +
         `${minSingle?.round} to ${maxSingle?.pct.toFixed(1)}% in ${maxSingle?.round}. ` +
-        `Coal cannot be tested at all — 0 of ${COAL_BLOCKS.length} rows carry a bid count. ` +
+        `Coal CAN now be tested, which a previous version of this page denied. The Nominated Authority's result ` +
+        `sheets carry no bid count, but the ministry's PIB bid-opening releases do: ${COAL_PIB_BIDS.observations} mine-level ` +
+        `counts across rounds 9–12, of which ${COAL_PIB_BIDS.singleBidMines} drew exactly one bid (${COAL_PIB_BIDS.singleBidSharePct}%, mean ${COAL_PIB_BIDS.meanBids}). ` +
+        `That denominator counts only mines that attracted a bidder, so it is not comparable with the state public-works rates. ` +
         `In the awards register, bid position is recoverable for ${awards.soleKnown} of ${awards.total} awards and ` +
         `${awards.soleCount} of those ${awards.soleKnown} were sole-bidder. ` +
         `The value-gradient test — does single-bidding rise with contract size — comes back NEGATIVE in ` +
@@ -111,7 +114,7 @@ export function capturePathways(): CapturePathway[] {
       innocentReading:
         'A block nobody bids for is usually a block nobody wants. Deep-water acreage, unexplored basins, coal with no evacuation infrastructure and mineral blocks with outstanding forest clearances all attract one bidder or none for reasons entirely internal to the asset. A rising single-bid share is equally consistent with a shrinking pool of firms willing to carry exploration risk.',
       whatWouldSettleIt:
-        'Bid counts per lot, published as a matter of course. The Ministry of Coal already publishes reserve price, final offer and winner for every mine; adding the number of bids received would cost nothing and would make this pathway testable across the largest register in the country. Two state governments already demonstrate it is possible — though neither published the data itself, and both series are frozen.',
+        'Bid counts in the RESULT document rather than only in a press release, and for every round rather than rounds 9 to 12. The Ministry of Coal already publishes a mine-wise bid table in its bid-opening releases — the practice exists and was simply not carried into the Nominated Authority result series or into the most recent round. Making it routine would close the gap at no cost.',
       registers: ['hydrocarbons', 'coal', 'awards'],
     },
     {
@@ -176,13 +179,13 @@ export function capturePathways(): CapturePathway[] {
         'Keep the disclosure regime intact for routine rounds and quietly skip the one with an awkward result. Nothing is falsified; a document simply never appears.',
       signature:
         'A break in an otherwise regular publication series — every comparable round announced, one not.',
-      verdict: 'signature-present',
+      verdict: 'signature-absent',
       evidence:
-        'The 14th round of commercial coal auctions received no PIB result release, while the 10th, 11th, 12th, 13th and 15th rounds each got one. That was established by absence rather than by a failed fetch: the ministry\'s own PIB mirror carries no such entry across a seven-month span, and a sweep of release IDs covering the days after the auction closed found no Ministry of Coal release at all. The result itself was published — as two Nominated Authority notices on the MSTC portal, five months after the auction ran.',
+        'KILLED BY THE DESK on the identity test, 2026-08-12. This page previously reported the signature as present. Three of its four limbs do not survive. "No PIB release" is false — two exist for the 14th round, the launch on 29 October 2025 and the bid opening on 23 December 2025; what is absent is specifically a RESULT release. The ministry did publish the outcome itself, on page 4 of its 21 May 2026 pre-bid presentation. And "five months later on MSTC" has no source, because the forward-auction date was never established. What remains is narrower and stays open: no block-wise result table exists anywhere for a round in which 24 blocks drew 49 bids from 11 companies.',
       innocentReading:
-        'A five-block round is small, the result did reach the public record through the statutory channel, and press releases are a courtesy rather than an obligation. Administrative drift across a holiday period explains a missing press note at least as well as anything else.',
+        'A five-block round is small, the outcome did reach the public record through the ministry\'s own presentation, and press releases are a courtesy rather than an obligation. Administrative drift across a holiday period explains a missing press note at least as well as anything else — and the base rate does not help the suspicious reading either way, since the Nominated Authority\'s result-notice series stops after tranche 12 and round 13 has no notice either, while having a next-day PIB release.',
       whatWouldSettleIt:
-        'Nothing available externally. What it does establish is that the PIB series cannot be treated as a complete record of auction outcomes, and that MSTC notices must be swept independently — which changes how the next dataset is built.',
+        'A block-wise result table for the 14th round, which exists nowhere. The wider lesson survives the kill: no single series — not PIB, not the Nominated Authority register, not MSTC — is a complete record of auction outcomes, and any claim of the form "X was never published" has to be tested against all three before it means anything.',
       registers: ['coal'],
     },
     {
@@ -216,7 +219,7 @@ export function capturePathways(): CapturePathway[] {
         `${zeroDisclosureSectors.map((d) => `${d.sector} (${d.total} awards, ${d.soleKnown} disclosed)`).join('; ')}. ` +
         `Spectrum, airports and renewables manufacturing disclose bid position for every award recorded. ` +
         `In minerals, quotes are recorded for ${quotes.withQuotes} of ${quotes.total} block records, and state portals range from machine-readable HTML result tables to nothing at all. ` +
-        `In coal, offered counts survive for only ${coalTake.rounds.length} of ${coalTake.rounds.length + roundsNoOffered} rounds, and final offers for ${COAL_BLOCKS.length - coalNoBids} of ${COAL_BLOCKS.length} blocks.`,
+        `In coal, offered counts survive for only ${coalTake.rounds.length} of ${coalTake.rounds.length + roundsNoOffered} rounds, and final offers for ${COAL_BLOCKS.length - coalNoBids} of ${COAL_BLOCKS.length} blocks — though the ministry does publish mine-wise bid counts in its bid-opening releases for rounds 9–12, which makes it the MOST forthcoming of the four authorities here rather than the least. The one publishing nothing is Mines.`,
       innocentReading:
         'Disclosure practice follows institutional history and the resourcing of the publishing body, not intent. A sectoral regulator with a statutory duty to publish round results does so; a ministry directorate without one publishes what its template contains. Nothing about the pattern requires a decision to conceal.',
       whatWouldSettleIt:

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   forceSimulation, forceLink, forceManyBody, forceCollide, forceX, forceY,
   type Simulation, type SimulationNodeDatum,
@@ -126,6 +126,16 @@ export default function ForceGraph({
   // transform, a wheel handler and a drag, and the dependency budget is five.
   const [view, setView] = useState({ k: 1, tx: 0, ty: 0 });
   const dragRef = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  /** Set once per layout, so a user who has panned is not yanked back on every tick. */
+  const fittedFor = useRef<string>('');
+  /**
+   * Bumped when the simulation stops. Fitting has to wait for this: d3 seeds nodes
+   * in a small spiral near the origin, so fitting on the first tick fits the seed
+   * cluster — which is exactly the bug this replaced. It zoomed IN to 1.6x on a
+   * graph whose nodes then spread far outside the frame, leaving 196 of 224 clipped.
+   */
+  const [settledAt, setSettledAt] = useState(0);
 
   const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
@@ -209,17 +219,80 @@ export default function ForceGraph({
       sim.stop();
       for (let i = 0; i < 260; i++) sim.tick();
       setTick((t) => t + 1);
+      setSettledAt((n) => n + 1);
     } else {
       sim.on('tick', () => setTick((t) => t + 1));
       sim.alpha(1).restart();
       // Freeze once settled — a graph that jitters under the cursor is unreadable.
-      window.setTimeout(() => sim.alphaTarget(0).stop(), 4200);
+      window.setTimeout(() => {
+        sim.alphaTarget(0).stop();
+        setSettledAt((n) => n + 1);
+      }, 4200);
     }
     simRef.current = sim;
     return () => {
       sim.stop();
     };
   }, [simNodes, simLinks, reduced, H]);
+
+  /**
+   * Fit the settled layout into the frame.
+   *
+   * THIS IS THE FIX THAT MATTERS. Pan and zoom are useless if the initial view does
+   * not contain the graph: the force simulation spreads 224 nodes well beyond a
+   * fixed 900×620 viewBox, so nodes and their labels were being clipped off all four
+   * edges and the reader had no way to know what they were missing.
+   *
+   * Computes the bounding box of the settled nodes, including label overhang, and
+   * sets the transform so the whole thing lands inside the frame with a margin.
+   * Runs once per layout — keyed on the node set — so panning is never yanked back.
+   */
+  const fitToContent = useCallback(() => {
+    const pts = simNodes.filter((d) => d.x != null && d.y != null);
+    if (!pts.length) return;
+    // Labels sit below and either side of a node, so the box is padded asymmetrically.
+    const LABEL_PAD_X = 60;
+    const LABEL_PAD_Y = 16;
+    const xs0 = Math.min(...pts.map((d) => d.x! - d.r - LABEL_PAD_X));
+    const xs1 = Math.max(...pts.map((d) => d.x! + d.r + LABEL_PAD_X));
+    const ys0 = Math.min(...pts.map((d) => d.y! - d.r - LABEL_PAD_Y));
+    const ys1 = Math.max(...pts.map((d) => d.y! + d.r + LABEL_PAD_Y * 2));
+    const bw = Math.max(1, xs1 - xs0);
+    const bh = Math.max(1, ys1 - ys0);
+    const k = Math.min(6, Math.max(0.15, Math.min(W / bw, H / bh) * 0.94));
+    setView({
+      k,
+      tx: (W - bw * k) / 2 - xs0 * k,
+      ty: (H - bh * k) / 2 - ys0 * k,
+    });
+  }, [simNodes, W, H]);
+
+  // Refit when the layout SETTLES, and once per layout. Keyed on the node set so a
+  // filter or focus change refits, while panning is never yanked back.
+  useEffect(() => {
+    if (!settledAt) return;
+    const key = `${simNodes.length}:${simNodes[0]?.id ?? ''}:${H}:${settledAt}`;
+    if (fittedFor.current === key) return;
+    if (!simNodes.length || simNodes[0].x == null) return;
+    fittedFor.current = key;
+    fitToContent();
+  }, [settledAt, simNodes, fitToContent, H]);
+
+  useEffect(() => {
+    if (!expanded) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setExpanded(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [expanded]);
+
+  const zoomBy = (factor: number) =>
+    setView((v) => {
+      const k = Math.min(6, Math.max(0.15, v.k * factor));
+      // Zoom about the frame centre, so the thing being looked at stays put.
+      return { k, tx: W / 2 - ((W / 2 - v.tx) / v.k) * k, ty: H / 2 - ((H / 2 - v.ty) / v.k) * k };
+    });
 
   const neighbours = useMemo(() => {
     const focus = hover ?? selected;
@@ -263,12 +336,19 @@ export default function ForceGraph({
     dragRef.current = null;
   };
 
-  return (
-    <div className="relative">
+  const frame = (
+    <div className="relative h-full">
       <svg
         ref={ref}
         viewBox={`0 0 ${W} ${H}`}
-        style={{ width: '100%', height, touchAction: 'none', cursor: dragRef.current ? 'grabbing' : 'grab' }}
+        style={{
+          width: '100%',
+          // An explicit height, not 100%. A percentage height resolves against a
+          // parent that has none, which silently collapsed the expanded svg to zero.
+          height: expanded ? 'calc(100vh - 96px)' : height,
+          touchAction: 'none',
+          cursor: dragRef.current ? 'grabbing' : 'grab',
+        }}
         role="img"
         aria-label={`Connection graph: ${simNodes.length} entities, ${simLinks.length} relationships. Scroll to zoom, drag to pan. A table view of the same data is available below.`}
         data-tick={tick}
@@ -376,22 +456,36 @@ export default function ForceGraph({
       )}
       </svg>
 
-      <div className="absolute top-2 right-2 flex items-center gap-1.5">
-        {(view.k !== 1 || view.tx !== 0 || view.ty !== 0) && (
+      {/* Controls, because a scroll wheel is not discoverable and fights the page
+          scroll on a long document. Every action here is also reachable by keyboard. */}
+      <div className="absolute top-2 right-2 flex items-center gap-1">
+        {[
+          { label: '−', title: 'Zoom out', act: () => zoomBy(1 / 1.3) },
+          { label: '+', title: 'Zoom in', act: () => zoomBy(1.3) },
+          { label: 'fit', title: 'Fit the whole graph in the frame', act: fitToContent },
+          {
+            label: expanded ? 'shrink' : 'expand',
+            title: expanded ? 'Back to inline size' : 'Fill the window',
+            act: () => setExpanded((e) => !e),
+          },
+        ].map((b) => (
           <button
-            onClick={() => setView({ k: 1, tx: 0, ty: 0 })}
-            className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-border-light bg-bg/85 text-text-muted hover:text-accent"
+            key={b.label}
+            onClick={b.act}
+            title={b.title}
+            aria-label={b.title}
+            className="font-mono text-[11px] min-w-[26px] px-1.5 py-0.5 rounded border border-border-light bg-bg/90 text-text-muted hover:text-accent hover:border-accent"
           >
-            reset view
+            {b.label}
           </button>
-        )}
-        <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-border bg-bg/85 text-text-muted tabular-nums">
+        ))}
+        <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-border bg-bg/90 text-text-muted tabular-nums ml-0.5">
           {view.k.toFixed(1)}×
         </span>
       </div>
 
       <div className="absolute bottom-2 left-2 font-mono text-[10px] text-text-muted bg-bg/80 px-1.5 py-0.5 rounded">
-        scroll to zoom · drag to pan
+        scroll or +/− to zoom · drag to pan · fit to reframe
         {focusHops > 0 && selected && hiddenByFocus > 0 && (
           <span className="text-accent">
             {' '}· {hiddenByFocus} entities outside {focusHops} hop{focusHops === 1 ? '' : 's'} hidden
@@ -399,5 +493,26 @@ export default function ForceGraph({
         )}
       </div>
     </div>
+  );
+
+  return expanded ? (
+    // Expanded is a real overlay rather than a bigger box: 224 nodes need the window,
+    // and a graph you have to scroll the page to see the bottom of is not usable.
+    <div className="fixed inset-0 z-50 bg-bg p-4 flex flex-col">
+      <div className="flex items-baseline justify-between mb-2">
+        <p className="font-mono text-[11px] text-text-muted">
+          {simNodes.length} entities · {simLinks.length} relationships · press Escape to close
+        </p>
+        <button
+          onClick={() => setExpanded(false)}
+          className="font-mono text-[11px] px-2 py-0.5 rounded border border-border-light text-text-muted hover:text-accent"
+        >
+          close
+        </button>
+      </div>
+      <div className="flex-1 min-h-0">{frame}</div>
+    </div>
+  ) : (
+    frame
   );
 }

@@ -88,6 +88,44 @@ export function jurisdiction(name: string): Jurisdiction | undefined {
   return JURISDICTIONS.find((j) => j.jurisdiction === name);
 }
 
+/**
+ * WHY THE HEADLINE RATIO IS NOT 4.8x — the desk's like-for-like correction.
+ *
+ * The platform published "Assam is 4.8 times less competitive than Himachal Pradesh".
+ * The desk killed it on the control: the two files do not observe the same object.
+ *
+ * Himachal Pradesh is tender data JOINED to award data — every one of its records
+ * carries an award and a supplier. Assam is tender-stage: only about 30% of its
+ * records have reached Acceptance of Contract, and the registry reports zero awards
+ * and zero suppliers for it. Inside Assam alone the single-bidder rate runs from
+ * 4.58% to 42.79% depending on which stage you measure, so the stage you compare at
+ * decides the answer.
+ *
+ * Narrowing to comparable ground — matched period, works category, award stage —
+ * the ratio falls from 4.77x to 2.53x. Himachal's own rate barely moves across that
+ * whole ladder (0.04 points); Assam's moves 7.83. A gap that survives is smaller and
+ * still real; a gap of five is an artefact of comparing a completed auction to an
+ * open one.
+ */
+export const LIKE_FOR_LIKE = {
+  headlineRatio: 4.77,
+  matchedRatio: 2.53,
+  ladder: [
+    { basis: 'as published', ratio: 4.77 },
+    { basis: 'award stage only', ratio: 4.17 },
+    { basis: 'valued tenders only', ratio: 2.43 },
+    { basis: 'matched period and Works category', ratio: 2.53 },
+  ],
+  whyTheyDiffer:
+    'Himachal Pradesh is tender data joined to award data; Assam is tender-stage with roughly 30% reaching award. Median tender value differs by a factor of six, and Assam has a documented e-procurement value threshold that moved twice.',
+  himachalStability: 'Himachal\'s rate moves 0.04 points across the whole ladder.',
+  assamInstability: 'Assam\'s moves 7.83 points.',
+  zeroBidCorrection:
+    'The 3,644 Assam tenders recorded with a bid count of zero are, in 92.34% of cases, simply UNOPENED — a stage that had not completed at export time, not a tender nobody bid for.',
+  publisherCorrection:
+    'The claim that neither state published the data itself is WRONG for Assam. Its publisher is the Assam Finance Department via AS-CFMS on data.gov.in, under the GODL-India licence. Himachal Pradesh remains a CivicDataLab transformation.',
+} as const;
+
 /** Totals across both, labelled so they cannot be read as a national figure. */
 export function pooled(): {
   tenders: number;
@@ -167,7 +205,7 @@ export function comparisons(): Comparison[] {
       register: 'State public works (this dataset)',
       singleBidPct: Number(p.pct.toFixed(2)),
       denominator: `${p.contested.toLocaleString('en-IN')} contested tenders across ${p.states} states`,
-      note: 'Pooling two states with rates 4.8× apart is itself questionable; shown only as the range midpoint.',
+      note: 'Pooling two states is questionable and the pooled figure is dominated by Assam, which contributes seven of every eight tenders. Read the per-state figures and the like-for-like note instead.',
     },
     {
       register: 'Hydrocarbon blocks, OALP Round VI',
@@ -182,10 +220,10 @@ export function comparisons(): Comparison[] {
       note: 'The same programme, eight years earlier, sat at the Himachal Pradesh rate.',
     },
     {
-      register: 'Coal blocks',
-      singleBidPct: null,
-      denominator: '0 of 133 blocks carry a bid count',
-      note: 'Cannot be computed. The Ministry of Coal publishes reserve price, final offer and winner, and never the number of bids.',
+      register: 'Coal blocks, rounds 9–12',
+      singleBidPct: 40,
+      denominator: '26 of 65 mines that drew at least one bid',
+      note: 'CORRECTED. This row previously read "cannot be computed". The Ministry of Coal does publish mine-wise bid counts, in its PIB bid-opening releases. The denominator counts only mines that attracted a bidder — mines drawing none never appear in those tables — so it is NOT comparable with the rates above, which are computed over a population including many small routine lots.',
     },
   ];
 }

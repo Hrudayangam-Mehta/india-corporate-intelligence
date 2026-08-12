@@ -18,7 +18,7 @@ import {
   HYDROCARBONS, HC_BLOCKS, HC_AS_OF,
   hydrocarbonSingleBid, hydrocarbonTakeRate,
   SPECTRUM, SPECTRUM_AUCTIONS, SPECTRUM_AS_OF, TWO_G,
-  spectrumUnsoldSeries, spectrumBidders, twoGDetail,
+  spectrumUnsoldSeries, spectrumBidders, twoGDetail, SPECTRUM_BAND_COMPARABLE,
   registerTension,
 } from '../data/resources';
 import type { StateCode } from '../graph/schema';
@@ -260,20 +260,34 @@ export default function Resources() {
             xFormat={(v) => String(v)}
             series={[
               {
-                name: 'share sold',
+                name: 'share sold, as published',
                 points: unsold
                   .filter((u) => u.comparable)
                   .map((u) => ({ x: u.year, y: u.soldSharePct })),
               },
+              {
+                name: 'band-comparable',
+                points: SPECTRUM_BAND_COMPARABLE.map((b) => ({ x: b.year, y: b.pct })),
+              },
             ]}
             caption={
               <>
-                The 2022 auction is <strong className="text-text">excluded from this line</strong>,
-                not because it is inconvenient but because it is not the same measurement: roughly
-                87% of what it offered was 26&nbsp;GHz millimetre wave, a band with far more
-                spectrum available and far less demand per MHz than the sub-3&nbsp;GHz bands every
-                earlier auction sold. Its headline 71% sold share compares two different things.
-                Strip the mmWave and its sub-3&nbsp;GHz share was 27.96%, worse than 2016.
+                <strong className="text-text">Corrected 12 August 2026.</strong> An earlier version
+                of this chart excluded 2022 for millimetre wave and plotted 2024 anyway — which was
+                inconsistent, because 2024 has the same defect and worse. In 2024, 26&nbsp;GHz was
+                82.68% of the offered MHz and 2.84% of the reserve valuation; with 3300&nbsp;MHz the
+                two bands are 93.23% of the denominator, and <em>both had been sold in bulk 22
+                months earlier</em>. The closing release says so: "the expiring spectrum in 2024 and
+                the unsold spectrum of previous Spectrum Auction held in 2022 were put to auction
+                this year." A ratio whose denominator is 93% of the last auction's residue measures
+                leftovers, not demand — so the widely-quoted 1.34% is not a failure rate.
+                <br />
+                <br />
+                The second line is the band-comparable series, and it is the one to read: 40.97% in
+                2016, 37.06% in 2021, 27.96% in 2022, 19.85% in 2024. A steady decline, and far less
+                dramatic than either headline. A whole band drawing zero bids has happened in
+                <strong className="text-text"> six of six</strong> auctions since 2012, so that on
+                its own distinguishes nothing.
               </>
             }
           />
@@ -454,7 +468,24 @@ export default function Resources() {
               },
             ]}
           />
-          <Callout label="The denominator problem, stated by the register itself" tone="warn">
+          <Callout label="Correction: the 54% annulment rate does not survive its base rate" tone="warn">
+            <strong className="text-text">This page previously led with "54% of critical-mineral
+            offerings were annulled" as a headline finding. The desk killed it on the base rate.</strong>{' '}
+            The Ministry of Mines' own Annual Report 2025-26, two pages apart at the same cut-off,
+            gives both numbers: 332 notices inviting tender of which 143 blocks were successfully
+            auctioned — <strong className="text-text">43.07% regime-wide</strong> — and 76 unique
+            critical and strategic mineral blocks of which 34 were auctioned —{' '}
+            <strong className="text-text">44.74%</strong>. Critical minerals performs{' '}
+            <strong className="text-text">1.67 points better</strong> than the mineral auction
+            regime as a whole. There are four denominators in circulation, not three, and the
+            fourth is the ministry's own and the only one with a control.
+            <br />
+            <br />
+            The 54% figure rests on wire reports quoting notices nobody retrieved, and is tier{' '}
+            <em>reported</em>. An absence worth recording alongside it: the word "annul" appears{' '}
+            <strong className="text-text">zero times</strong> in the 360-page annual report.
+            <br />
+            <br />
             {MINERALS.denominators.note}
             <br />
             <br />
@@ -986,9 +1017,9 @@ export default function Resources() {
               tone: 'accent',
             },
             {
-              value: `${annulment.annulmentRateOnOfferings.toFixed(0)}%`,
-              label: 'of critical-mineral offerings were annulled',
-              tone: 'accent',
+              value: '44.7%',
+              label: 'of critical-mineral blocks auctioned successfully — against 43.1% regime-wide',
+              tone: 'sage',
             },
             {
               value: `${hcTake.awarded}/${hcTake.offered}`,
@@ -999,16 +1030,31 @@ export default function Resources() {
               label: 'mineral records carrying a quote count',
               tone: 'muted',
             },
-            { value: '0', label: 'coal blocks with a published bidder count', tone: 'rose' },
+            { value: '65', label: 'coal mine-level bid counts, recovered from PIB releases', tone: 'accent' },
           ]}
         />
-        <Callout label="Zero of every coal block has a published bidder count" tone="warn">
-          The Ministry of Coal publishes the reserve price, the final offer and the winner for each
-          mine, and never the number of bids received. The same hole appears in the awards
-          register, where coal discloses bid position for none of its rows while spectrum, airports
-          and renewables disclose it for all of theirs. It bounds every claim about competition in
-          this register <em>in both directions</em> — nothing here can show that a coal auction was
-          competitive, and nothing here can show that it was not.
+        <Callout label="Correction: coal bid counts do exist, and 40% of those mines drew one bid" tone="warn">
+          This page previously said no coal block has a published bidder count, and treated that as
+          the sharpest disclosure hole in the register. <strong className="text-text">It was wrong
+          about the ministry.</strong> The claim held for the Nominated Authority's result sheets,
+          which is what this register was built from — but the Ministry of Coal's PIB
+          <em> bid-opening</em> releases carry a table headed "Mine-wise list of bids received", and
+          five of them yield <strong className="text-text">65 mine-level bid counts</strong> across
+          rounds 9 to 12. One goes further and names all eight bidders with bids each.
+          <br />
+          <br />
+          The correction cuts both ways, and the second half matters more.{' '}
+          <strong className="text-text">26 of those 65 mines drew exactly one bid</strong> — 40%,
+          mean 3.22. Under the auction rules a mine with fewer than two technically qualified
+          bidders is annulled, so those 26 could not proceed.
+          <br />
+          <br />
+          <strong className="text-text">Read the denominator.</strong> These tables list only mines
+          that drew at least one bid; mines drawing none never appear. So 40% is a share of mines
+          that attracted a bidder, and it is <em>not</em> comparable with the state public-works
+          rates on the competition page, which are computed over a population containing far more
+          small routine lots. On the control, coal turns out to be the most forthcoming of the four
+          authorities here, not the least — the one publishing nothing is Mines.
         </Callout>
       </Section>
 

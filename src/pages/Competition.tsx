@@ -7,7 +7,7 @@ import {
 import { GapsPanel, SourceLedger, type Gap, type LedgerEntry } from '../components/Domain';
 import { Distribution, Scatter } from '../components/viz/Charts';
 import {
-  PROCUREMENT, JURISDICTIONS, PROC_AS_OF, SCATTER, pooled, valueGradient, comparisons,
+  PROCUREMENT, JURISDICTIONS, PROC_AS_OF, SCATTER, LIKE_FOR_LIKE, pooled, valueGradient, comparisons,
 } from '../data/procurement';
 
 /**
@@ -52,14 +52,62 @@ export default function Competition() {
       <PageTitle>How many bidders actually show up</PageTitle>
       <Standfirst>
         Every question this platform asks about whether a process was competitive reduces to one
-        number, and no Indian government publishes it in bulk. Two states do — through an NGO,
-        not through themselves — and their rates differ by a factor of nearly five. That
-        disagreement is the most useful thing on this page.
+        number, and no Indian government publishes it in bulk. Two states do, and their rates
+        differ — but not by the factor of five this page first reported. What the gap actually is,
+        once the two are made comparable, is the most useful thing here.
       </Standfirst>
       <Byline>
         {p.tenders.toLocaleString('en-IN')} tenders with bid counts across {p.states} states ·
         tier reported, not yet verified · as of {PROC_AS_OF}
       </Byline>
+
+      <Section title="Correction, 12 August 2026" note="Three claims on this page did not survive the desk">
+        <Callout label="The 4.8× ratio was not a like-for-like comparison" tone="warn">
+          This page reported Assam as roughly five times less competitive than Himachal Pradesh.
+          The desk killed it on the control: <strong className="text-text">the two files do not
+          observe the same object.</strong> Himachal Pradesh is tender data joined to award data —
+          every record carries an award and a supplier. Assam is tender-stage, with only about 30%
+          of records reaching acceptance of contract, and the registry reports zero awards and zero
+          suppliers for it. Inside Assam alone the single-bidder rate runs from 4.58% to 42.79%
+          depending on which stage you measure.
+          <br />
+          <br />
+          Narrowed to comparable ground the ratio falls from{' '}
+          <strong className="text-text">{LIKE_FOR_LIKE.headlineRatio}×</strong> to{' '}
+          <strong className="text-text">{LIKE_FOR_LIKE.matchedRatio}×</strong>. Himachal's own rate
+          moves 0.04 points across that whole ladder; Assam's moves 7.83. A gap survives and it is
+          real — it is just half
+          the size, and the version this page shipped was an artefact of comparing a completed
+          auction to an open one.
+        </Callout>
+
+        <div className="mt-4 space-y-1.5">
+          {LIKE_FOR_LIKE.ladder.map((l) => (
+            <div key={l.basis} className="flex items-center gap-3 text-[13px]">
+              <span className="w-56 shrink-0 text-text-secondary">{l.basis}</span>
+              <span
+                className="h-3 bg-accent/60 rounded-sm"
+                style={{ width: `${(l.ratio / LIKE_FOR_LIKE.headlineRatio) * 200}px` }}
+              />
+              <span className="font-mono text-[11.5px] tabular-nums text-text">{l.ratio}×</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5">
+          <Callout label="Two more corrections" tone="note">
+            <strong className="text-text">Assam does publish its own data.</strong> This page said
+            neither state did. Assam's publisher is the state Finance Department, via AS-CFMS on
+            data.gov.in under the GODL-India licence. Only Himachal Pradesh is a CivicDataLab
+            transformation.
+            <br />
+            <br />
+            <strong className="text-text">The 3,644 "zero-bid" Assam tenders are mostly not
+            failed tenders.</strong> In 92.34% of cases they are simply <em>unopened</em> — a stage
+            that had not completed when the file was exported, rather than a tender nobody bid for.
+          </Callout>
+        </div>
+      </Section>
 
       <Section title="What was found" note="And the reason it took this long to find anything">
         <Callout label="The headline, computed rather than written" tone="bottomline">
@@ -76,8 +124,8 @@ export default function Competition() {
           </p>
           <p>
             So the entire national record of <em>how many people bid for public work in India</em>{' '}
-            comes down to two state datasets, both assembled by{' '}
-            {PROCUREMENT.provenance.transformedBy}, an NGO, and both frozen.
+            comes down to two state datasets — one published by the Assam Finance Department, one
+            transformed by {PROCUREMENT.provenance.transformedBy} — and both are frozen.
           </p>
         </Prose>
       </Section>
@@ -291,6 +339,11 @@ export default function Competition() {
               tone: 'amber',
             },
             { value: '0', label: 'central government tenders included', tone: 'rose' },
+            {
+              value: '65',
+              label: 'coal mine bid counts recoverable from PIB releases — not zero, as first reported',
+              tone: 'accent',
+            },
           ]}
         />
         <Prose>
