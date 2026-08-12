@@ -83,6 +83,8 @@ const ROUTES = [
   ['/prospector', 'prospector'],
   ['/desk', 'desk'],
   ['/capture', 'capture'],
+  ['/allocation', 'allocation'],
+  ['/allocation?min=3', 'allocation-three'],
   ['/interlocks', 'interlocks'],
   ['/conglomerates/reliance', 'deepdive-reliance'],
   ['/conglomerates/adani', 'deepdive-adani'],

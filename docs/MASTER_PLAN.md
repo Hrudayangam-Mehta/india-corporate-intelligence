@@ -323,7 +323,32 @@ TOOLS        Search · Donations · Watchlist
 | **P5** ✅ | `/tenders` deepening — competitive tension, concentration curve | Cross-register comparison |
 | **P6** ✅ | Group deep-dives — ownership tree replaces force layout | Fixes the wrong centre |
 | **P7** ✅ | `/media` rebuild on ownership distribution | Long-outstanding — done |
-| **P8** | Cross-register competitive-tension comparison page | Needs P3–P5 complete |
+| **P8** ✅ | Cross-register competitive-tension comparison | Shipped inside `/resources` rather than as its own page — the comparison belongs beside the registers, not away from them |
+| **P9** ✅ | Connection graph made usable; `/capture` capture pathways | The adversarial half of the method |
+| **P10** | `/pmcares` — flow ledger with holes, PMNRF control | Research running |
+| **P11** | Spectrum register, joining the other three | Research running |
+| **P12** | Allocation graph — awards and resource winners as one bipartite network | Needs P3 ✅ |
+
+### What P3 established, which changes the domain
+
+The three registers are directly comparable and they do not look alike:
+
+| Register | Offered → sold | Bidders per lot |
+|---|---|---|
+| Coal | 113 → 26 (**23%**) | **not published, 0 of 133** |
+| Critical minerals | 123 → 56 (**46%**) | 4.5, on 46 of 298 records |
+| Hydrocarbons | 516 → 392 (**76%**) | not published; 4 rounds carry a block table |
+
+The hydrocarbon single-bid share ran from **3.6% in OALP Round I to 85.7% in Round VI**.
+That is the clearest competition series on the platform, and it exists only because
+DGH published block-by-block bid tables for four rounds. Nobody else does.
+
+**The recurring finding across every register is the same missing column.** Coal
+publishes reserve price, final offer and winner for all 133 blocks and the bid count
+for none. Sixty of 126 rows carry no winner CIN, concentrated among the single-block
+winners. Those two columns are what make "was there competition" and "are these
+winners distinct" answerable, and their absence is why `/capture` returns *cannot be
+tested* on its two most consequential pathways.
 
 **P2 before P3–P6.** Building the chrome four times is how four pages drift apart.
 
@@ -341,6 +366,8 @@ TOOLS        Search · Donations · Watchlist
 | 2026-08-11 | `32e6859` | P0/P1/P2 | BY correction + stratified null; designer & developer roles; this plan; shared domain chrome | ✅ all four |
 | 2026-08-11 | `2c880e6` | P5/P6 | Competitive tension on `/tenders`; ownership tree replaces force layout on group deep-dives | ✅ all four |
 | 2026-08-11 | `c20ede7` | P7 | `/media` rebuilt on ownership distribution; lean-rating refusal published as the lead | ✅ all four |
+| 2026-08-12 | `7ebbbce` | P3 | `/resources` — coal, minerals and hydrocarbons; nav regrouped into Registers | ✅ all four |
+| 2026-08-12 | `03cb045` | P9 | Connection graph pan/zoom/ego-focus; `/capture` capture pathways | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:

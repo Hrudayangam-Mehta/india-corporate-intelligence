@@ -53,6 +53,7 @@ const navGroups: { label: string; items: { path: string; label: string; icon: ty
       { path: '/tenders', label: 'Govt awards', icon: Gavel },
       { path: '/resources', label: 'Natural resources', icon: Mountain },
       { path: '/media', label: 'Media ownership', icon: Newspaper },
+      { path: '/allocation', label: 'Allocation graph', icon: Waypoints },
     ],
   },
   {

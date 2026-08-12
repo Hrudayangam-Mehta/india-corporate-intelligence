@@ -36,6 +36,7 @@ const Motifs = lazy(() => import('./pages/Motifs'));
 const Prospector = lazy(() => import('./pages/Prospector'));
 const Desk = lazy(() => import('./pages/Desk'));
 const Capture = lazy(() => import('./pages/Capture'));
+const Allocation = lazy(() => import('./pages/Allocation'));
 const Provenance = lazy(() => import('./pages/Provenance'));
 const Method = lazy(() => import('./pages/Method'));
 const IndustryView = lazy(() => import('./pages/IndustryView'));
@@ -88,6 +89,7 @@ function App() {
                     <Route path="/prospector" element={<Prospector />} />
                     <Route path="/desk" element={<Desk />} />
                     <Route path="/capture" element={<Capture />} />
+                    <Route path="/allocation" element={<Allocation />} />
                     <Route path="/provenance" element={<Provenance />} />
                     <Route path="/method" element={<Method />} />
                     <Route path="/industries" element={<IndustryView />} />
