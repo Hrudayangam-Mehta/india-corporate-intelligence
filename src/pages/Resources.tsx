@@ -9,6 +9,7 @@ import {
   CompetitiveTension, type Gap, type LedgerEntry, type TensionRow,
 } from '../components/Domain';
 import IndiaMap from '../components/viz/IndiaMap';
+import { TimeSeries } from '../components/viz/Charts';
 import {
   COAL, COAL_BLOCKS, COAL_AS_OF, COAL_HEADLINE, COAL_WINNERS,
   coalByState, coalTakeRate, coalIdentifierCoverage,
@@ -16,11 +17,13 @@ import {
   mineralAnnulment, mineralsByState, mineralQuoteCoverage,
   HYDROCARBONS, HC_BLOCKS, HC_AS_OF,
   hydrocarbonSingleBid, hydrocarbonTakeRate,
+  SPECTRUM, SPECTRUM_AUCTIONS, SPECTRUM_AS_OF, TWO_G,
+  spectrumUnsoldSeries, spectrumBidders, twoGDetail,
   registerTension,
 } from '../data/resources';
 import type { StateCode } from '../graph/schema';
 
-type Register = 'all' | 'coal' | 'minerals' | 'hydrocarbons';
+type Register = 'all' | 'coal' | 'minerals' | 'hydrocarbons' | 'spectrum';
 type View = 'map' | 'blocks' | 'winners' | 'record';
 
 const REGISTERS: { id: Register; label: string; asOf: string }[] = [
@@ -28,6 +31,7 @@ const REGISTERS: { id: Register; label: string; asOf: string }[] = [
   { id: 'coal', label: 'Coal', asOf: COAL_AS_OF },
   { id: 'minerals', label: 'Minerals', asOf: MINERALS_AS_OF },
   { id: 'hydrocarbons', label: 'Hydrocarbons', asOf: HC_AS_OF },
+  { id: 'spectrum', label: 'Spectrum', asOf: SPECTRUM_AS_OF },
 ];
 
 /**
@@ -38,8 +42,8 @@ const REGISTERS: { id: Register; label: string; asOf: string }[] = [
  * and every series splits there, because plotting a discretionary regime and an
  * auction regime as one continuous line hides the subject of the chart.
  *
- * Three registers ship here and the comparison across them is the point: they are
- * three different allocation mechanisms over the same kind of object, and the same
+ * Four registers ship here and the comparison across them is the point: they are
+ * four different allocation mechanisms over the same kind of object, and the same
  * two questions can be asked of each.
  */
 export default function Resources() {
@@ -137,7 +141,8 @@ export default function Resources() {
       register === 'minerals' ? MINERALS.gaps
       : register === 'hydrocarbons' ? HYDROCARBONS.gaps
       : register === 'coal' ? COAL.gaps
-      : [...COAL.gaps, ...MINERALS.gaps, ...HYDROCARBONS.gaps];
+      : register === 'spectrum' ? SPECTRUM.gaps
+      : [...COAL.gaps, ...MINERALS.gaps, ...HYDROCARBONS.gaps, ...SPECTRUM.gaps];
     return src.map((g) => ({
       what: g.slice(0, 200) + (g.length > 200 ? '…' : ''),
       why: g.length > 200 ? g.slice(200) : 'Recorded during retrieval.',
@@ -149,7 +154,8 @@ export default function Resources() {
       register === 'minerals' ? MINERALS.sources
       : register === 'hydrocarbons' ? HYDROCARBONS.sources
       : register === 'coal' ? COAL.sources
-      : [...COAL.sources, ...MINERALS.sources, ...HYDROCARBONS.sources];
+      : register === 'spectrum' ? SPECTRUM.sources
+      : [...COAL.sources, ...MINERALS.sources, ...HYDROCARBONS.sources, ...SPECTRUM.sources];
     return src.map((s) => ({
       label: `${s.publisher} — ${s.title}`,
       url: s.url,
@@ -162,6 +168,9 @@ export default function Resources() {
   const showCoal = register === 'all' || register === 'coal';
   const showMinerals = register === 'all' || register === 'minerals';
   const showHydro = register === 'all' || register === 'hydrocarbons';
+  const showSpectrum = register === 'all' || register === 'spectrum';
+  const unsold = useMemo(() => spectrumUnsoldSeries(), []);
+  const spBidders = useMemo(() => spectrumBidders(), []);
 
   return (
     <div className="max-w-[1180px]">
@@ -170,8 +179,8 @@ export default function Resources() {
       <Standfirst>
         A coal block is a place. Its state, its coalfield and its reserves are properties of the
         earth, not of whoever won it — which is why this domain gets a map where the awards
-        register gets a curve. Three registers sit here: coal, non-coal minerals and
-        hydrocarbons. They are three different mechanisms for handing over the same kind of
+        register gets a curve. Four registers sit here: coal, non-coal minerals, hydrocarbons
+        and spectrum. They are four different mechanisms for handing over the same kind of
         object, and the comparison between them is the point.
       </Standfirst>
       <Byline>
@@ -211,7 +220,7 @@ export default function Resources() {
       </div>
 
       <Section
-        title="Competitive tension across the three registers"
+        title="Competitive tension across the four registers"
         note="The same two questions, asked identically of each — and answerable in none of them completely"
       >
         <Prose>
@@ -238,6 +247,154 @@ export default function Resources() {
           ))}
         </div>
       </Section>
+
+      {showSpectrum && (
+        <Section
+          title="Spectrum: what was offered against what sold, 2010 to 2024"
+          note="The one register with a fourteen-year series — and the only one where the trend is the finding"
+        >
+          <TimeSeries
+            yLabel="share of offered spectrum sold"
+            yMax={105}
+            yFormat={(v) => `${v.toFixed(0)}%`}
+            xFormat={(v) => String(v)}
+            series={[
+              {
+                name: 'share sold',
+                points: unsold
+                  .filter((u) => u.comparable)
+                  .map((u) => ({ x: u.year, y: u.soldSharePct })),
+              },
+            ]}
+            caption={
+              <>
+                The 2022 auction is <strong className="text-text">excluded from this line</strong>,
+                not because it is inconvenient but because it is not the same measurement: roughly
+                87% of what it offered was 26&nbsp;GHz millimetre wave, a band with far more
+                spectrum available and far less demand per MHz than the sub-3&nbsp;GHz bands every
+                earlier auction sold. Its headline 71% sold share compares two different things.
+                Strip the mmWave and its sub-3&nbsp;GHz share was 27.96%, worse than 2016.
+              </>
+            }
+          />
+
+          <div className="mt-6">
+            <TimeSeries
+              yLabel="operators bidding"
+              yFormat={(v) => String(Math.round(v))}
+              series={[
+                {
+                  name: 'operators bidding',
+                  points: spBidders.map((b) => ({ x: b.year, y: b.bidders })),
+                },
+              ]}
+              caption="Operators per AUCTION, not per lot. Bidders per lot is published nowhere, for any Indian spectrum auction, ever — which is the same hole the coal register has and the reason neither can answer whether an individual block was contested."
+            />
+          </div>
+
+          <Callout label="The innocent reading, which ships with the series and is not optional" tone="bottomline">
+            {SPECTRUM.unsoldShareSeries.innocentReading.slice(0, 700)}
+            {SPECTRUM.unsoldShareSeries.innocentReading.length > 700 ? '…' : ''}
+          </Callout>
+
+          <div className="mt-6">
+            <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-text-muted mb-2">
+              every auction, with both quantities where published
+            </p>
+            <DataTable
+              columns={['Auction', 'MHz offered', 'MHz sold', 'Sold', 'Bidders', 'Winners', 'Tier']}
+              rows={SPECTRUM_AUCTIONS.map((a) => [
+                <span key="n">
+                  <strong className="text-text">{a.name}</strong>
+                  {a.notes && (
+                    <span className="block text-[11.5px] text-text-muted mt-0.5 max-w-[46ch]">
+                      {a.notes.slice(0, 150)}
+                      {a.notes.length > 150 ? '…' : ''}
+                    </span>
+                  )}
+                </span>,
+                <span key="o" className="font-mono text-[11.5px] tabular-nums">
+                  {a.mhzOffered == null ? (
+                    <span className="text-amber">not published</span>
+                  ) : (
+                    a.mhzOffered.toLocaleString('en-IN')
+                  )}
+                </span>,
+                <span key="s" className="font-mono text-[11.5px] tabular-nums">
+                  {a.mhzSold?.toLocaleString('en-IN') ?? '—'}
+                </span>,
+                <span
+                  key="p"
+                  className={`font-mono text-[11.5px] tabular-nums ${(a.shareSoldPct ?? 100) < 50 ? 'text-amber' : 'text-text'}`}
+                >
+                  {a.shareSoldPct == null ? '—' : `${a.shareSoldPct}%`}
+                </span>,
+                <span key="b" className="font-mono text-[11.5px] tabular-nums text-text-muted">
+                  {a.biddersParticipating ?? a.applicants ?? '—'}
+                </span>,
+                <span key="w" className="font-mono text-[11.5px] tabular-nums text-text-muted">
+                  {a.distinctWinningBidders ?? '—'}
+                </span>,
+                <TierChip key="t" tier={(a.tier as 'documented') ?? 'documented'} />,
+              ])}
+            />
+          </div>
+        </Section>
+      )}
+
+      {showSpectrum && TWO_G.length > 0 && (
+        <Section
+          title="The 2G record, end to end"
+          note="Six facts, separately tiered — and the last one renders at the same size as the first"
+        >
+          <Prose>
+            <p>
+              This is the worked example the whole platform is built around. An allegation, an
+              audit estimate, a cancellation and an acquittal are four different kinds of fact
+              about one sequence, and a page that carries the first three and not the fourth is
+              the exact failure this project exists to avoid.
+            </p>
+          </Prose>
+          <div className="mt-4 space-y-4">
+            {[...TWO_G]
+              .sort((a, b) => a.sequence - b.sequence)
+              .map((t) => (
+                <article key={t.id} className="border-l-2 border-accent/40 pl-3">
+                  <div className="flex flex-wrap items-baseline gap-x-3">
+                    <span className="font-mono text-[10px] text-text-muted">
+                      {String(t.sequence).padStart(2, '0')}
+                    </span>
+                    <TierChip tier={t.tier} />
+                  </div>
+                  <p className="text-[15px] text-text mt-1 max-w-[78ch] leading-relaxed">{t.claim}</p>
+                  {t.tierBasis && (
+                    <p className="font-mono text-[10.5px] text-text-muted mt-1.5 max-w-[78ch] leading-snug">
+                      tier basis: {t.tierBasis}
+                    </p>
+                  )}
+                  {/* Each record keeps the shape of the document it came from — an
+                      audit range, a judgment, a process account — so the detail is
+                      flattened from the record's own fields rather than forced
+                      through one template. */}
+                  <dl className="mt-2 space-y-1">
+                    {twoGDetail(t as unknown as Record<string, unknown>)
+                      .slice(0, 14)
+                      .map((d) => (
+                        <div key={d.key} className="text-[12.5px] leading-snug">
+                          <dt className="inline font-mono text-[10px] uppercase tracking-[0.1em] text-text-muted">
+                            {d.key}
+                          </dt>
+                          <dd className="inline ml-2 text-text-secondary">
+                            {d.value.length > 340 ? `${d.value.slice(0, 340)}…` : d.value}
+                          </dd>
+                        </div>
+                      ))}
+                  </dl>
+                </article>
+              ))}
+          </div>
+        </Section>
+      )}
 
       {showHydro && singleBid.rounds.length > 0 && (
         <Section
@@ -861,6 +1018,7 @@ export default function Resources() {
             ...(showCoal ? COAL.baseRates : []),
             ...(showMinerals ? MINERALS.baseRates : []),
             ...(showHydro ? HYDROCARBONS.baseRates : []),
+            ...(showSpectrum ? SPECTRUM.baseRates : []),
           ].map((b, i) => (
             <div key={i} className="border-l-2 border-border-light pl-3">
               <p className="font-medium text-[14.5px]">“{b.claim}”</p>
@@ -892,6 +1050,7 @@ export default function Resources() {
             ...(showCoal ? COAL.rejected : []),
             ...(showMinerals ? MINERALS.rejected : []),
             ...(showHydro ? HYDROCARBONS.rejected : []),
+            ...(showSpectrum ? SPECTRUM.rejected : []),
           ].map((r, i) => (
             <div key={i} className="border-l-2 border-rose/40 pl-3">
               <p className="font-medium text-[14px]">{r.candidate}</p>
@@ -913,9 +1072,10 @@ export default function Resources() {
 
       <Footnote>
         <p>
-          <strong>One register still missing.</strong> Spectrum is in research and will join these
-          three. Until it lands, nothing here should be read as a statement about Indian resource
-          allocation generally — three registers is three mechanisms, not a survey.
+          <strong>Four registers, four mechanisms.</strong> Coal, non-coal minerals, hydrocarbons
+          and spectrum are allocated under different statutes by different bodies, and the
+          comparison across them is the point of putting them on one page. Four is still four —
+          it is not a survey of Indian resource allocation, and nothing here should be read as one.
         </p>
         <p>
           <strong>Standing.</strong> Every figure comes from a document the platform opened, with

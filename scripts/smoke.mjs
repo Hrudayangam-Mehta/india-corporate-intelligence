@@ -94,6 +94,7 @@ const ROUTES = [
   ['/provenance', 'provenance'],
   ['/tenders', 'tenders'],
   ['/resources', 'resources'],
+  ['/resources?register=spectrum', 'resources-spectrum'],
   ['/resources?register=minerals&view=blocks', 'resources-minerals'],
   ['/resources?register=hydrocarbons&view=blocks', 'resources-hydrocarbons'],
   ['/resources?register=coal&view=winners', 'resources-coal-winners'],

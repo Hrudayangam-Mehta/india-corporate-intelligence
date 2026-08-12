@@ -139,6 +139,50 @@ function analyse(rows, label) {
   };
 }
 
+/** Mulberry32 — same seeded generator the null models use, so a sample reproduces. */
+function rng(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * A seeded sample of individual tenders, for the value-against-bids scatter.
+ *
+ * The aggregate bands answer "does the rate rise with value" but they cannot show
+ * the SHAPE — whether single-bidder tenders cluster anywhere, or scatter evenly
+ * through the value range. Only individual points can, and 38,000 of them would be
+ * an unreadable smear as well as a large file.
+ *
+ * Sampled rather than truncated: taking the first N would be taking whatever the
+ * portal happened to export first, which is not a random subset of anything.
+ */
+function scatterSample(rows, label, n = 400, seed = 11) {
+  const usable = rows.filter(
+    (r) => r?.tender?.numberOfTenderers > 0 && r?.tender?.value?.amount > 0,
+  );
+  const rand = rng(seed);
+  const idx = usable.map((_, i) => i);
+  for (let i = idx.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [idx[i], idx[j]] = [idx[j], idx[i]];
+  }
+  return {
+    jurisdiction: label,
+    population: usable.length,
+    sampled: Math.min(n, usable.length),
+    seed,
+    points: idx.slice(0, n).map((i) => ({
+      valueInr: usable[i].tender.value.amount,
+      bids: usable[i].tender.numberOfTenderers,
+    })),
+  };
+}
+
 const hp = load(hpPath);
 const assam = load(assamPath);
 
@@ -212,6 +256,8 @@ const doc = {
   },
 
   jurisdictions,
+
+  scatterSamples: [scatterSample(hp.rows, 'Himachal Pradesh'), scatterSample(assam.rows, 'Assam')],
 
   denominators: {
     note:

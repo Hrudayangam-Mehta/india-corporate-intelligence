@@ -5,8 +5,9 @@ import {
   Prose, Footnote,
 } from '../components/Editorial';
 import { GapsPanel, SourceLedger, type Gap, type LedgerEntry } from '../components/Domain';
+import { Distribution, Scatter } from '../components/viz/Charts';
 import {
-  PROCUREMENT, JURISDICTIONS, PROC_AS_OF, pooled, valueGradient, comparisons,
+  PROCUREMENT, JURISDICTIONS, PROC_AS_OF, SCATTER, pooled, valueGradient, comparisons,
 } from '../data/procurement';
 
 /**
@@ -79,6 +80,56 @@ export default function Competition() {
             {PROCUREMENT.provenance.transformedBy}, an NGO, and both frozen.
           </p>
         </Prose>
+      </Section>
+
+      <Section
+        title="The shape of the distribution"
+        note="Two means that sound alike, describing two different markets"
+      >
+        <Distribution
+          xLabel="bidders per tender"
+          highlight={1}
+          series={JURISDICTIONS.map((j) => ({ name: j.jurisdiction, bins: j.histogram }))}
+          caption={
+            <>
+              Shown as shares, because the two populations differ in size by a factor of nine and
+              raw counts would make Himachal Pradesh invisible. The mean bid counts —{' '}
+              {JURISDICTIONS.map((j) => `${j.meanBidsWhereContested} in ${j.jurisdiction}`).join(' and ')}{' '}
+              — sound similar and describe different markets: one has its mode at 3 with almost
+              nothing at 1, the other carries a visible spike at exactly one bidder. A summary
+              statistic hides the only feature that matters here.
+            </>
+          }
+        />
+      </Section>
+
+      <Section
+        title="Does competition thin out as the money gets bigger?"
+        note="Contract value against bidders received — the question the aggregate bands cannot answer"
+      >
+        <Scatter
+          logX
+          xLabel="contract value (₹, log scale)"
+          yLabel="bidders"
+          xFormat={(v) =>
+            v >= 1e7 ? `${(v / 1e7).toFixed(0)} cr` : v >= 1e5 ? `${(v / 1e5).toFixed(0)} lakh` : String(Math.round(v))
+          }
+          yFormat={(v) => String(Math.round(v))}
+          points={SCATTER.flatMap((s) =>
+            s.points.map((p) => ({ x: p.valueInr, y: p.bids, group: s.jurisdiction })),
+          )}
+          caption={
+            <>
+              A seeded random sample of {SCATTER.map((s) => s.sampled).reduce((a, b) => a + b, 0)}{' '}
+              tenders from {SCATTER.map((s) => s.population.toLocaleString('en-IN')).join(' and ')}{' '}
+              eligible records — sampled rather than truncated, because taking the first N would be
+              taking whatever the portal exported first. The x-axis is logarithmic: contract values
+              span six orders of magnitude and a linear axis would stack almost every point against
+              zero. What the cloud shows is that the single-bidder points do not concentrate at the
+              high-value end in either state; they run the length of the range.
+            </>
+          }
+        />
       </Section>
 
       <Section title="The two states" note="Measured identically, and disagreeing by a factor of nearly five">

@@ -73,6 +73,7 @@ const doc = raw as unknown as {
   verification: { status: string; why: string; plan: string; consequence: string };
   freshness: Record<string, string>;
   jurisdictions: Jurisdiction[];
+  scatterSamples: { jurisdiction: string; population: number; sampled: number; seed: number; points: { valueInr: number; bids: number }[] }[];
   denominators: { note: string };
   whatIsMissing: Record<string, string>;
   gaps: string[];
@@ -81,6 +82,7 @@ const doc = raw as unknown as {
 export const PROCUREMENT = doc;
 export const JURISDICTIONS = doc.jurisdictions;
 export const PROC_AS_OF = doc.asOf;
+export const SCATTER = doc.scatterSamples;
 
 export function jurisdiction(name: string): Jurisdiction | undefined {
   return JURISDICTIONS.find((j) => j.jurisdiction === name);

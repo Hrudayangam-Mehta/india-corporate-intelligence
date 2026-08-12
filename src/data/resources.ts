@@ -1,6 +1,7 @@
 import coalRaw from '../../research/raw/resources-coal.json';
 import mineralsRaw from '../../research/raw/resources-minerals.json';
 import hydrocarbonsRaw from '../../research/raw/resources-hydrocarbons.json';
+import spectrumRaw from '../../research/raw/resources-spectrum.json';
 import type { StateCode } from '../graph/schema';
 
 /**
@@ -519,6 +520,164 @@ export function hydrocarbonTakeRate(): {
 }
 
 // ---------------------------------------------------------------------------
+// Spectrum
+// ---------------------------------------------------------------------------
+
+export interface SpectrumAuction {
+  id: string;
+  name: string;
+  band: string | null;
+  startDate: string | null;
+  mhzOffered: number | null;
+  mhzSold: number | null;
+  shareSoldPct: number | null;
+  unsoldSharePct: number | null;
+  reservePriceTotalCrore: number | null;
+  winningBidTotalCrore: number | null;
+  applicants: number | null;
+  biddersParticipating: number | null;
+  distinctWinningBidders: number | null;
+  tier: string;
+  notes?: string;
+  disagreements?: unknown;
+}
+
+export interface TwoGFact {
+  id: string;
+  sequence: number;
+  claim: string;
+  whatHappened: string;
+  exactWording?: string;
+  tier: 'documented' | 'reported' | 'alleged' | 'analytic';
+  tierBasis?: string;
+  internalDisagreement?: string;
+  notes?: string;
+  srcs?: unknown;
+}
+
+const spectrum = spectrumRaw as unknown as {
+  asOf: string;
+  scope: string;
+  /** States the file's central statistic and its coverage limit before anything else. */
+  readThisFirst: string;
+  sources: ResourceSource[];
+  auctions: SpectrumAuction[];
+  unsoldShareSeries: {
+    definition: string;
+    series: { auction: string; date: string | null; mhzOffered: number | null; mhzSold: number | null; soldSharePct: number | null; unsoldSharePct: number | null; tier: string; denominatorSource?: string }[];
+    /** Mandatory and ships with the number — see the page. */
+    innocentReading: string;
+  };
+  biddersPerAuctionSeries: {
+    definition: string;
+    series: { auction: string; applicants: number | null; biddersParticipating: number | null; distinctWinners: number | null; tier: string; src?: string }[];
+  };
+  twoGRecord: TwoGFact[];
+  denominators: Record<string, unknown>;
+  baseRates: CoalBaseRate[];
+  gaps: string[];
+  rejected: { candidate: string; reason: string }[];
+};
+
+export const SPECTRUM = spectrum;
+export const SPECTRUM_AUCTIONS = spectrum.auctions;
+export const SPECTRUM_AS_OF = spectrum.asOf;
+export const TWO_G = spectrum.twoGRecord;
+
+/**
+ * The unsold-share series, with the one auction that is not comparable flagged
+ * rather than silently plotted.
+ *
+ * The 2022 auction offered 72,098 MHz, of which roughly 87% was 26 GHz millimetre
+ * wave — a band with vastly more spectrum available and vastly less demand per MHz
+ * than the sub-3 GHz bands every earlier auction sold. Plotting its 71% sold share
+ * on the same axis as 2016's 41% compares two different things and flatters 2022.
+ * Strip the mmWave and its sub-3 GHz share is 27.96%, worse than 2016.
+ */
+export function spectrumUnsoldSeries(): {
+  year: number;
+  auction: string;
+  soldSharePct: number | null;
+  comparable: boolean;
+  note?: string;
+}[] {
+  return spectrum.unsoldShareSeries.series
+    .map((s) => {
+      const year = Number((s.date ?? s.auction).slice(0, 4));
+      const comparable = !s.auction.includes('2022');
+      return {
+        year,
+        auction: s.auction,
+        soldSharePct: s.soldSharePct,
+        comparable,
+        note: comparable
+          ? undefined
+          : 'Roughly 87% of what was offered was 26 GHz mmWave. Not comparable with the sub-3 GHz auctions before it; the sub-3 GHz share was 27.96%.',
+      };
+    })
+    .sort((a, b) => a.year - b.year);
+}
+
+/**
+ * Flatten one 2G record into renderable key/value detail.
+ *
+ * The six records are deliberately NOT uniform: an account of an allocation process,
+ * an audit estimate with four bases, a Supreme Court order and a criminal acquittal
+ * have genuinely different shapes, and the researcher recorded each in the shape its
+ * own document has. Forcing them through one template either drops most of the
+ * content or crashes on the field that happens to be an object — which is what a
+ * first attempt at this page did.
+ *
+ * So the renderer takes the record's own scalar leaves, in the order they were
+ * written, and shows them. Heterogeneity is the data being honest about its subject.
+ */
+const TWO_G_SKIP = new Set(['id', 'sequence', 'claim', 'tier', 'tierBasis', 'srcs', 'notes']);
+
+export function twoGDetail(rec: Record<string, unknown>, maxDepth = 2): { key: string; value: string }[] {
+  const out: { key: string; value: string }[] = [];
+  const label = (k: string) =>
+    k.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/^./, (c) => c.toUpperCase());
+
+  const walk = (obj: Record<string, unknown>, depth: number, prefix = '') => {
+    for (const [k, v] of Object.entries(obj)) {
+      if (depth === 0 && TWO_G_SKIP.has(k)) continue;
+      if (v == null) continue;
+      const key = prefix ? `${prefix} · ${label(k)}` : label(k);
+      if (typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') {
+        out.push({ key, value: String(v) });
+      } else if (Array.isArray(v)) {
+        const scalars = v.filter((x) => typeof x === 'string' || typeof x === 'number');
+        if (scalars.length) out.push({ key, value: scalars.join(' · ') });
+        else if (depth < maxDepth) {
+          v.forEach((x, i) => {
+            if (x && typeof x === 'object') walk(x as Record<string, unknown>, depth + 1, `${key} ${i + 1}`);
+          });
+        }
+      } else if (typeof v === 'object' && depth < maxDepth) {
+        walk(v as Record<string, unknown>, depth + 1, key);
+      }
+    }
+  };
+  walk(rec, 0);
+  return out;
+}
+
+/** Operators bidding per auction. Bidders per LOT is published nowhere, ever. */
+export function spectrumBidders(): { year: number; auction: string; bidders: number | null; winners: number | null }[] {
+  return spectrum.biddersPerAuctionSeries.series
+    .map((s) => {
+      const a = spectrum.auctions.find((x) => x.name === s.auction || x.id.includes(String(s.auction).slice(0, 4)));
+      return {
+        year: Number((a?.startDate ?? s.auction).slice(0, 4)),
+        auction: s.auction,
+        bidders: s.biddersParticipating ?? s.applicants,
+        winners: s.distinctWinners,
+      };
+    })
+    .sort((a, b) => a.year - b.year);
+}
+
+// ---------------------------------------------------------------------------
 // The cross-register spine
 // ---------------------------------------------------------------------------
 
@@ -589,6 +748,34 @@ export function registerTension(): RegisterTension[] {
       asOf: HC_AS_OF,
       note: `single-bid share rose from ${hcSingle.rounds[0]?.pct.toFixed(1)}% to ${Math.max(...hcSingle.rounds.map((r) => r.pct)).toFixed(1)}% across the covered rounds`,
     },
+    (() => {
+      // Spectrum's lot is a MHz block, so offered/taken is in MHz. Only the auctions
+      // publishing BOTH an offered and a sold quantity can contribute — five of ten
+      // publish a share without an offered quantum, and those cannot be recomputed.
+      const withBoth = SPECTRUM_AUCTIONS.filter(
+        (a) => a.mhzOffered != null && a.mhzSold != null && !a.id.includes('2022'),
+      );
+      const offered = withBoth.reduce((s, a) => s + (a.mhzOffered ?? 0), 0);
+      const sold = withBoth.reduce((s, a) => s + (a.mhzSold ?? 0), 0);
+      const bidders = SPECTRUM_AUCTIONS.map((a) => a.biddersParticipating).filter(
+        (v): v is number => v != null,
+      );
+      return {
+        register: 'Spectrum',
+        route: '/resources?register=spectrum',
+        unit: 'auction',
+        // Operators per AUCTION, not per lot — bidders per lot is published nowhere,
+        // for any auction, ever. The unit difference is stated rather than hidden.
+        biddersPerLot: bidders.length
+          ? Number((bidders.reduce((a, b) => a + b, 0) / bidders.length).toFixed(1))
+          : null,
+        biddersNote: `operators per auction for ${bidders.length} of ${SPECTRUM_AUCTIONS.length} auctions — bidders per LOT is published nowhere, for any auction`,
+        offered: Math.round(offered),
+        taken: Math.round(sold),
+        asOf: SPECTRUM_AS_OF,
+        note: `MHz across ${withBoth.length} auctions publishing both quantities; 2022 excluded as ~87% mmWave and not comparable`,
+      };
+    })(),
   ];
 }
 

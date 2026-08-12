@@ -311,25 +311,142 @@ TOOLS        Search · Donations · Watchlist
 
 ---
 
-## 11. Roadmap
+## 11. Roadmap — five subgoals
 
-| Phase | Work | Unblocks |
+*Consolidated 2026-08-12. The old P0–P16 numbering grew by accretion and stopped
+meaning anything; it is folded into the five subgoals below. Each has a **completion
+test** — a thing that is either true or false — because a goal you cannot fail is a
+goal you cannot finish.*
+
+Phases P0–P13 are complete and are recorded in the ledger at §12. What remains is
+organised as follows.
+
+---
+
+### SG1 — The register set is complete, and its numbers are legible
+
+**Why first.** Four allocation registers were scoped and three shipped; the spectrum
+dataset has been sitting in `research/raw/` unused. And every quantity on this site is
+currently drawn as a `<div>` with a percentage width — there is not one time series, one
+distribution, or one scatter plot anywhere in the codebase, while the data now contains
+all three shapes.
+
+| # | Work | Output |
 |---|---|---|
-| **P0** ✅ | Prospector on BY + stratified null; desk; research plan | Everything downstream trusts the statistics |
-| **P1** ✅ | Designer + developer skills and agents; this plan | The four-role loop is complete |
-| **P2** | Shared chrome components (§9) | All four domain pages |
-| **P3** | `/resources` — schema, two-layer map, regime split, competitive tension | The new domain |
-| **P4** | `/pmcares` — flow ledger with holes, contested panel, PMNRF control | The fund domain |
-| **P5** ✅ | `/tenders` deepening — competitive tension, concentration curve | Cross-register comparison |
-| **P6** ✅ | Group deep-dives — ownership tree replaces force layout | Fixes the wrong centre |
-| **P7** ✅ | `/media` rebuild on ownership distribution | Long-outstanding — done |
-| **P8** ✅ | Cross-register competitive-tension comparison | Shipped inside `/resources` rather than as its own page — the comparison belongs beside the registers, not away from them |
-| **P9** ✅ | Connection graph made usable; `/capture` capture pathways | The adversarial half of the method |
-| **P10** ✅ | `/pmcares` — flow ledger with holes, PMNRF control | Shipped |
-| **P13** ✅ | Ingest a bulk tender dataset under the Stage 0 rule | Shipped as `/competition` |
-| **P14** | Wire the spectrum register into `/resources` | Dataset landed, page not yet updated |
-| **P15** | Verify the OCDS sample against the portals by hand | Blocked on captcha; the tool is built |
-| **P16** | The 4.5M-row CPPP scrape via HuggingFace (3.45 GB) | Found, not ingested |
+| 1.1 | Chart layer — `TimeSeries`, `Distribution`, `Scatter` | `src/components/viz/Charts.tsx` |
+| 1.2 | Validated chart palette, separate from the frozen family hues | tokens + a note on why they are separate |
+| 1.3 | Spectrum wired into `/resources` as the fourth register | `src/data/resources.ts`, `/resources` |
+| 1.4 | Spectrum unsold-share series, 2010→2024 | time series |
+| 1.5 | Bid-count distribution, Himachal against Assam | distribution, 2 series |
+| 1.6 | Contract value against bids received | scatter |
+
+**Completion test — PASSED 2026-08-12**
+- [x] All four registers appear in `CompetitiveTension` with real numbers
+- [x] Three chart forms shipped, used on `/resources` and `/competition`
+- [x] `validate_palette.js` → ALL CHECKS PASS on `#b27f02,#448dd4,#459f5d,#9c73c8` against `#0a0a0c`
+- [x] Every chart has a table twin and a hover layer; single-series charts carry no legend
+- [x] All four gates green
+
+**What SG1 turned up.** The site's own token palette was tested as a chart palette and
+**failed**: sage `#7a9e7e` against blue `#5a8ec4` measures ΔE 13.1 in normal vision,
+under the floor of 15, and four of six tokens fall below the chroma floor and read grey
+on a dark ground. They were chosen as low-saturation semantic accents, which is a
+different job. Chart series now use a separate validated set, kept apart from the frozen
+family hues so a blue line never reads as "public power".
+
+The spectrum series carries the sharpest number on the platform: **the 2024 auction sold
+1.34% of what it was offered.** The 2022 auction is excluded from the line — roughly 87%
+of what it offered was 26 GHz mmWave, so its 71% headline compares two different things;
+its sub-3 GHz share was 27.96%, worse than 2016.
+
+---
+
+### SG2 — Nothing unverified is presented as though it were verified
+
+`/competition` ships 37,995 tenders at tier `reported` with `verification.status:
+not-yet-verified`. The sampler exists and works. The blocker is real — award pages are
+captcha-gated and stored portal URLs are session-scoped — so the honest outcomes are a
+measured rate OR a documented statement that automated verification is impossible and
+what a human would have to do instead.
+
+**Completion test**
+- [ ] `procurement-ocds.json` carries a real `verification` block with a measured rate, or a documented impossibility with the manual procedure written down
+- [ ] The locate rate is published beside every figure drawn from the dataset
+
+---
+
+### SG3 — The corpus goes national
+
+Two states is not India, and the page says so loudly. The 4.5M-row CPPP scrape carries
+`num_bids_received` at 100% fill across central, state and defence procurement, 2011 to
+2026. It is 3.45 GB and needs streaming rather than loading.
+
+**Completion test**
+- [ ] A national single-bidder rate with its denominator and its coverage limits, or a documented reason it cannot be computed
+- [ ] Ingested under Stage 0 with a verification block, like everything else
+
+---
+
+### SG4 — Entities resolve, or the failure is documented
+
+**The single highest-value unbuilt thing on the platform.** Zero winner CINs exist in
+any accessible procurement dataset — measured, not assumed. That one absence makes the
+coal HHI a floor rather than a measurement, makes shell-layering untestable on
+`/capture`, and caps every edge on `/allocation` at `analytic`. There is one published
+attempt at the problem (Splink linkage against the MCA register).
+
+**Completion test**
+- [ ] A linkage method with **precision measured on a hand-labelled sample**, or a documented refusal explaining why the platform will not fuzzy-match company names into documented edges
+- [ ] Whatever ships is tiered `analytic` and carries its measured error rate
+
+---
+
+### SG5 — The site is navigable
+
+Thirty routes and no index. A reader arriving at the dashboard cannot discover
+`/capture` or `/competition` without scanning a sidebar.
+
+**Completion test**
+- [ ] A table-of-contents route listing every page with what question it answers
+- [ ] The dashboard surfaces the registers and the newest findings
+- [ ] Every page reachable within two clicks of the root
+
+---
+
+## 11a. Presentation standard
+
+*Added with SG1. Applies to every chart built from here on.*
+
+**Form is chosen from the data's job, and colour is chosen last.** Charts on this
+platform mostly carry a single series, and a single series takes no legend — the title
+names it.
+
+| Job | Form | Not |
+|---|---|---|
+| Change over time | line, one axis | dual-axis anything |
+| Distribution shape | histogram with the tail drawn | a mean with no spread |
+| Two variables | scatter | two bar charts side by side |
+| One headline | stat tile | a chart of one number |
+| Magnitude across categories | horizontal bars | a pie |
+
+**Two colour systems, kept apart.** The node-family hues (state / capital / recipient /
+instrument / enforce / market) are **semantically frozen** and must never be used for
+chart series — a blue line would read as "public power". The chart palette is separate,
+validated, and carries no meaning beyond series identity.
+
+The site's own token palette was **tested and failed** as a categorical chart palette:
+sage `#7a9e7e` against blue `#5a8ec4` measures ΔE 13.1 in normal vision, below the
+readability floor of 15, and four tokens fall under the chroma floor and read as grey on
+a dark ground. The chart palette is therefore a separate, darker, more saturated set that
+passes all six checks against `#0a0a0c`.
+
+**Non-negotiable, from the dataviz discipline:**
+- One axis. Never two y-scales — two measures of different scale become two charts.
+- Categorical hues assigned in fixed order, never cycled; colour follows the entity, not its rank.
+- Text wears text tokens, never the series colour.
+- A table twin exists for every chart. It is the accessible equivalent, not a fallback.
+- Grid and axes are recessive; marks are thin.
+- Run the validator. Never eyeball whether a palette is colourblind-safe.
 
 ### What P13 established: the bid count exists, twice, and nowhere else
 
@@ -441,6 +558,7 @@ tested* on its two most consequential pathways.
 | 2026-08-12 | `7ffcc00` | P10 | `/pmcares` — control-first; INGESTION Stage 0 rule for third-party bulk data | ✅ all four |
 | 2026-08-12 | `18370c2` | P13 | `scripts/verify-sample.mjs` — the tool that makes Stage 0 enforceable | ✅ all four |
 | 2026-08-12 | `86902ec` | P13 | `/competition` — 37,995 tenders with real bid counts, from the only two Indian sources that publish them | ✅ all four |
+| 2026-08-12 | *pending* | **SG1** | Chart layer + validated palette; spectrum as the fourth register; time series, distribution, scatter | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
