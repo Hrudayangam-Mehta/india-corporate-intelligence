@@ -1,0 +1,553 @@
+{
+  "asOf": "2026-08-12",
+  "scope": "Bid counts on Indian public procurement, from the only two jurisdictions that publish them in bulk. Himachal Pradesh and Assam only — this is NOT a national dataset and no figure here should be presented as an Indian rate.",
+  "headline": "Single-bidder rates differ by a factor of 4.8 between the only two Indian states whose procurement bid counts are published: 3.39% in Himachal Pradesh (128 of 3771) against 16.18% in Assam (4532 of 28015), measured identically over tenders that drew at least one bid. Neither state published the data itself.",
+  "provenance": {
+    "tier": "reported",
+    "tierReason": "Neither dataset is published by the procuring government. Both are transformations of state e-procurement portal scrapes, made by CivicDataLab (an NGO) and registered with the Open Contracting Partnership. Per docs/INGESTION.md Stage 0 a third-party bulk dataset enters at `reported` and no individual row becomes `documented` until the portal page for that row is opened.",
+    "transformedBy": "CivicDataLab",
+    "registeredWith": "Open Contracting Partnership data registry",
+    "standard": "Open Contracting Data Standard 1.1, compiled releases",
+    "sources": [
+      {
+        "publisher": "Open Contracting Partnership data registry",
+        "title": "Publication 77 — Himachal Pradesh (CivicDataLab), full.jsonl.gz",
+        "url": "https://data.open-contracting.org/en/publication/77/download?name=full.jsonl.gz",
+        "retrieved": "2026-08-12",
+        "readAs": "gzipped JSON Lines, downloaded with curl and parsed line by line",
+        "bytes": 10319213,
+        "sha256_16": "fa7fc29b4166c51a"
+      },
+      {
+        "publisher": "Open Contracting Partnership data registry",
+        "title": "Publication 131 — Assam (CivicDataLab), full.jsonl.gz",
+        "url": "https://data.open-contracting.org/en/publication/131/download?name=full.jsonl.gz",
+        "retrieved": "2026-08-12",
+        "readAs": "gzipped JSON Lines, downloaded with curl and parsed line by line",
+        "bytes": 41594501,
+        "sha256_16": "15614a65f4380d64"
+      }
+    ]
+  },
+  "verification": {
+    "status": "not-yet-verified",
+    "why": "Award-stage pages on the GePNIC state portals these were scraped from are captcha-gated and additionally require a known tender ID, and the stored portal URLs are session-scoped and return \"Unauthorized Page\" when replayed. A sample therefore cannot be checked by automated retrieval; it needs portal search by tender ID, by hand.",
+    "plan": "node scripts/verify-sample.mjs draw research/raw/procurement-ocds.json samples.himachalPradesh --n 40 --seed 7, then retrieve each by tender ID through the portal search form.",
+    "consequence": "Until that is done every figure here is `reported` and carries an unmeasured error rate. The rates are published because an unverified rate with its provenance stated is more useful than no rate at all — but a parser bug that dropped bidders would be invisible, and the single-bidder figures would be biased upward by exactly that bug."
+  },
+  "freshness": {
+    "warning": "Both datasets are frozen. There is no live official feed of Indian procurement outcomes.",
+    "himachalPradesh": "Registry records the source as no longer updated.",
+    "assam": "Registry records the source as no longer updated; CKAN mirrors run later."
+  },
+  "jurisdictions": [
+    {
+      "jurisdiction": "Himachal Pradesh",
+      "records": 3791,
+      "withBidCount": 3771,
+      "bidCountCoveragePct": 99.47,
+      "zeroBidTenders": 0,
+      "zeroBidPct": 0,
+      "tendersThatDrewBids": 3771,
+      "singleBidder": 128,
+      "singleBidderPctOfContested": 3.39,
+      "singleBidderPctOfAll": 3.39,
+      "meanBidsWhereContested": 4.4,
+      "medianBidsWhereContested": 3,
+      "histogram": {
+        "1": 128,
+        "2": 872,
+        "3": 926,
+        "4": 597,
+        "5": 423,
+        "6": 284,
+        "7": 156,
+        "8": 116,
+        "9": 89,
+        "10": 34,
+        "11": 25,
+        "12": 24,
+        "13": 13,
+        "14": 13,
+        "15": 13,
+        "16": 4,
+        "17": 6,
+        "18": 5,
+        "19": 2,
+        "20": 4,
+        "21": 1,
+        "22": 5,
+        "24": 1,
+        "25": 1,
+        "26": 5,
+        "27": 2,
+        "28": 3,
+        "29": 3,
+        "31": 3,
+        "32": 2,
+        "34": 2,
+        "35": 3,
+        "36": 4,
+        "37": 1,
+        "40": 1
+      },
+      "byValueBand": [
+        {
+          "band": "under 1 lakh",
+          "tenders": 60,
+          "singleBidder": 1,
+          "singleBidderPct": 1.67,
+          "meanBids": 4.23
+        },
+        {
+          "band": "1 to 10 lakh",
+          "tenders": 1027,
+          "singleBidder": 19,
+          "singleBidderPct": 1.85,
+          "meanBids": 5.1
+        },
+        {
+          "band": "10 lakh to 1 crore",
+          "tenders": 2329,
+          "singleBidder": 99,
+          "singleBidderPct": 4.25,
+          "meanBids": 4.15
+        },
+        {
+          "band": "1 to 10 crore",
+          "tenders": 312,
+          "singleBidder": 9,
+          "singleBidderPct": 2.88,
+          "meanBids": 3.98
+        },
+        {
+          "band": "over 10 crore",
+          "tenders": 41,
+          "singleBidder": 0,
+          "singleBidderPct": 0,
+          "meanBids": 4.15
+        }
+      ],
+      "byCategory": [
+        {
+          "key": "works",
+          "tenders": 3650,
+          "singleBidder": 120,
+          "singleBidderPct": 3.29
+        },
+        {
+          "key": "goods",
+          "tenders": 72,
+          "singleBidder": 6,
+          "singleBidderPct": 8.33
+        },
+        {
+          "key": "services",
+          "tenders": 49,
+          "singleBidder": 2,
+          "singleBidderPct": 4.08
+        }
+      ],
+      "byProcurementMethod": [
+        {
+          "key": "limited",
+          "tenders": 3768,
+          "singleBidder": 128,
+          "singleBidderPct": 3.4
+        },
+        {
+          "key": "open",
+          "tenders": 3,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        }
+      ],
+      "topBuyers": [
+        {
+          "key": "PWD",
+          "tenders": 2041,
+          "singleBidder": 90,
+          "singleBidderPct": 4.41
+        },
+        {
+          "key": "Directorate of Urban Development||Urban Development - UDDHP||Municipal Council Solan - UDDHP",
+          "tenders": 136,
+          "singleBidder": 2,
+          "singleBidderPct": 1.47
+        },
+        {
+          "key": "HP Irrigation and Public Health||Una Circle,Irrigation and Public Health,HP||Una-I,Irrigation and Public Health,HP",
+          "tenders": 78,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "Municipal Corporation Shimla||Road and Building - MC",
+          "tenders": 75,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||Hamirpur Circle,Irrigation and Public Health,HP||Barsar,Irrigation and Public Health,HP",
+          "tenders": 67,
+          "singleBidder": 1,
+          "singleBidderPct": 1.49
+        },
+        {
+          "key": "HP Irrigation and Public Health||Nahan Circle,Irrigation and Public Health,HP||Nahan,Irrigation and Public Health,HP",
+          "tenders": 64,
+          "singleBidder": 1,
+          "singleBidderPct": 1.56
+        },
+        {
+          "key": "HP Irrigation and Public Health||Dharamshala Circle,Irrigation and Public Health,HP||Palampur,Irrigation and Public Health,HP",
+          "tenders": 57,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||Hamirpur Circle,Irrigation and Public Health,HP||Dehra,Irrigation and Public Health,HP",
+          "tenders": 57,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||Kullu Circle,Irrigation and Public Health,HP||Kullu -1,Irrigation and Public Health,HP",
+          "tenders": 50,
+          "singleBidder": 2,
+          "singleBidderPct": 4
+        },
+        {
+          "key": "HP Irrigation and Public Health||Dharamshala Circle,Irrigation and Public Health,HP||Thural,Irrigation and Public Health,HP",
+          "tenders": 47,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||Dharamshala Circle,Irrigation and Public Health,HP||Shahpur,Irrigation and Public Health,HP",
+          "tenders": 46,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||Hamirpur Circle,Irrigation and Public Health,HP||Hamirpur,Irrigation and Public Health,HP",
+          "tenders": 45,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||S Nagar Circle,Irrigation and Public Health,HP||Mandi,Irrigation and Public Health,HP",
+          "tenders": 45,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||Bilaspur Circle,Irrigation and Public Health,HP||Bilaspur,Irrigation and Public Health,HP",
+          "tenders": 37,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        },
+        {
+          "key": "HP Irrigation and Public Health||Rohru Circle,Irrigation and Public Health,HP||Jubbal,Irrigation and Public Health,HP",
+          "tenders": 35,
+          "singleBidder": 0,
+          "singleBidderPct": 0
+        }
+      ]
+    },
+    {
+      "jurisdiction": "Assam",
+      "records": 34232,
+      "withBidCount": 34224,
+      "bidCountCoveragePct": 99.98,
+      "zeroBidTenders": 3644,
+      "zeroBidPct": 10.65,
+      "tendersThatDrewBids": 28015,
+      "singleBidder": 4532,
+      "singleBidderPctOfContested": 16.18,
+      "singleBidderPctOfAll": 13.24,
+      "meanBidsWhereContested": 3.77,
+      "medianBidsWhereContested": 3,
+      "histogram": {
+        "0": 3644,
+        "1": 4532,
+        "2": 9309,
+        "3": 6194,
+        "4": 2753,
+        "5": 1648,
+        "6": 1109,
+        "7": 674,
+        "8": 439,
+        "9": 300,
+        "10": 210,
+        "11": 165,
+        "12": 112,
+        "13": 110,
+        "14": 66,
+        "15": 70,
+        "16": 53,
+        "17": 34,
+        "18": 31,
+        "19": 24,
+        "20": 22,
+        "21": 17,
+        "22": 15,
+        "23": 19,
+        "24": 11,
+        "25": 4,
+        "26": 9,
+        "27": 5,
+        "28": 5,
+        "29": 3,
+        "30": 1,
+        "31": 3,
+        "32": 6,
+        "33": 3,
+        "34": 7,
+        "35": 1,
+        "36": 3,
+        "38": 1,
+        "40": 1,
+        "41": 3,
+        "43": 2,
+        "44": 1,
+        "45": 1,
+        "48": 1,
+        "51": 1,
+        "52": 1,
+        "53": 1,
+        "54": 1,
+        "56": 2,
+        "62": 1,
+        "64": 1,
+        "75": 1,
+        "79": 1,
+        "80": 1,
+        "91": 1,
+        "96": 1,
+        "106": 1,
+        "111": 1,
+        "115": 1,
+        "120": 1,
+        "140": 1,
+        "159": 1,
+        "172": 1,
+        "181": 1,
+        "189": 1,
+        "295": 1,
+        "308": 1,
+        "318": 1,
+        "349": 1,
+        "352": 1,
+        "361": 1,
+        "475": 1,
+        "507": 1,
+        "540": 1,
+        "692": 1,
+        "759": 1,
+        "849": 1,
+        "873": 1,
+        "899": 1,
+        "1077": 1,
+        "1410": 1,
+        "NA": 2565
+      },
+      "byValueBand": [
+        {
+          "band": "under 1 lakh",
+          "tenders": 2150,
+          "singleBidder": 246,
+          "singleBidderPct": 11.44,
+          "meanBids": 9.96
+        },
+        {
+          "band": "1 to 10 lakh",
+          "tenders": 550,
+          "singleBidder": 139,
+          "singleBidderPct": 25.27,
+          "meanBids": 4.09
+        },
+        {
+          "band": "10 lakh to 1 crore",
+          "tenders": 11154,
+          "singleBidder": 1411,
+          "singleBidderPct": 12.65,
+          "meanBids": 3.19
+        },
+        {
+          "band": "1 to 10 crore",
+          "tenders": 9795,
+          "singleBidder": 1580,
+          "singleBidderPct": 16.13,
+          "meanBids": 3.31
+        },
+        {
+          "band": "over 10 crore",
+          "tenders": 1266,
+          "singleBidder": 206,
+          "singleBidderPct": 16.27,
+          "meanBids": 4.02
+        }
+      ],
+      "byCategory": [
+        {
+          "key": "Works",
+          "tenders": 25574,
+          "singleBidder": 3841,
+          "singleBidderPct": 15.02
+        },
+        {
+          "key": "Goods",
+          "tenders": 3858,
+          "singleBidder": 532,
+          "singleBidderPct": 13.79
+        },
+        {
+          "key": "Services",
+          "tenders": 1148,
+          "singleBidder": 159,
+          "singleBidderPct": 13.85
+        }
+      ],
+      "byProcurementMethod": [
+        {
+          "key": "Open Tender",
+          "tenders": 30168,
+          "singleBidder": 4455,
+          "singleBidderPct": 14.77
+        },
+        {
+          "key": "Limited",
+          "tenders": 281,
+          "singleBidder": 52,
+          "singleBidderPct": 18.51
+        },
+        {
+          "key": "Open Limited",
+          "tenders": 80,
+          "singleBidder": 5,
+          "singleBidderPct": 6.25
+        },
+        {
+          "key": "Global Tenders",
+          "tenders": 32,
+          "singleBidder": 6,
+          "singleBidderPct": 18.75
+        },
+        {
+          "key": "Single",
+          "tenders": 19,
+          "singleBidder": 14,
+          "singleBidderPct": 73.68
+        }
+      ],
+      "topBuyers": [
+        {
+          "key": "Public Works Roads Department",
+          "tenders": 9475,
+          "singleBidder": 1663,
+          "singleBidderPct": 17.55
+        },
+        {
+          "key": "Bodoland Territorial Council-PWD",
+          "tenders": 2765,
+          "singleBidder": 143,
+          "singleBidderPct": 5.17
+        },
+        {
+          "key": "Department of Water Resources",
+          "tenders": 2156,
+          "singleBidder": 324,
+          "singleBidderPct": 15.03
+        },
+        {
+          "key": "Public Works Building and NH Department",
+          "tenders": 2125,
+          "singleBidder": 395,
+          "singleBidderPct": 18.59
+        },
+        {
+          "key": "Bodoland Territorial Council",
+          "tenders": 1861,
+          "singleBidder": 99,
+          "singleBidderPct": 5.32
+        },
+        {
+          "key": "Industries and Commerce Department",
+          "tenders": 1032,
+          "singleBidder": 177,
+          "singleBidderPct": 17.15
+        },
+        {
+          "key": "National Health Mission",
+          "tenders": 913,
+          "singleBidder": 81,
+          "singleBidderPct": 8.87
+        },
+        {
+          "key": "Guwahati Municipal Corporation",
+          "tenders": 770,
+          "singleBidder": 140,
+          "singleBidderPct": 18.18
+        },
+        {
+          "key": "Assam Power Distribution Company Ltd",
+          "tenders": 757,
+          "singleBidder": 111,
+          "singleBidderPct": 14.66
+        },
+        {
+          "key": "Home B",
+          "tenders": 695,
+          "singleBidder": 93,
+          "singleBidderPct": 13.38
+        },
+        {
+          "key": "Health and Family Welfare Department",
+          "tenders": 636,
+          "singleBidder": 133,
+          "singleBidderPct": 20.91
+        },
+        {
+          "key": "Welfare of Plain Tribes and Backward Classes",
+          "tenders": 577,
+          "singleBidder": 86,
+          "singleBidderPct": 14.9
+        },
+        {
+          "key": "Public Health Engineering Department",
+          "tenders": 544,
+          "singleBidder": 105,
+          "singleBidderPct": 19.3
+        },
+        {
+          "key": "Axom Sarba Siksha Abhijan Mission",
+          "tenders": 494,
+          "singleBidder": 70,
+          "singleBidderPct": 14.17
+        },
+        {
+          "key": "Assam Police Housing Corporation Ltd",
+          "tenders": 492,
+          "singleBidder": 80,
+          "singleBidderPct": 16.26
+        }
+      ]
+    }
+  ],
+  "denominators": {
+    "note": "Two denominators are available for a single-bidder rate and they differ materially. Tenders that drew ZERO bids are excluded from the headline, because a tender nobody bid for is a failed tender rather than an uncompetitive award. Both figures are published so neither can be quoted without the other."
+  },
+  "whatIsMissing": {
+    "winnerIdentifier": "No CIN, GSTIN or any company identifier appears in either dataset. The OCDS `identifier` object — the standard's designated slot for exactly this — is absent. Supplier ids are within-award sequence numbers reused on every tender, and supplier names are free text that frequently denote natural persons. Linking a winner here to a company elsewhere on this platform requires fuzzy name matching and would be `analytic`.",
+    "nationalCoverage": "Two states of 28, and neither is large. The Central Public Procurement Portal publishes no bulk award export; its results page returns zero rows behind a captcha and its dashboard JSON feeds return empty bodies.",
+    "liveData": "Neither source is updated. Any trend computed from them ends where they end."
+  },
+  "gaps": [
+    "Verification sample not yet drawn or checked — see `verification`.",
+    "Himachal Pradesh codes 3,768 of 3,771 tenders as procurement method \"limited\", which is almost certainly a portal-export artefact rather than a real distribution. No method-level comparison should be drawn from it.",
+    "Assam records 3,644 tenders with a bid count of exactly zero. Whether these are failed tenders, cancelled tenders, or an export artefact for a stage that had not completed is not established here.",
+    "Neither dataset carries a bidder roster in the OCP bulk file, so losing bidders and disqualification reasons — which the Assam CKAN API is reported to expose — are absent from this build.",
+    "No national figure exists and none is computed. Presenting a two-state rate as an Indian rate would be the error this dataset is best placed to prevent."
+  ]
+}

@@ -5,6 +5,7 @@ import {
   hydrocarbonSingleBid,
 } from './resources';
 import { ALL_AWARDS, competitionEvidence, disclosureBySector } from './tenders';
+import { pooled as procurementPooled } from './procurement';
 
 /**
  * Capture pathways — the adversarial half of the method.
@@ -70,6 +71,7 @@ export function capturePathways(): CapturePathway[] {
   const annul = mineralAnnulment();
   const quotes = mineralQuoteCoverage();
   const awards = competitionEvidence(ALL_AWARDS);
+  const proc = procurementPooled();
   const disclosure = disclosureBySector(ALL_AWARDS);
   const coalNoBids = COAL_BLOCKS.filter((b) => b.revenueSharePctFinalOffer == null).length;
   const zeroDisclosureSectors = disclosure.filter((d) => d.total >= 3 && d.soleKnown === 0);
@@ -95,15 +97,21 @@ export function capturePathways(): CapturePathway[] {
         'A bid count of one, or a winning offer sitting at the reserve floor. Both are published in a competent disclosure regime.',
       verdict: 'mixed',
       evidence:
-        `Hydrocarbons is the one register that publishes block-by-block bid tables, and the signature is unmistakable there: ` +
-        `single-bid share runs from ${minSingle?.pct.toFixed(1)}% in ${minSingle?.round} to ${maxSingle?.pct.toFixed(1)}% in ${maxSingle?.round}. ` +
+        `There is now a base rate to test against, which there was not before. Across ` +
+        `${proc.contested.toLocaleString('en-IN')} contested state public-works tenders in the only two Indian ` +
+        `jurisdictions that publish bid counts, ${proc.pct.toFixed(1)}% drew exactly one bidder — and the two states ` +
+        `disagree with each other by a factor of nearly five, so the range matters more than the midpoint. ` +
+        `Against that, hydrocarbons is stark: single-bid share runs from ${minSingle?.pct.toFixed(1)}% in ` +
+        `${minSingle?.round} to ${maxSingle?.pct.toFixed(1)}% in ${maxSingle?.round}. ` +
         `Coal cannot be tested at all — 0 of ${COAL_BLOCKS.length} rows carry a bid count. ` +
         `In the awards register, bid position is recoverable for ${awards.soleKnown} of ${awards.total} awards and ` +
-        `${awards.soleCount} of those ${awards.soleKnown} were sole-bidder.`,
+        `${awards.soleCount} of those ${awards.soleKnown} were sole-bidder. ` +
+        `The value-gradient test — does single-bidding rise with contract size — comes back NEGATIVE in ` +
+        `Himachal Pradesh, whose highest value band contains zero single-bidder tenders.`,
       innocentReading:
         'A block nobody bids for is usually a block nobody wants. Deep-water acreage, unexplored basins, coal with no evacuation infrastructure and mineral blocks with outstanding forest clearances all attract one bidder or none for reasons entirely internal to the asset. A rising single-bid share is equally consistent with a shrinking pool of firms willing to carry exploration risk.',
       whatWouldSettleIt:
-        'Bid counts per lot, published as a matter of course. The Ministry of Coal already publishes reserve price, final offer and winner for every mine; adding the number of bids received would cost nothing and would make this pathway testable across the largest register in the country.',
+        'Bid counts per lot, published as a matter of course. The Ministry of Coal already publishes reserve price, final offer and winner for every mine; adding the number of bids received would cost nothing and would make this pathway testable across the largest register in the country. Two state governments already demonstrate it is possible — though neither published the data itself, and both series are frozen.',
       registers: ['hydrocarbons', 'coal', 'awards'],
     },
     {

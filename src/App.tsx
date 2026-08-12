@@ -38,6 +38,7 @@ const Desk = lazy(() => import('./pages/Desk'));
 const Capture = lazy(() => import('./pages/Capture'));
 const Allocation = lazy(() => import('./pages/Allocation'));
 const PmCares = lazy(() => import('./pages/PmCares'));
+const Competition = lazy(() => import('./pages/Competition'));
 const Provenance = lazy(() => import('./pages/Provenance'));
 const Method = lazy(() => import('./pages/Method'));
 const IndustryView = lazy(() => import('./pages/IndustryView'));
@@ -92,6 +93,7 @@ function App() {
                     <Route path="/capture" element={<Capture />} />
                     <Route path="/allocation" element={<Allocation />} />
                     <Route path="/pmcares" element={<PmCares />} />
+                    <Route path="/competition" element={<Competition />} />
                     <Route path="/provenance" element={<Provenance />} />
                     <Route path="/method" element={<Method />} />
                     <Route path="/industries" element={<IndustryView />} />

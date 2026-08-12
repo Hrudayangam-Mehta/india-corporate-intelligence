@@ -85,6 +85,7 @@ const ROUTES = [
   ['/capture', 'capture'],
   ['/allocation', 'allocation'],
   ['/pmcares', 'pmcares'],
+  ['/competition', 'competition'],
   ['/allocation?min=3', 'allocation-three'],
   ['/interlocks', 'interlocks'],
   ['/conglomerates/reliance', 'deepdive-reliance'],

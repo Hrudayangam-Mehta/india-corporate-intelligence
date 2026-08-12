@@ -76,6 +76,7 @@ const navGroups: { label: string; items: { path: string; label: string; icon: ty
       { path: '/capture', label: 'Capture pathways', icon: Crosshair },
       { path: '/evidence', label: 'Evidence audit', icon: Scale },
       { path: '/base-rates', label: 'Base rates', icon: BookOpen },
+      { path: '/competition', label: 'Bidder counts', icon: Gavel },
       { path: '/provenance', label: 'Provenance ledger', icon: ShieldCheck },
       { path: '/method', label: 'How this is built', icon: BookOpen },
     ],

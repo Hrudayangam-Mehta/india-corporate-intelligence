@@ -312,6 +312,46 @@
       "url": "https://pib.gov.in/newsite/PrintRelease.aspx?relid=117707",
       "retrieved": "2026-08-12",
       "readAs": "HTML, curl + regex strip"
+    },
+    {
+      "id": "src-sc-39041",
+      "publisher": "Supreme Court of India",
+      "title": "Centre for Public Interest Litigation and others v. Union of India and others, W.P.(C) No. 423 of 2010 with Dr. Subramanian Swamy v. Union of India and others, W.P.(C) No. 10 of 2011 - judgment of 2 February 2012 (G.S. Singhvi J and Asok Kumar Ganguly J), REPORTABLE, 94 pages",
+      "url": "https://api.sci.gov.in/jonew/judis/39041.pdf",
+      "retrieved": "2026-08-12",
+      "readAs": "PDF, 94 pages, downloaded with curl from the Supreme Court's own server and read with pypdf. The file has a non-standard header - 'file' reports it as raw data and pypdf warns about the xref pointer - but pypdf's object-stream fallback recovers the complete text. api.sci.gov.in/jonew/judis/<id>.pdf is live and unauthenticated but has no fetchable index."
+    },
+    {
+      "id": "src-ik-cbi-2017",
+      "publisher": "Delhi District Court (Special Judge CBI-04, 2G Spectrum Cases, Patiala House Courts) - read from an Internet Archive capture of indiankanoon.org",
+      "title": "CBI v. (1) A. Raja (A-1) and 16 others, CC No. 01/11, RC No. 45(A) 2009 - judgment of O. P. Saini, Special Judge, 21 December 2017, 1,553 pages",
+      "url": "https://web.archive.org/web/20201210154707id_/https://indiankanoon.org/doc/17920655/",
+      "retrieved": "2026-08-12",
+      "readAs": "HTML (3.9 MB) fetched with curl from the Internet Archive and stripped with a regex script. NOT AN OFFICIAL COURT SERVER - see the gap entry. indiankanoon.org is now behind a Cloudflare managed challenge that returns 403 to curl with a full Chrome header set and to WebFetch alike."
+    },
+    {
+      "id": "src-ik-ed-2017",
+      "publisher": "Delhi District Court (Special Judge CBI-04 / PMLA, 2G Spectrum Cases) - read from an Internet Archive capture of indiankanoon.org",
+      "title": "ED v. (1) A. Raja and 18 others, Complaint Case No. 01/14, ECIR No. ECIR/31/DZ/2010 - judgment of O. P. Saini, Special Judge, 21 December 2017, 105 pages",
+      "url": "https://web.archive.org/web/20210307152303id_/https://indiankanoon.org/doc/37508020/",
+      "retrieved": "2026-08-12",
+      "readAs": "HTML fetched with curl from the Internet Archive and stripped with a regex script. Same provenance caveat."
+    },
+    {
+      "id": "src-dhc-leave-2024",
+      "publisher": "High Court of Delhi at New Delhi",
+      "title": "Central Bureau of Investigation v. A Raja & Ors, CRL.L.P. 185/2018 - judgment granting leave to appeal, pronounced 22 March 2024, Dinesh Kumar Sharma J, 120 pages",
+      "url": "https://delhihighcourt.nic.in/app/showFileJudgment/DIS22032024CRLMP1852018_135236.pdf",
+      "retrieved": "2026-08-12",
+      "readAs": "PDF, 120 pages, curl + pypdf, from the Delhi High Court's own server"
+    },
+    {
+      "id": "src-dhc-case-status",
+      "publisher": "High Court of Delhi at New Delhi",
+      "title": "Case-status service (case-number-wise) and online cause history for CRL.A. 277/2024, CRL.L.P. 184/2018, CRL.L.P. 185/2018 and CRL.L.P. 257/2018",
+      "url": "https://delhihighcourt.nic.in/app/get-case-wise?case_type=CRL.A.&case_number=277&case_year=2024",
+      "retrieved": "2026-08-12",
+      "readAs": "JSON over HTTPS via curl with an X-Requested-With: XMLHttpRequest header, plus the linked cause-history HTML. The captcha on the search page gates only the client-side submit handler. PARAMETER TRAP: case_type takes the literal display string ('CRL.A.', 'CRL.L.P.') and the year parameter is case_year, not year; wrong combinations return recordsTotal 0 rather than an error, which reads as 'no such case'."
     }
   ],
   "auctions": [
@@ -790,7 +830,7 @@
       "mhzOffered": null,
       "mhzSold": 30,
       "mhzSoldTier": "analytic",
-      "shareSoldPct": null,
+      "shareSoldPct": 15.38,
       "reservePriceTotalCrore": null,
       "winningBidTotalCrore": 3639.48,
       "winningBidTotalTier": "analytic",
@@ -911,7 +951,10 @@
           ],
           "note": "A gap of Rs 474.17 crore between two DoT sources for an auction with ONE bidder and 24 blocks. Both documents agree that 30 MHz was sold. No document opened for this file reconciles the money. Both are carried."
         }
-      ]
+      ],
+      "unsoldSharePct": 84.62,
+      "shareSoldPctBasis": "PUBLISHED AS A PERCENTAGE, NOT COMPUTED. DoT's WPC Wing comparative table prints the percentage of spectrum sold for this auction; the offered quantum it was computed against is not published anywhere opened for this file. The share therefore cannot be recomputed or recombined with other years' MHz figures.",
+      "allocationsNote": "Formal only: there was one bidder, so the single allocation row is the whole auction."
     },
     {
       "id": "auction-2014",
@@ -926,7 +969,7 @@
       "rounds": 68,
       "mhzOffered": null,
       "mhzSold": 353.2,
-      "shareSoldPct": null,
+      "shareSoldPct": 81.91,
       "reservePriceTotalCrore": null,
       "winningBidTotalCrore": 61162.22,
       "biddersParticipating": 8,
@@ -1059,7 +1102,9 @@
         "band900MHz": 46,
         "blockSize1800MHz": 0.2,
         "blockSize900MHz": 1.0
-      }
+      },
+      "unsoldSharePct": 18.09,
+      "shareSoldPctBasis": "PUBLISHED AS A PERCENTAGE, NOT COMPUTED. DoT's WPC Wing comparative table prints the percentage of spectrum sold for this auction; the offered quantum it was computed against is not published anywhere opened for this file. The share therefore cannot be recomputed or recombined with other years' MHz figures."
     },
     {
       "id": "auction-2015",
@@ -1079,7 +1124,7 @@
       "rounds": 115,
       "mhzOffered": null,
       "mhzSold": 418.25,
-      "shareSoldPct": null,
+      "shareSoldPct": 88.85,
       "reservePriceTotalCrore": null,
       "winningBidTotalCrore": 113932.2,
       "biddersParticipating": 8,
@@ -1184,7 +1229,10 @@
           ],
           "note": "A gap of Rs 4,058.2 crore, 3.7 per cent, between the provisional figure PIB announced on the closing day and the figure in DoT's own later analysis. The pattern mirrors 2021, where the provisional Rs 77,814.80 crore became a payable Rs 77,820.81 crore - but the 2015 gap is three orders of magnitude larger and no document opened for this file explains it. Both are carried; the WPC figure is used in the file's revenue total because it is the later of the two and is not labelled provisional."
         }
-      ]
+      ],
+      "unsoldSharePct": 11.15,
+      "shareSoldPctBasis": "PUBLISHED AS A PERCENTAGE, NOT COMPUTED. DoT's WPC Wing comparative table prints the percentage of spectrum sold for this auction; the offered quantum it was computed against is not published anywhere opened for this file. The share therefore cannot be recomputed or recombined with other years' MHz figures.",
+      "allocationsNote": "NOT ESTABLISHED. DoT's March 2015 result report gives the winning price per block for each service area and band and the frequencies assigned to each winner, but no operator-level rollup of the kind published for the February 2014 auction. No MHz or rupee figure per operator is recorded here for the largest auction in this file by value."
     },
     {
       "id": "auction-2016",
@@ -2548,6 +2596,115 @@
         }
       ],
       "notes": "THE ACQUITTAL IS DERIVATIVE, AND THAT IS AN IMPORTANT LIMIT ON WHAT IT ESTABLISHES. The court did not find that the Rs 200 crore transfer to Kalaignar TV did not happen or was innocent; it found that once the predicate offence collapsed there was no 'proceeds of crime' for the PMLA to operate on, and expressly declined to go further: 'Since there are no \"proceeds of crime\", in my humble opinion, there is no need to discuss...' (paragraph 167). If the CBI's appeal succeeds and the predicate acquittal is reversed, the foundation of this judgment goes with it. Anyone citing this acquittal as an independent finding on the money trail is over-reading it in the opposite direction from those who ignore it."
+    },
+    {
+      "id": "2g-06-appeal-status",
+      "sequence": 6,
+      "claim": "AS OF 12 AUGUST 2026 THE ACQUITTAL STANDS AND THE APPEAL AGAINST IT IS UNDECIDED. The Delhi High Court granted the CBI leave to appeal on 22 March 2024, six years and three months after the acquittal, and registered the matter as CRL.A. 277/2024. That appeal is recorded as PENDING on the High Court's own case-status service, with its next listing on 28 October 2026. The Enforcement Directorate's leave petition against the money-laundering acquittal, CRL.L.P. 184/2018, has still not been granted leave. A third leave petition, against the connected Essar/Loop acquittal of the same day, is also pending.",
+      "asOfDate": "2026-08-12",
+      "statusAsOfRetrievalDate": [
+        {
+          "case": "CRL.L.P. 185/2018",
+          "parties": "Central Bureau of Investigation v. A Raja & Ors",
+          "diaryNo": "89265/2018",
+          "status": "DISPOSED",
+          "disposalDate": "2024-03-22",
+          "outcome": "Leave to appeal GRANTED; the petition was directed to be registered as an appeal.",
+          "advocateOnRecord": "Sanjeev Bhandari"
+        },
+        {
+          "case": "CRL.A. 277/2024",
+          "parties": "Central Bureau of Investigation v. A Raja & Ors",
+          "diaryNo": "893115/2024",
+          "status": "PENDING",
+          "nextDate": "2026-10-28",
+          "courtRoom": "Court No. 266 (Sitting Court 30)",
+          "advocateOnRecord": "Sanjeev Bhandari"
+        },
+        {
+          "case": "CRL.L.P. 184/2018",
+          "parties": "The Joint Director, Directorate of Enforcement v. A. Raja & Ors",
+          "diaryNo": "88475/2018",
+          "status": "PENDING",
+          "nextDate": "2026-10-28",
+          "note": "STILL AT THE LEAVE STAGE. Eight years and five months after filing, the Enforcement Directorate has not been granted leave to appeal against the money-laundering acquittal.",
+          "advocateOnRecord": "Rajeev Awasthi"
+        },
+        {
+          "case": "CRL.L.P. 257/2018",
+          "parties": "Central Bureau of Investigation v. Ravi Kant Ruia & Ors",
+          "diaryNo": "109462/2018",
+          "status": "PENDING",
+          "nextDate": "2026-10-13",
+          "note": "The leave petition against the connected Essar/Loop acquittal of 21 December 2017. Also still at the leave stage. That trial-court judgment itself is not in this file - see gaps.",
+          "advocateOnRecord": "Sanjeev Bhandari"
+        }
+      ],
+      "theLeaveJudgment": {
+        "court": "High Court of Delhi at New Delhi",
+        "judge": "Hon'ble Mr Justice Dinesh Kumar Sharma",
+        "reserved": "2024-03-14",
+        "pronounced": "2024-03-22",
+        "lengthPages": 120,
+        "counselForCbi": "Mr Sanjay Jain, Senior Advocate and Senior Special Public Prosecutor",
+        "paragraph269": "'I must hasten to add that this court is expressing these concerns only to take a prima facie view of the matter and nothing in this order to be construed as final opinion.'",
+        "paragraph270": "'The court on the basis of material on record, and after going through the sworn testimonies, material on record, impugned judgement and the submissions made at bar by both the parties has reached on an objective satisfaction that there is a prima facie case which requires deeper examination and re-appreciation/re-appraisal of entire evidence.'",
+        "paragraph271": "'In view of the discussion made herein above, arguable points have been made out by the CBI thereby converting grant of Leave to Appeal.'",
+        "whatItDoesAndDoesNotDecide": "GRANTING LEAVE IS NOT A FINDING ON THE MERITS AND THE JUDGMENT SAYS SO IN TERMS at paragraph 269. It is a threshold ruling that the CBI has raised arguable points requiring re-appraisal of the evidence. It does not disturb the acquittal, and the acquittal remains the operative outcome unless and until the appeal succeeds."
+      },
+      "listingHistoryOfTheAppeal": {
+        "source": "Delhi High Court online cause-history page for CRL.A. 277/2024",
+        "listedDates2026": [
+          "2026-02-12",
+          "2026-05-04",
+          "2026-05-05",
+          "2026-05-19",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30",
+          "2026-07-31"
+        ],
+        "toBeListed": [
+          "2026-10-27",
+          "2026-10-28"
+        ],
+        "note": "The four consecutive listings of 28 to 31 July 2026 were set aside for arguments and the matter moved again to 27-28 October 2026. NINE YEARS AND EIGHT MONTHS AFTER THE ACQUITTAL, AND TWO YEARS AND FIVE MONTHS AFTER LEAVE WAS GRANTED, THE APPEAL HAS NOT BEEN ARGUED TO A CONCLUSION on the record opened for this file."
+      },
+      "lowerCourtDetailsAsRecordedByTheHighCourt": {
+        "court": "Patiala House Courts, New Delhi",
+        "caseNo": "1-2011",
+        "decisionDate": "2017-12-21",
+        "firNo": "DAI-2009-A-0045",
+        "sections": "420/468/471 IPC 13(I)D/13(II) POC ACT",
+        "subjectCategory": "SINGLE BENCH CRIMINAL CASES INVOLVING SITTING/FORMER MPs AND MLAs",
+        "note": "THREE OFFICIAL RENDERINGS OF THE SAME CASE REFERENCE, all from courts: the trial judgment says 'RC No: 45 (A) 2009, CBI, ACB, New Delhi'; the Delhi High Court's leave judgment says 'RC.DAL2009.A.0045'; and the Delhi High Court's own case-history record says 'DAI-2009-A-0045'. All three are carried; none is corrected against the others."
+      },
+      "supremeCourtProceedings": {
+        "found": "None connected to the acquittal appeal in any document opened for this file.",
+        "note": "NOT A FINDING OF ABSENCE. No exhaustive Supreme Court party-name sweep was completed, and the Supreme Court's own case-detail page for the 2012 writ petition serves a JavaScript shell rather than content. What is recorded is that none of the Delhi High Court records opened - the 120-page leave judgment and the case histories of all four matters - refers to any Supreme Court proceeding arising out of the 21 December 2017 acquittal."
+      },
+      "tier": "documented",
+      "tierBasis": "Read from the High Court of Delhi's own case-status service and its own judgment, both on delhihighcourt.nic.in, on 12 August 2026.",
+      "falsifier": "A Delhi High Court judgment disposing of CRL.A. 277/2024 in either direction, or a case-status entry showing a different status or next date, supersedes this record.",
+      "upgradeIf": "The appeal is decided. Whatever the outcome, it must be recorded on the day it is found, with the same prominence as the acquittal and the allegation.",
+      "killIf": "The case-status service shows CRL.A. 277/2024 as disposed.",
+      "srcs": [
+        {
+          "publisher": "High Court of Delhi at New Delhi",
+          "title": "Case-status service, case-number-wise query (endpoint /app/get-case-wise) for CRL.A. 277/2024, CRL.L.P. 184/2018, CRL.L.P. 185/2018 and CRL.L.P. 257/2018, and the online cause-history page for CRL.A. 277/2024",
+          "url": "https://delhihighcourt.nic.in/app/get-case-wise?case_type=CRL.A.&case_number=277&case_year=2024",
+          "retrieved": "2026-08-12",
+          "readAs": "JSON over HTTPS, fetched with curl with an X-Requested-With: XMLHttpRequest header, plus the linked online-cause-history HTML page. The court's own DataTables endpoint; the page's captcha gates only the client-side submit handler. NOTE the parameter names: case_type takes the LITERAL display string ('CRL.A.', 'CRL.L.P.') and the year parameter is case_year, not year - other combinations return recordsTotal 0 rather than an error."
+        },
+        {
+          "publisher": "High Court of Delhi at New Delhi",
+          "title": "Central Bureau of Investigation v. A Raja & Ors, CRL.L.P. 185/2018 - judgment granting leave to appeal, reserved 14 March 2024, pronounced 22 March 2024, Hon'ble Mr Justice Dinesh Kumar Sharma, 120 pages",
+          "url": "https://delhihighcourt.nic.in/app/showFileJudgment/DIS22032024CRLMP1852018_135236.pdf",
+          "retrieved": "2026-08-12",
+          "readAs": "PDF, 120 pages, curl + pypdf, from the Delhi High Court's own server"
+        }
+      ],
+      "notes": "THIS RECORD EXISTS BECAUSE 'THE APPEAL IS PENDING' IS ITSELF A FACT WITH A DATE, AND IT DECAYS. As of 12 August 2026 the position is: the trial court's acquittal of all seventeen accused stands; the CBI has leave to appeal and has not concluded its arguments; the Enforcement Directorate does not yet have leave; and the connected Essar/Loop leave petition does not either. Anyone reading this file after 28 October 2026 must re-check the status before repeating it. That is why the retrieval date is on every source object in this file and why this record carries an explicit asOfDate."
     }
   ],
   "denominators": {
@@ -2792,7 +2949,9 @@
     "DOT'S CURRENT WEBSITE CANNOT BE BROWSED FOR THESE DOCUMENTS. dot.gov.in is a client-rendered Next.js application whose pages return an empty HTML shell to any non-JavaScript client, and no public API endpoint for its content was found in its JavaScript bundles. Every DoT document in this file was reached either through its /static/uploads/ path, discovered via domain-restricted search, or through the Internet Archive. There is no way to enumerate what else DoT holds, so the absence of a document from this file is not evidence that DoT has not published it.",
     "SPECTRUM ACQUIRED OUTSIDE AUCTION IS NOT IN THIS FILE AT ALL. Spectrum trading and sharing, permitted since 2015, moved substantial holdings between operators without any auction; TRAI's paragraph 3.104 records that the secondary market 'increased the spectrum availability with existing leading TSPs manifold'. A register of auctions therefore understates how much spectrum changed hands, and a falling sold share in auctions is not the same statistic as falling demand for spectrum.",
     "THE 21 DECEMBER 2017 TRIAL-COURT JUDGMENTS COULD NOT BE OPENED ON AN OFFICIAL COURT SERVER. Both were read from Internet Archive captures of a third-party judgment database (indiankanoon.org), which is now behind a Cloudflare challenge that this environment cannot pass. Delhi district-court hosts under dcourts.gov.in did not resolve; services.ecourts.gov.in is behind a session-bound image captcha; judgments.ecourts.gov.in covers the Supreme Court and High Courts only, not district courts. Every case-management fact in those captures is independently corroborated by the Delhi High Court's own judgment of 22 March 2024, which WAS read from delhihighcourt.nic.in - but the quoted passages themselves rest on a mirror, and the record says so.",
-    "THE ESSAR / LOOP TRIAL-COURT JUDGMENT OF 21 DECEMBER 2017 IS NOT IN THIS FILE. A third acquittal was delivered the same day in the connected Essar/Loop case, and the Delhi High Court record shows CBI filed a third leave petition against it (CRL.L.P. 257/2018). No copy of that judgment could be opened - the Internet Archive has no capture of it - so nothing about its case number, accused or reasoning is asserted here."
+    "THE ESSAR / LOOP TRIAL-COURT JUDGMENT OF 21 DECEMBER 2017 IS NOT IN THIS FILE. A third acquittal was delivered the same day in the connected Essar/Loop case, and the Delhi High Court record shows CBI filed a third leave petition against it (CRL.L.P. 257/2018). No copy of that judgment could be opened - the Internet Archive has no capture of it - so nothing about its case number, accused or reasoning is asserted here.",
+    "THE FILING DATES OF THE THREE LEAVE PETITIONS ARE NOT ESTABLISHED. The Delhi High Court's case-status record gives diary numbers and diary years (89265/2018, 88475/2018, 109462/2018) but not filing dates. The earliest orders reported to this file are first-listing dates, not filing dates, and the order PDFs themselves were not opened here.",
+    "NO SUPREME COURT SWEEP WAS COMPLETED for proceedings arising out of the 21 December 2017 acquittal. The Supreme Court's party-name case-status service matches substrings and is slow; its case-detail page for the 2012 writ petition serves a JavaScript shell. That no such proceeding appears in the Delhi High Court records opened here is not evidence that none exists."
   ],
   "rejected": [
     {
