@@ -325,7 +325,31 @@ TOOLS        Search · Donations · Watchlist
 | **P7** ✅ | `/media` rebuild on ownership distribution | Long-outstanding — done |
 | **P8** ✅ | Cross-register competitive-tension comparison | Shipped inside `/resources` rather than as its own page — the comparison belongs beside the registers, not away from them |
 | **P9** ✅ | Connection graph made usable; `/capture` capture pathways | The adversarial half of the method |
-| **P10** | `/pmcares` — flow ledger with holes, PMNRF control | Research running |
+| **P10** ✅ | `/pmcares` — flow ledger with holes, PMNRF control | Shipped |
+| **P13** | Ingest a bulk tender dataset under the Stage 0 rule | Research running |
+
+### What P10 established: the control is the highest-yield check after the date test
+
+The PM CARES investigation ran PMNRF as its control and the control killed the two
+claims most often made about the fund:
+
+| Claim | Killed by | Because |
+|---|---|---|
+| "Created to escape the RTI Act" | **Date test, via the control** | PMNRF asserted the identical s.2(h) position from 2011, litigated it from 2012, and a Delhi HC Division Bench **split 1–1 on 23 May 2018** — two years before PM CARES existed |
+| "Accounts have gone dark since FY23" | **Base rate** | PMNRF's series stops at the same year. Both publish **4 of 7** elapsed FYs |
+
+Identical on **8 of 8** properties tested — same auditor, same replacement firm, same
+PMO officers signing both, same one-page statement format with the notes withheld.
+
+**What survived is better than what died.** PMNRF refuses contributions from PSU
+balance sheets outright; PM CARES excludes only *budgetary* sources and expressly
+admits PSU **CSR**, which comes off the balance sheet. That is the missing mechanism
+behind the ~100% PSU donation base rate this project had already measured and never
+explained — and on the searching done, nobody has assembled it as that explanation.
+
+The pattern generalises: **run the control before writing anything.** It is cheap, it
+has a very high kill rate, and what survives it is worth far more than what was
+claimed before it ran.
 | **P11** | Spectrum register, joining the other three | Research running |
 | **P12** ✅ | Allocation graph — awards and resource winners as one bipartite network | Shipped |
 
@@ -390,6 +414,7 @@ tested* on its two most consequential pathways.
 | 2026-08-12 | `7ebbbce` | P3 | `/resources` — coal, minerals and hydrocarbons; nav regrouped into Registers | ✅ all four |
 | 2026-08-12 | `03cb045` | P9 | Connection graph pan/zoom/ego-focus; `/capture` capture pathways | ✅ all four |
 | 2026-08-12 | `5ab3966` | P12 | `/allocation` — four registers joined on winner name, tiered analytic throughout | ✅ all four |
+| 2026-08-12 | `7ffcc00` | P10 | `/pmcares` — control-first; INGESTION Stage 0 rule for third-party bulk data | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:

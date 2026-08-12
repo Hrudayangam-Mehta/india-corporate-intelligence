@@ -1,7 +1,7 @@
 {
   "asOf": "2026-08-12",
   "scope": "India: central-government auction of telecom access spectrum by the Department of Telecommunications, 2010 to 2024 - every auction round with spectrum offered, spectrum sold, reserve value, winning bid value, bidders, rounds and per-operator allocation - plus the end-to-end documentary record of the 2G licences issued in 2008, from the CAG's presumptive-value estimates through the Supreme Court's 2012 cancellation to the CBI special court's 2017 acquittal of every accused. Descriptive only. No allegation of wrongdoing against any named company or individual is made or implied anywhere in this file.",
-  "readThisFirst": "This file's central statistic is the share of offered spectrum that actually sold, auction by auction. It ranges from 100 per cent (2010 3G and 2010 BWA, where DoT records that every block sold) to 1.34 per cent (2024, measured against the 10,522.35 MHz that DoT's own opening release says was put up). The 2016 auction - the one usually described as the failure - sold 964.80 of 2,354.75 MHz, or 40.97 per cent, and that figure is reconciled here from two independent official documents. COVERAGE LIMIT: the 2013, 2014 and 2015 auctions carry partial records; no single official table listing offered-versus-sold for all auctions 2010-2024 was found, so every share in this file is computed from per-auction sources with their denominators published alongside. A HIGH UNSOLD SHARE IS NOT EVIDENCE OF ANYTHING ON ITS OWN: it is exactly what an aggressive reserve price produces, and TRAI's own reserve prices are the other half of every one of these ratios. Nothing in this file establishes why any block went unsold.",
+  "readThisFirst": "This file's central statistic is the share of offered spectrum that actually sold, auction by auction, and it now covers all ten auctions from 2010 to 2024: 100 per cent (2010 3G), 100 per cent (2010 BWA), 33.33 per cent (2012), 15.38 per cent (2013), 81.91 per cent (2014), 88.85 per cent (2015), 40.97 per cent (2016), 37.06 per cent (2021), 71.06 per cent (2022) and 1.34 per cent (2024). COVERAGE LIMIT: only seven of the ten have a published or countable MHz-OFFERED figure; the 2013, 2014 and 2015 shares are DoT's own published percentages with no denominator attached, so no MHz-over-MHz ratio can be recomputed for them. The second statistic is bidders per auction, and it is weaker than it looks: only seven auctions have a documented participation count, and in all of them together exactly TWO bidders bid and won nothing. TWO WARNINGS TRAVEL WITH EVERY NUMBER HERE. First, 2022 is not comparable with any other year - 87 per cent of what was offered that year was 26 GHz millimetre wave, and stripping it out turns a 71 per cent sale into a 28 per cent one. Second, A HIGH UNSOLD SHARE IS NOT EVIDENCE OF ANYTHING ON ITS OWN: it is exactly what an aggressive reserve price produces, and the reserve price is published for only four of the ten auctions. The file also carries the 2G record end to end - the 2008 allocations, the CAG's FOUR presumptive estimates (not one), the Supreme Court's 2012 quashing, and the CBI special court's acquittal of every accused on 21 December 2017 with the appeal still undecided. The acquittal is recorded with the same prominence as the allegation.",
   "method": "Per-auction retrieval from the publisher of record: DoT press notes, DoT Notices Inviting Applications, DoT daily and final public auction reports, PIB releases of the Ministry of Communications and of the Cabinet, TRAI recommendations, and the CAG's tabled audit report. Where a figure is computed rather than published - notably the 2016 winning-bid total and the 2012 offered quantum - the arithmetic is stated, the tier is set to analytic, and the computation is cross-checked against an independent official figure wherever one exists. Where two official sources disagree, both are carried and neither is preferred.",
   "conventions": {
     "mhzCounting": "Indian official practice counts PAIRED (FDD) spectrum by the uplink quantity only: a 2x5 MHz block is recorded as 5 MHz. Unpaired (TDD) spectrum in 2300, 2500, 3300 MHz and 26 GHz is counted as the full quantity. Every MHz figure in this file follows the convention used by the source document, which is the Indian one throughout. Comparing a 2010 3G MHz figure with a 2022 26 GHz MHz figure is therefore NOT comparing like with like - see the caveat on auction-2022.",
@@ -2236,9 +2236,27 @@
           "url": "https://cag.gov.in/en/audit-report/details/2314",
           "retrieved": "2026-08-12",
           "readAs": "HTML, curl + regex strip"
+        },
+        {
+          "publisher": "Supreme Court of India",
+          "title": "Centre for Public Interest Litigation and others v. Union of India and others, Writ Petition (Civil) No. 423 of 2010, with Dr. Subramanian Swamy v. Union of India and others, Writ Petition (Civil) No. 10 of 2011 - judgment of 2 February 2012 (G.S. Singhvi J and Asok Kumar Ganguly J)",
+          "url": "https://api.sci.gov.in/jonew/judis/39041.pdf",
+          "retrieved": "2026-08-12",
+          "readAs": "PDF, 94 pages, downloaded with curl from the Supreme Court's own server and text extracted with pypdf. The file has a non-standard header that makes 'file' report it as raw data and makes pypdf warn about the xref pointer; pypdf recovers it through its object-stream fallback and extracts the full text."
         }
       ],
-      "notes": "THE DATE TEST APPLIED FORWARD RATHER THAN BACKWARD. Everything in this record is a date, and the dates are what carry the finding: a press release on 24 September 2007 fixing a cut-off of 1 October; a decision to move that cut-off BACKWARDS to 25 September, the day a newspaper report of the cut-off appeared; a Telecom Commission meeting on pricing postponed from 9 to 15 January 2008; and Letters of Intent issued on 10 January 2008, in the six-day gap that postponement created. None of that is an allegation. It is a sequence, and every element of it is in a tabled audit report. WHAT IT DOES NOT ESTABLISH is that any particular person acted corruptly, or that any particular company knew the sequence in advance. The CAG's own language on the last point is careful and conditional - 'some licensees, who COULD PROACTIVELY ANTICIPATE such procedural changes' - and it names no one."
+      "notes": "THE DATE TEST APPLIED FORWARD RATHER THAN BACKWARD. Everything in this record is a date, and the dates are what carry the finding: a press release on 24 September 2007 fixing a cut-off of 1 October; a decision to move that cut-off BACKWARDS to 25 September, the day a newspaper report of the cut-off appeared; a Telecom Commission meeting on pricing postponed from 9 to 15 January 2008; and Letters of Intent issued on 10 January 2008, in the six-day gap that postponement created. None of that is an allegation. It is a sequence, and every element of it is in a tabled audit report. WHAT IT DOES NOT ESTABLISH is that any particular person acted corruptly, or that any particular company knew the sequence in advance. The CAG's own language on the last point is careful and conditional - 'some licensees, who COULD PROACTIVELY ANTICIPATE such procedural changes' - and it names no one.",
+      "theSupremeCourtsAccountOfTheSameSequence": {
+        "tier": "documented",
+        "paragraph29": "'In the meanwhile, on 24.9.2007, Shri A.K. Srivastava, DDG (AS), DoT prepared a note mentioning therein that as on that date, 167 applications had been received from 12 companies for 22 service areas and opined that it may be difficult to handle such a large number of applications at any point of time. He suggested that 10.10.2007 may be announced as the cut-off date for receipt of new UAS Licence applications. Shri A. Raja who was, at the relevant time, Minister of C&IT did not agree with the suggestion and ordered that 1.10.2007 be fixed as the cut-off date for receipt of applications for new UAS Licence. Accordingly, press note dated 24.9.2007 was issued by the DoT stating that no new application for UAS Licence will be accepted after 1.10.2007.'",
+        "paragraph30": "'Between 24.9.2007 and 1.10.2007, over 300 applications were received for grant of UAS Licences.'",
+        "paragraph42": "The second press release of 10 January 2008, reproduced in full in the judgment: 'All above are requested to assemble at 3:30 pm on 10.1.2008 at Committee Room, 2nd Floor, Sanchar Bhawan, New Delhi. The companies which fail to report before 4:30 P.M. on 10.1.2008, the responses of DOT will be dispatched by post.'",
+        "paragraph43": "'All the applicants including those who were not even eligible for UAS Licence collected their LoIs on 10.1.2008. The acceptance of 120 applications and compliance with the terms and conditions of the LoIs for 78 applications was also received on the same day.'",
+        "paragraph77vi": "'The Minister of C&IT introduced cut off date as 25.9.2007 for consideration of the applications received for grant of licence despite the fact that only one day prior to this, press release was issued by the DoT fixing 1.10.2007 as the last date for receipt of the applications. This arbitrary action of the Minister of C&IT though appears to be innocuous, actually benefitted some of the real estate companies who did not have any experience in dealing with telecom services and who had made applications only on 24.9.2007, i.e., one day before the cut off date fixed by the Minister of C&IT on his own.'",
+        "paragraph77vii": "'The cut off date, i.e. 25.9.2007 decided by the Minister of C&IT on 2.11.2007 was not made public till 10.1.2008 and the first-come-first-served policy, which was being followed since 2003 was changed by him on 7.1.2008 and was incorporated in press release dated 10.1.2008. This enabled some of the applicants, who had access either to the Minister or the officers of the DoT to get the demand drafts, bank guarantee, etc. prepared in advance for compliance of conditions of the LoIs, which was the basis for determination of seniority for grant of licences and allocation of spectrum.'",
+        "paragraph77viii": "'The meeting of the full Telecom Commission, which was scheduled to be held on 9.1.2008 to consider issues relating to grant of licences and pricing of spectrum was deliberately postponed on 7.1.2008 so that the Secretary, Finance and Secretaries of three other important Departments may not be able to raise objections against the procedure...'",
+        "note": "A FOURTH NUMBER FOR THE SAME EVENT. The Supreme Court records that 'The acceptance of 120 applications' was received on 10 January 2008 - alongside the CAG's 121 LoIs issued, the CAG web page's 120 licences issued and the CAG report's 122 licences awarded in 2008. The 120 in the Supreme Court's paragraph 43 is a count of ACCEPTANCES, which is a different act from issuing an LoI. These are four counts of three or four different events and they are routinely quoted as if they were the same one."
+      }
     },
     {
       "id": "2g-02-cag-presumptive-range",
@@ -2338,6 +2356,198 @@
         }
       ],
       "notes": "WHY THE RANGE MATTERS MORE THAN THE HEADLINE. The four estimates differ by a factor of three. They differ because they answer four different questions: what one bidder said it would pay, what a different band fetched two years later, and what two foreign investors paid for equity in two specific companies. A range of Rs 57,666 crore to Rs 1,76,645 crore is not a measurement with an error bar; it is four incompatible valuations printed together because the auditor could not choose between them and said so. Reporting only the top of the range is not rounding - it is selecting the single most aggressive assumption and dropping the report's own warning about it. This file therefore never uses the phrase 'the 1.76 lakh crore loss' and never prints the figure without the other three."
+    },
+    {
+      "id": "2g-03-supreme-court-2-feb-2012",
+      "sequence": 3,
+      "claim": "On 2 February 2012 a two-judge bench of the Supreme Court of India quashed every licence granted to the private respondents on or after 10 January 2008 pursuant to the two press releases of that day, together with the spectrum allocated under them, held the first-come-first-served policy fundamentally flawed for the alienation of scarce natural resources, and directed that fresh licences be granted by auction. THE OPERATIVE ORDER DOES NOT USE THE NUMBER 122.",
+      "court": "Supreme Court of India, Civil Original Jurisdiction",
+      "bench": [
+        "G.S. Singhvi, J (author)",
+        "Asok Kumar Ganguly, J"
+      ],
+      "benchSize": 2,
+      "caseNumbers": [
+        "Writ Petition (Civil) No. 423 of 2010 - Centre for Public Interest Litigation and others v. Union of India and others",
+        "Writ Petition (Civil) No. 10 of 2011 - Dr. Subramanian Swamy v. Union of India and others"
+      ],
+      "date": "2012-02-02",
+      "place": "New Delhi",
+      "reportable": true,
+      "operativeOrder": "'81. In the result, the writ petitions are allowed in the following terms: (i) The licences granted to the private respondents on or after 10.1.2008 pursuant to two press releases issued on 10.1.2008 and subsequent allocation of spectrum to the licensees are declared illegal and are quashed. (ii) The above direction shall become operative after four months. (iii) Keeping in view the decision taken by the Central Government in 2011, TRAI shall make fresh recommendations for grant of licence and allocation of spectrum in 2G band in 22 Service Areas by auction, as was done for allocation of spectrum in 3G band. (iv) The Central Government shall consider the recommendations of TRAI and take appropriate decision within next one month and fresh licences be granted by auction. (v) Respondent Nos.2, 3 and 9 who have been benefited at the cost of Public Exchequer by a wholly arbitrary and unconstitutional action taken by the DoT for grant of UAS Licences and allocation of spectrum in 2G band and who off-loaded their stakes for many thousand crores in the name of fresh infusion of equity or transfer of equity shall pay cost of Rs.5 crores each. Respondent Nos. 4, 6, 7 and 10 shall pay cost of Rs.50 lakhs each because they too had been benefited by the wholly arbitrary and unconstitutional exercise undertaken by the DoT for grant of UAS Licences and allocation of spectrum in 2G band. We have not imposed cost on the respondents who had submitted their applications in 2004 and 2006 and whose applications were kept pending till 2007. (vi) Within four months, 50% of the cost shall be deposited with the Supreme Court Legal Services Committee for being used for providing legal aid to poor and indigent litigants. The remaining 50% cost shall be deposited in the funds created for Resettlement and Welfare Schemes of the Ministry of Defence.'",
+      "theSavingClauseThatMattersMost": {
+        "paragraph": "81(vii)",
+        "text": "'However, it is made clear that the observations made in this judgment shall not, in any manner, affect the pending investigation by the CBI, Directorate of Enforcement and others agencies or cause prejudice to those who are facing prosecution in the cases registered by the CBI or who may face prosecution on the basis of chargesheet(s) which may be filed by the CBI in future and the Special Judge, CBI shall decide the matter uninfluenced by this judgment. We also make it clear that this judgment shall not prejudice any person in the action which may be taken by other investigating agencies under Income Tax Act, 1961, Prevention of Money Laundering Act, 2002 and other similar statutes.'",
+        "whyItMatters": "THIS SENTENCE IS THE HINGE OF THE WHOLE RECORD AND IT IS ALMOST NEVER QUOTED. The Supreme Court expressly severed its own findings from the criminal case and directed the trial judge to decide 'uninfluenced by this judgment'. A civil-side finding that an administrative process was arbitrary and unconstitutional therefore did NOT decide, and was told not to decide, whether anyone committed a crime. The 2012 quashing and the 2017 acquittal are not in conflict; the Court that ordered the first said in terms that it was not deciding the second."
+      },
+      "onFirstComeFirstServed": {
+        "paragraph": "76 (answering Question Nos. 3 and 4)",
+        "text": "'There is a fundamental flaw in the first-come-first-served policy inasmuch as it involves an element of pure chance or accident. In matters involving award of contracts or grant of licence or permission to use public property, the invocation of first-come-first-served policy has inherently dangerous implications. Any person who has access to the power corridor at the highest or the lowest level may be able to obtain information from the Government files or the files of the agency/instrumentality of the State that a particular public property or asset is likely to be disposed of or a contract is likely to be awarded or a licence or permission is likely to be given, he would immediately make an application and would become entitled to stand first in the queue at the cost of all others who may have a better claim. ... When it comes to alienation of scarce natural resources like spectrum etc., it is the burden of the State to ensure that a non-discriminatory method is adopted for distribution and alienation, which would necessarily result in protection of national/public interest. In our view, a duly publicised auction conducted fairly and impartially is perhaps the best method for discharging this burden and the methods like first-come-first-served when used for alienation of natural resources/public property are likely to be misused by unscrupulous people who are only interested in garnering maximum financial benefit and have no respect for the constitutional ethos and values. In other words, while transferring or alienating the natural resources, the State is duty bound to adopt the method of auction by giving wide publicity so that all eligible persons can participate in the process.'"
+      },
+      "onThe2007to2008Exercise": {
+        "paragraph": "77",
+        "text": "'The exercise undertaken by the officers of the DoT between September, 2007 and March 2008, under the leadership of the then Minister of C&IT was wholly arbitrary, capricious and contrary to public interest apart from being violative of the doctrine of equality.'"
+      },
+      "onTheNumber122": {
+        "finding": "THE OPERATIVE ORDER NEVER SAYS 122. The string '122' appears exactly once in the whole 94-page judgment, and it is in the Court's recital of counsel's submissions at page 64: 'Shri Bhushan pointed out that, out of 122 applications, 85 were found to be ineligible'. The order quashes 'the licences granted to the private respondents on or after 10.1.2008 pursuant to two press releases issued on 10.1.2008', which is a description, not a count.",
+        "whereThe122ComesFrom": "The CAG's Report No. 19 of 2010 states '122 new UAS licences awarded in 2008, also at the same entry fee of 2001', and the CBI's first information report as recited in the trial-court judgment refers to 'all 122 UAS Licences issued in 2008'. The figure is the executive's and the auditor's, and it is accurate as a count of licences; it is simply not the Supreme Court's operative language. 'The Supreme Court cancelled 122 licences' is a correct shorthand for the effect and an incorrect quotation of the order.",
+        "comparison": "This is the same failure mode the coal register documents at length, where 'the Supreme Court cancelled 204 of 218 coal blocks' fuses a parliamentary schedule, a government affidavit and a barrister's aside and attributes the result to a court. Here the fusion is smaller but identical in kind."
+      },
+      "tier": "documented",
+      "tierBasis": "Read from the Supreme Court of India's own server.",
+      "srcs": [
+        {
+          "publisher": "Supreme Court of India",
+          "title": "Centre for Public Interest Litigation and others v. Union of India and others, Writ Petition (Civil) No. 423 of 2010, with Dr. Subramanian Swamy v. Union of India and others, Writ Petition (Civil) No. 10 of 2011 - judgment of 2 February 2012 (G.S. Singhvi J and Asok Kumar Ganguly J)",
+          "url": "https://api.sci.gov.in/jonew/judis/39041.pdf",
+          "retrieved": "2026-08-12",
+          "readAs": "PDF, 94 pages, downloaded with curl from the Supreme Court's own server and text extracted with pypdf. The file has a non-standard header that makes 'file' report it as raw data and makes pypdf warn about the xref pointer; pypdf recovers it through its object-stream fallback and extracts the full text."
+        }
+      ],
+      "notes": "The four-month suspension in clause (ii) is what made the November 2012 auction necessary: the quashed licensees kept operating until early June 2012 and the spectrum they surrendered had to be re-auctioned. The direct line from this order to the 2012, 2013 and 2014 auction records in this file is clause (iii) - 'fresh recommendations for grant of licence and allocation of spectrum in 2G band in 22 Service Areas by auction, as was done for allocation of spectrum in 3G band'. The whole auction series after 2010 exists because of this paragraph."
+    },
+    {
+      "id": "2g-04-cbi-acquittal-21-dec-2017",
+      "sequence": 4,
+      "claim": "ON 21 DECEMBER 2017 THE SPECIAL CBI COURT ACQUITTED EVERY ACCUSED IN THE 2G CASE - all seventeen, fourteen individuals and three companies - holding that the prosecution had 'miserably failed to prove any charge against any of the accused'. THIS RECORD CARRIES THE SAME WEIGHT IN THIS FILE AS THE ALLEGATION. A register that publishes the CAG's presumptive-loss range and the Supreme Court's quashing without publishing the acquittal is not a shorter record. It is a false one.",
+      "court": "Court of O. P. Saini, Special Judge, CBI (04) (2G Spectrum Cases), Patiala House Courts, New Delhi",
+      "judge": "O. P. Saini, Special Judge / CBI (04) / PMLA (2G Spectrum Cases), New Delhi",
+      "caseNumbers": [
+        "CC No. 01/11",
+        "Case RC No. 45 (A) 2009, CBI, ACB, New Delhi"
+      ],
+      "caseNumberNote": "The judgment itself renders the RC number as 'RC No: 45 (A) 2009, CBI, ACB, New Delhi'. The Delhi High Court's 2024 judgment renders the same case as 'RC.DAL2009.A.0045'. Both renderings are recorded; neither is corrected against the other.",
+      "dateOfInstitution": "2011-04-02",
+      "commencementOfFinalArguments": "2015-04-15",
+      "conclusionOfFinalArguments": "2017-04-26",
+      "orderReserved": "2017-12-05",
+      "pronounced": "2017-12-21",
+      "lengthPages": 1553,
+      "lengthPagesPerHighCourt": 1552,
+      "accusedAcquitted": 17,
+      "individualsAcquitted": 14,
+      "companiesAcquitted": 3,
+      "accused": [
+        "A-1 A. Raja",
+        "A-2 Siddhartha Behura",
+        "A-3 R. K. Chandolia",
+        "A-4 Shahid Usman Balwa",
+        "A-5 Vinod Goenka",
+        "A-6 M/s Swan Telecom (P) Limited (now M/s Etisalat DB Telecom (P) Limited)",
+        "A-7 Sanjay Chandra",
+        "A-8 M/s Unitech Wireless (Tamil Nadu) Limited",
+        "A-9 Gautam Doshi",
+        "A-10 Surendra Pipara",
+        "A-11 Hari Nair",
+        "A-12 M/s Reliance Telecom Limited",
+        "A-13 Asif Balwa",
+        "A-14 Rajiv Agarwal",
+        "A-15 Karim Morani",
+        "A-16 Sharad Kumar",
+        "A-17 Kanimozhi Karunanithi"
+      ],
+      "theOperativeFindings": {
+        "paragraph1817": "'There is no evidence on the record produced before the Court indicating any criminality in the acts allegedly committed by the accused persons relating to fixation of cut-off date, manipulation of first-come first-served policy, allocation of spectrum to dual technology applicants, ignoring ineligibility of STPL and Unitech group companies, non-revision of entry fee and transfer of Rs. 200 crore to Kalaignar TV (P) Limited as illegal gratification. The charge sheet of the instant case is based mainly on misreading, selective reading, non-reading and out of context reading of the official record. Further, it is based on some oral statements made by the witnesses during investigation, which the witnesses have not owned up in the witness-box. Lastly, if statements were made orally by the witnesses, the same were contrary to the official record and thus, not acceptable in law.'",
+        "paragraph1818": "'I may add that many facts recorded in the charge sheet are factually incorrect, like Finance Secretary strongly recommending revision of entry fee, deletion of a clause of draft LOI by Sh. A. Raja, Recommendations of TRAI for revision of entry fee etc. The end result of the above discussion is that, I have absolutely no hesitation in holding that the prosecution has miserably failed to prove any charge against any of the accused, made in its well choreographed charge sheet.'",
+        "paragraph1819": "'Accordingly, all accused are entitled to be acquitted and are acquitted.'",
+        "paragraph1811": "'I may also add that for the last about seven years, on all working days, summer vacation included, I religiously sat in the open Court from 10 AM to 5 PM, awaiting for someone with some legally admissible evidence in his possession, but all in vain. Not a single soul turned up. This indicates that everybody was going by public perception created by rumour, gossip and speculation. However, public perception has no place in judicial proceedings.'",
+        "paragraph1812": "'In the beginning, the prosecution started with the case with great enthusiasm and ardour. However, as the case progressed, it became highly cautious and guarded in its attitude making it difficult to find out as to what prosecution wanted to prove. However, by the end, the quality of prosecution totally deteriorated and it became directionless and diffident.'",
+        "paragraph1814": "Under the heading 'About the DoT Files': '...on account of the various actions and inactions of the officials, as noted above, nobody believed the version of DoT and a huge scam was seen by everyone where there was none. These factors compelled people to conjecture about a big scam. Thus, some people created a scam by artfully arranging a few selected facts and exaggerating things beyond recognition to astronomical levels.'",
+        "paragraph1816": "'Thus, the genesis of the instant case lies not so much in the actions of Sh. A. Raja but in the action/inaction of others, referred to above. There is no material on record to show that Sh. A. Raja was mother lode of conspiracy in the instant case. There is also no evidence of his no-holds-barred immersion in any wrongdoing, conspiracy or corruption.'",
+        "closing": "'1823. File be consigned to the Record Room. Announced in open Court today on 21.12.2017. (O.P. Saini), Spl. Judge/CBI(04)/ PMLA (2G Spectrum Cases), New Delhi.'"
+      },
+      "consequentialOrders": [
+        "Bail bonds cancelled and sureties discharged (paragraph 1820).",
+        "Each accused directed under Section 437A CrPC to furnish a bail bond of Rs 5 lakh with one surety for appearance before the appellate court (paragraph 1821)."
+      ],
+      "trialScale": {
+        "prosecutionWitnesses": 153,
+        "defenceWitnesses": 29,
+        "accusedWhoTestifiedThemselves": [
+          "A. Raja, as DW-1 under Section 315 CrPC",
+          "R. K. Chandolia, as DW-22"
+        ],
+        "chargesFramed": "2012-10-22",
+        "chargeSheetFiled": "2011-04-02 against A-1 to A-12; supplementary charge sheet 25 April 2011 against A-13 to A-17, tagged 24 May 2011",
+        "recordSize": "'the record of which runs into about three-four lac pages' (paragraph 1822)",
+        "src": "These figures are from the Delhi High Court's judgment of 22 March 2024, paragraphs 4 to 6, read from delhihighcourt.nic.in, except the record size which is from the trial judgment itself."
+      },
+      "tier": "documented",
+      "tierBasis": "DOCUMENTED, WITH A NAMED PROVENANCE WEAKNESS. The judgment text was read from an Internet Archive capture of a third-party judgment database, not from an official court server - see the source note and the gap entry. Every case-management fact in that text (case number, dates of institution and pronouncement, page count, outcome, number of accused, witness counts) is independently corroborated by the Delhi High Court's own judgment of 22 March 2024, which WAS read from delhihighcourt.nic.in. The quoted passages themselves rest on the mirror.",
+      "falsifier": "An official copy of CC No. 01/11 obtained from a Delhi district-court server or from eCourts that does not contain paragraphs 1811 to 1823 in these terms, or that records a different outcome, kills this record.",
+      "upgradeIf": "An official-court-server copy of the judgment is opened. That would move the tier basis from 'mirror, corroborated' to 'primary record'.",
+      "srcs": [
+        {
+          "publisher": "Delhi District Court (Special Judge CBI-04, 2G Spectrum Cases, Patiala House Courts, New Delhi) - read from an Internet Archive capture of indiankanoon.org",
+          "title": "CBI v. (1) A. Raja (A-1) and 16 others, CC No. 01/11, Case RC No. 45(A) 2009, CBI, ACB, New Delhi - judgment of O. P. Saini, Special Judge, announced in open court on 21 December 2017, 1,553 pages",
+          "url": "https://web.archive.org/web/20201210154707id_/https://indiankanoon.org/doc/17920655/",
+          "retrieved": "2026-08-12",
+          "readAs": "HTML (3.9 MB) fetched with curl from the Internet Archive and stripped of markup with a regex script. NOT AN OFFICIAL COURT SERVER: indiankanoon.org is a third-party judgment database and is now behind a Cloudflare managed challenge that this environment cannot pass; Delhi district-court hosts under dcourts.gov.in did not resolve, and services.ecourts.gov.in is behind a session-bound image captcha. The internal page footers run 'Page N of 1553' consistently and every case-management fact in it is independently corroborated by the Delhi High Court judgment read from delhihighcourt.nic.in."
+        },
+        {
+          "publisher": "High Court of Delhi at New Delhi",
+          "title": "Central Bureau of Investigation v. A Raja & Ors, CRL.L.P. 185/2018 with CRL.M.A. 14255/2023, 14256/2023, 4631/2024 and 4632/2024 - judgment on the application for leave to appeal, reserved 14 March 2024, pronounced 22 March 2024, Hon'ble Mr Justice Dinesh Kumar Sharma, 120 pages",
+          "url": "https://delhihighcourt.nic.in/app/showFileJudgment/DIS22032024CRLMP1852018_135236.pdf",
+          "retrieved": "2026-08-12",
+          "readAs": "PDF, 120 pages, downloaded with curl from the Delhi High Court's own server and text extracted with pypdf"
+        }
+      ],
+      "notes": "THE DATE TEST AND THE OUTCOME TEST ARE DIFFERENT TESTS AND THIS RECORD IS WHY THE PLATFORM NEEDS BOTH. Nothing in the 2017 judgment contradicts the 2012 quashing or the CAG's arithmetic. The Supreme Court decided that an administrative process was arbitrary; the CAG estimated what the spectrum might have fetched under a different process; the criminal court decided that no charge of criminal conspiracy, cheating or corruption was proved against anyone. Those are three questions, and the answers are 'yes', 'somewhere between Rs 57,666 crore and Rs 1,76,645 crore depending on your assumption', and 'no'. A file that publishes the first two and stops has not shortened the record, it has inverted it."
+    },
+    {
+      "id": "2g-05-ed-pmla-acquittal-21-dec-2017",
+      "sequence": 5,
+      "claim": "The same judge, on the same day, acquitted all nineteen accused in the connected money-laundering case, on the ground that the acquittal in the predicate offence left no 'proceeds of crime' for the Prevention of Money-Laundering Act to attach to. Property worth Rs 223.55 crore that the Enforcement Directorate had attached was ordered released.",
+      "court": "Court of O. P. Saini, Special Judge, CBI (04) / PMLA (2G Spectrum Cases), New Delhi",
+      "caseNumbers": [
+        "Complaint Case No. 01/14",
+        "ECIR No. ECIR/31/DZ/2010"
+      ],
+      "dateOfInstitution": "2014-04-25",
+      "pronounced": "2017-12-21",
+      "lengthPages": 105,
+      "accusedAcquitted": 19,
+      "individualsAcquitted": 10,
+      "companiesOrFirmsAcquitted": 9,
+      "accused": [
+        "A. Raja",
+        "Shahid Usman Balwa",
+        "Vinod Goenka",
+        "Asif Balwa",
+        "Rajeev Agarwal",
+        "Karim Morani",
+        "Sharad Kumar",
+        "M. K. Dayalu Ammal",
+        "Kanimozhi Karunanithi",
+        "P. Amirtham",
+        "M/s Swan Telecom (P) Limited (now Etisalat DB Telecom (P) Limited)",
+        "M/s Kusegaon Realty (P) Limited (formerly Kusegaon Fruits and Vegetables (P) Limited)",
+        "M/s Cineyug Media & Entertainment (P) Limited (formerly Cineyug Films (P) Limited)",
+        "Kalaignar TV (P) Limited",
+        "M/s Dynamix Realty",
+        "M/s Eversmile Constructions Company (P) Limited",
+        "M/s Conwood Construction & Developers (P) Limited",
+        "M/s DB Realty Limited",
+        "Mystical Construction (P) Limited (earlier Nihar Constructions (P) Limited)"
+      ],
+      "operativeReasoning": "'166. However, vide my separate judgment dated today, in the case of scheduled offence titled CBI Vs. A. Raja and others, all accused have been ordered to be acquitted. In view of acquittal of accused in the case relating to scheduled offence, there are no \"proceeds of crime\". \"Proceeds of crime\" is the foundational fact for the offence of money-laundering. Since there are no \"proceeds of crime\", there can be no offence of money-laundering, as nothing remains to be laundered. Thus, the very base of the instant case is gone and the alleged offence stands wiped out. ... 168. Accordingly, all accused are entitled to be acquitted and are acquitted.'",
+      "propertyOrder": {
+        "attachedValueCrore": 223.55,
+        "paragraph169": "'In the instant case, as per para 5.2 of the complaint, property worth Rs. 223.55 crore of DB group of companies and its associates has been attached by ED.'",
+        "paragraph172": "'In terms of the above legal position, properties attached in the instant case by the Enforcement Directorate, are ordered to be released to the persons from whom the same were attached, after the time for filing of appeal is over.'"
+      },
+      "tier": "documented",
+      "tierBasis": "Same provenance weakness as the CBI judgment: read from an Internet Archive capture of a third-party judgment database, not an official court server.",
+      "srcs": [
+        {
+          "publisher": "Delhi District Court (Special Judge CBI-04 / PMLA, 2G Spectrum Cases, New Delhi) - read from an Internet Archive capture of indiankanoon.org",
+          "title": "ED v. (1) A. Raja and 18 others, Complaint Case No. 01/14, ECIR No. ECIR/31/DZ/2010 - judgment of O. P. Saini, Special Judge, 21 December 2017, 105 pages",
+          "url": "https://web.archive.org/web/20210307152303id_/https://indiankanoon.org/doc/37508020/",
+          "retrieved": "2026-08-12",
+          "readAs": "HTML fetched with curl from the Internet Archive and stripped of markup with a regex script. Same caveat as the CBI judgment: a mirror, not an official court server."
+        }
+      ],
+      "notes": "THE ACQUITTAL IS DERIVATIVE, AND THAT IS AN IMPORTANT LIMIT ON WHAT IT ESTABLISHES. The court did not find that the Rs 200 crore transfer to Kalaignar TV did not happen or was innocent; it found that once the predicate offence collapsed there was no 'proceeds of crime' for the PMLA to operate on, and expressly declined to go further: 'Since there are no \"proceeds of crime\", in my humble opinion, there is no need to discuss...' (paragraph 167). If the CBI's appeal succeeds and the predicate acquittal is reversed, the foundation of this judgment goes with it. Anyone citing this acquittal as an independent finding on the money trail is over-reading it in the opposite direction from those who ignore it."
     }
   ],
   "denominators": {
@@ -2620,6 +2830,30 @@
     {
       "candidate": "Using the auction ordinal ('the 8th auction', 'the 10th auction') as an identifier",
       "reason": "DoT calls the July 2022 auction 'the 8th Spectrum Auction', which requires counting the 2010 3G and BWA auctions as one event; press accounts calling the 2024 auction 'the 10th' count them as two and count differently again. The ordinal is ambiguous by at least one and is recorded only where an official source uses it."
+    },
+    {
+      "candidate": "Publishing the 2G allegation record without the acquittal",
+      "reason": "The CAG's estimates, the Supreme Court's 2012 quashing and the CBI charge sheet are all in this file. So is the 21 December 2017 judgment acquitting all seventeen accused in the CBI case and all nineteen in the money-laundering case, and so is the fact that the appeal against it had still not been argued on the merits as of the retrieval date. A file that carries the first three and not the fourth is not a shorter record; it is a different and false one."
+    },
+    {
+      "candidate": "'The Supreme Court cancelled 122 licences' as a quotation of the 2012 order",
+      "reason": "The number 122 appears exactly once in the 94-page judgment and it is in the recital of counsel's submissions. The operative order quashes 'the licences granted to the private respondents on or after 10.1.2008 pursuant to two press releases issued on 10.1.2008'. 122 is the CAG's and the CBI's count of licences issued in 2008 and is accurate as such. The shorthand describes the effect correctly and misquotes the order."
+    },
+    {
+      "candidate": "Treating the 2012 quashing and the 2017 acquittal as contradicting each other",
+      "reason": "The Supreme Court's own paragraph 81(vii) severed the two: 'the Special Judge, CBI shall decide the matter uninfluenced by this judgment.' One court decided an administrative process was arbitrary; another decided no criminal charge was proved. Neither answers the other's question."
+    },
+    {
+      "candidate": "Treating the money-laundering acquittal as an independent finding about the Rs 200 crore transfer",
+      "reason": "It is expressly derivative. The court held that once the predicate offence collapsed there were no 'proceeds of crime' and declined to examine the evidence further. If the predicate acquittal is reversed on appeal, this judgment's foundation goes with it."
+    },
+    {
+      "candidate": "Preferring one official figure over another where two exist",
+      "reason": "There are five unresolved conflicts between government sources in this file - 2010 MHz sold, 2012 quantity and money, 2013 money, 2015 money, 2016 money - plus three different official figures for the 2021 offered quantum, two for the 2021 winning total, two for Bharti Airtel's 2022 bid inside a single PIB release, and two denominators for the 2024 sold share one day apart. Each is carried with both values and the reason they differ where one is documented. None is silently resolved."
+    },
+    {
+      "candidate": "The DoT WPC analysis paper as the file's spine",
+      "reason": "It is the only document found that tabulates several auctions side by side, and it is genuinely useful - but it is an officer-authored study hosted on the DoT website, not a statutory return, it stops at 2016, it has no offered-MHz and no reserve-price column, and it disagrees with other DoT documents on four separate figures. It is used where it is the only source of a statistic (the 2013, 2014 and 2015 sold shares) and carried alongside where it is not."
     }
   ]
 }
