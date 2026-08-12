@@ -38,16 +38,22 @@ Seed every RNG and ship the seed. `Math.random()` anywhere it can affect display
 is a defect — it has already been rejected once here, as fake sparkline price history.
 Sort with an explicit tiebreak so diffs and screenshots reproduce.
 
-## The four gates, every time, before reporting
+## The five gates, every time, before reporting
 
 ```bash
-npx tsc -b && npm run build && npm run validate && npm run smoke
+npx tsc -b && npm run build && npm run validate && npm run smoke && npm run viewport
 ```
 
 `validate` enforces the four invariants — provenance, resolution, supersession,
 contradiction. `smoke` renders every route and fails on any page error; it navigates
 via `about:blank` between routes deliberately, because hash navigation does not reload
 and one crash used to blank every route after it. Do not optimise that away.
+
+`viewport` MEASURES the graph camera — that the viewBox is not silently letterboxed,
+that a 200px drag moves the graph 200px, that auto-fit leaves zero nodes clipped, that
+maximise really hands over the window, and that dragging a node is not read as a click.
+It exists because every one of those bugs shipped: none is a type error, and a render
+smoke test passes happily while the graph is unusable.
 
 **Never disable a gate to land a change.** A validator failure means the data is wrong.
 

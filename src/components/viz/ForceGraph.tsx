@@ -4,6 +4,7 @@ import {
   type Simulation, type SimulationNodeDatum,
 } from 'd3-force';
 import { TIERS, type GNode, type GEdge, type Tier, type NodeFamily } from '../../graph/schema';
+import { useCamera, CameraControls, ExpandShell } from './camera';
 
 /**
  * The connection graph.
@@ -12,6 +13,26 @@ import { TIERS, type GNode, type GEdge, type Tier, type NodeFamily } from '../..
  * is semantic, not decorative, and is never restyled for looks. Node shape carries
  * type, hue carries family, radius carries weight: three orthogonal channels,
  * never overloaded.
+ *
+ * VIEWPORT MODEL — the thing that was broken.
+ *
+ * The svg used to carry a fixed `viewBox="0 0 900 620"` with the default
+ * preserveAspectRatio. Two consequences, both of which made the graph unusable and
+ * neither of which was visible in the code:
+ *
+ *   1. The drawing area was LETTERBOXED inside the element. On a wide card the
+ *      graph was pinned to a 1.45 aspect box with dead margin either side, so
+ *      "expand" bought blank space rather than graph.
+ *   2. Pan was mathematically WRONG. It mapped the cursor through `rect.width`,
+ *      but the viewBox does not span `rect.width` when letterboxed — so the graph
+ *      slid at a different rate than the pointer. That is why dragging felt broken
+ *      rather than merely awkward.
+ *
+ * Now the viewBox is MEASURED from the element with a ResizeObserver, so one
+ * viewBox unit is one CSS pixel: no letterbox, drag is exact, and expanding really
+ * does hand the graph the whole window. The force layout is computed around the
+ * origin and is deliberately independent of the viewport — resizing refits the
+ * camera and never re-runs the simulation.
  */
 
 export const FAMILY_COLOR: Record<NodeFamily, string> = {
@@ -65,6 +86,9 @@ interface Props {
   focusHops?: number;
 }
 
+/** How far apart the family bands sit in layout units. Not a pixel measure. */
+const BAND = 230;
+
 /** ty → shape. Deliberately few shapes; more would be unreadable at this density. */
 function shapeFor(n: GNode, r: number): string {
   switch (n.ty) {
@@ -116,17 +140,38 @@ export default function ForceGraph({
   focusHops = 0,
 }: Props) {
   const ref = useRef<SVGSVGElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const simRef = useRef<Simulation<SimNode, undefined> | null>(null);
   const [tick, setTick] = useState(0);
   const [hover, setHover] = useState<string | null>(null);
-  const W = 900;
-  const H = height;
 
-  // Pan and zoom. Implemented directly rather than pulling in d3-zoom — it is a
-  // transform, a wheel handler and a drag, and the dependency budget is five.
-  const [view, setView] = useState({ k: 1, tx: 0, ty: 0 });
-  const dragRef = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
-  const [expanded, setExpanded] = useState(false);
+  /**
+   * The viewport, measured rather than assumed. Seeded with the declared height so
+   * the first paint is not degenerate; the observer corrects it within a frame.
+   */
+  const [size, setSize] = useState({ w: 900, h: height });
+  const W = size.w;
+  const H = size.h;
+
+  const cam = useCamera(ref, W, H);
+  const { fitTo, expanded, toLocal } = cam;
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver((entries) => {
+      const r = entries[0]?.contentRect;
+      if (!r) return;
+      const w = Math.max(240, Math.round(r.width));
+      const h = Math.max(240, Math.round(r.height));
+      setSize((s) => (s.w === w && s.h === h ? s : { w, h }));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+    // Re-observed when the frame moves between inline and overlay, since React
+    // remounts the wrapper at the new position in the tree.
+  }, [expanded]);
+
   /** Set once per layout, so a user who has panned is not yanked back on every tick. */
   const fittedFor = useRef<string>('');
   /**
@@ -200,6 +245,12 @@ export default function ForceGraph({
     };
   }, [nodes, edges, filter, focusHops, selected]);
 
+  /**
+   * The layout runs in its own coordinate space, centred on the origin, and knows
+   * nothing about the viewport. That decoupling is what lets the window resize,
+   * the panel expand and the camera refit WITHOUT re-running the simulation and
+   * throwing away a layout the reader was already reading.
+   */
   useEffect(() => {
     simRef.current?.stop();
     if (!simNodes.length) {
@@ -212,8 +263,8 @@ export default function ForceGraph({
       .force('collide', forceCollide<SimNode>().radius((d) => d.r + 7))
       // Families settle into bands — public power left, capital right — so the
       // layout reads as a flow rather than a hairball.
-      .force('x', forceX<SimNode>((d) => (d.n.fam === 'state' ? W * 0.28 : d.n.fam === 'capital' ? W * 0.72 : W * 0.5)).strength(0.09))
-      .force('y', forceY<SimNode>(H / 2).strength(0.05));
+      .force('x', forceX<SimNode>((d) => (d.n.fam === 'state' ? -BAND : d.n.fam === 'capital' ? BAND : 0)).strength(0.09))
+      .force('y', forceY<SimNode>(0).strength(0.05));
 
     if (reduced) {
       sim.stop();
@@ -233,19 +284,15 @@ export default function ForceGraph({
     return () => {
       sim.stop();
     };
-  }, [simNodes, simLinks, reduced, H]);
+  }, [simNodes, simLinks, reduced]);
 
   /**
    * Fit the settled layout into the frame.
    *
-   * THIS IS THE FIX THAT MATTERS. Pan and zoom are useless if the initial view does
-   * not contain the graph: the force simulation spreads 224 nodes well beyond a
-   * fixed 900×620 viewBox, so nodes and their labels were being clipped off all four
-   * edges and the reader had no way to know what they were missing.
-   *
    * Computes the bounding box of the settled nodes, including label overhang, and
-   * sets the transform so the whole thing lands inside the frame with a margin.
-   * Runs once per layout — keyed on the node set — so panning is never yanked back.
+   * sets the transform so the whole thing lands inside the measured frame with a
+   * margin. Runs once per layout and once per resize, so panning is never yanked
+   * back but a window change never strands the graph off-screen either.
    */
   const fitToContent = useCallback(() => {
     const pts = simNodes.filter((d) => d.x != null && d.y != null);
@@ -253,46 +300,24 @@ export default function ForceGraph({
     // Labels sit below and either side of a node, so the box is padded asymmetrically.
     const LABEL_PAD_X = 60;
     const LABEL_PAD_Y = 16;
-    const xs0 = Math.min(...pts.map((d) => d.x! - d.r - LABEL_PAD_X));
-    const xs1 = Math.max(...pts.map((d) => d.x! + d.r + LABEL_PAD_X));
-    const ys0 = Math.min(...pts.map((d) => d.y! - d.r - LABEL_PAD_Y));
-    const ys1 = Math.max(...pts.map((d) => d.y! + d.r + LABEL_PAD_Y * 2));
-    const bw = Math.max(1, xs1 - xs0);
-    const bh = Math.max(1, ys1 - ys0);
-    const k = Math.min(6, Math.max(0.15, Math.min(W / bw, H / bh) * 0.94));
-    setView({
-      k,
-      tx: (W - bw * k) / 2 - xs0 * k,
-      ty: (H - bh * k) / 2 - ys0 * k,
+    fitTo({
+      x0: Math.min(...pts.map((d) => d.x! - d.r - LABEL_PAD_X)),
+      x1: Math.max(...pts.map((d) => d.x! + d.r + LABEL_PAD_X)),
+      y0: Math.min(...pts.map((d) => d.y! - d.r - LABEL_PAD_Y)),
+      y1: Math.max(...pts.map((d) => d.y! + d.r + LABEL_PAD_Y * 2)),
     });
-  }, [simNodes, W, H]);
+  }, [simNodes, fitTo]);
 
-  // Refit when the layout SETTLES, and once per layout. Keyed on the node set so a
-  // filter or focus change refits, while panning is never yanked back.
+  // Refit when the layout SETTLES and when the frame RESIZES — keyed so each of
+  // those happens exactly once, and a deliberate pan is never overridden.
   useEffect(() => {
     if (!settledAt) return;
-    const key = `${simNodes.length}:${simNodes[0]?.id ?? ''}:${H}:${settledAt}`;
+    const key = `${simNodes.length}:${simNodes[0]?.id ?? ''}:${settledAt}:${W}x${H}`;
     if (fittedFor.current === key) return;
     if (!simNodes.length || simNodes[0].x == null) return;
     fittedFor.current = key;
     fitToContent();
-  }, [settledAt, simNodes, fitToContent, H]);
-
-  useEffect(() => {
-    if (!expanded) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setExpanded(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [expanded]);
-
-  const zoomBy = (factor: number) =>
-    setView((v) => {
-      const k = Math.min(6, Math.max(0.15, v.k * factor));
-      // Zoom about the frame centre, so the thing being looked at stays put.
-      return { k, tx: W / 2 - ((W / 2 - v.tx) / v.k) * k, ty: H / 2 - ((H / 2 - v.ty) / v.k) * k };
-    });
+  }, [settledAt, simNodes, fitToContent, W, H]);
 
   const neighbours = useMemo(() => {
     const focus = hover ?? selected;
@@ -305,55 +330,109 @@ export default function ForceGraph({
     return s;
   }, [hover, selected, simLinks]);
 
-  /** Zoom about the cursor, so the thing under the pointer stays under the pointer. */
-  const onWheel = (ev: React.WheelEvent<SVGSVGElement>) => {
-    ev.preventDefault();
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    const px = ((ev.clientX - rect.left) / rect.width) * W;
-    const py = ((ev.clientY - rect.top) / rect.height) * H;
-    setView((v) => {
-      const k = Math.min(6, Math.max(0.35, v.k * (ev.deltaY < 0 ? 1.15 : 1 / 1.15)));
-      return { k, tx: px - ((px - v.tx) / v.k) * k, ty: py - ((py - v.ty) / v.k) * k };
-    });
+  /**
+   * Node dragging, and the click/drag disambiguation it forces.
+   *
+   * Dragging a node PINS it (d3's fx/fy), because the useful thing to do with a
+   * hairball is pull one strand out of it and have it stay pulled. A drag under
+   * three pixels is treated as a click so selection still works.
+   */
+  const nodeDrag = useRef<{ d: SimNode; ox: number; oy: number; moved: boolean } | null>(null);
+  const suppressClick = useRef(false);
+  const [pins, setPins] = useState<Set<string>>(new Set());
+
+  const onNodePointerDown = (ev: React.PointerEvent<SVGGElement>, d: SimNode) => {
+    if (ev.button !== 0) return;
+    ev.stopPropagation();
+    const p = toLocal(ev.clientX, ev.clientY);
+    if (!p) return;
+    // Tell the camera to keep its hands off this gesture, then take the pointer.
+    cam.suspend.current = true;
+    nodeDrag.current = { d, ox: (d.x ?? 0) - p.x, oy: (d.y ?? 0) - p.y, moved: false };
+    (ev.currentTarget as Element).setPointerCapture?.(ev.pointerId);
   };
 
-  const onPointerDown = (ev: React.PointerEvent<SVGSVGElement>) => {
-    if (ev.button !== 0) return;
-    dragRef.current = { x: ev.clientX, y: ev.clientY, tx: view.tx, ty: view.ty };
-    (ev.target as Element).setPointerCapture?.(ev.pointerId);
-  };
   const onPointerMove = (ev: React.PointerEvent<SVGSVGElement>) => {
-    const d = dragRef.current;
-    if (!d) return;
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    const sx = W / rect.width;
-    const sy = H / rect.height;
-    setView((v) => ({ ...v, tx: d.tx + (ev.clientX - d.x) * sx, ty: d.ty + (ev.clientY - d.y) * sy }));
+    const nd = nodeDrag.current;
+    if (!nd) {
+      cam.svgProps.onPointerMove(ev);
+      return;
+    }
+    const p = toLocal(ev.clientX, ev.clientY);
+    if (!p) return;
+    nd.d.fx = nd.d.x = p.x + nd.ox;
+    nd.d.fy = nd.d.y = p.y + nd.oy;
+    if (!nd.moved) {
+      nd.moved = true;
+      setPins((s) => new Set(s).add(nd.d.id));
+    }
+    setTick((t) => t + 1);
   };
+
   const endDrag = () => {
-    dragRef.current = null;
+    if (nodeDrag.current?.moved) suppressClick.current = true;
+    nodeDrag.current = null;
+    cam.suspend.current = false;
+    cam.svgProps.onPointerUp();
+  };
+
+  /** Release every pinned node and let the layout re-settle around the change. */
+  const releasePins = () => {
+    for (const d of simNodes) {
+      delete d.fx;
+      delete d.fy;
+    }
+    setPins(new Set());
+    const sim = simRef.current;
+    if (!sim) return;
+    sim.alpha(0.4).restart();
+    window.setTimeout(() => {
+      sim.alphaTarget(0).stop();
+      setSettledAt((n) => n + 1);
+    }, 1800);
+  };
+
+  /**
+   * Keyboard camera. Handled on the wrapper so it works whether the frame itself
+   * or a node inside it holds focus. `0` is the one key the camera cannot own —
+   * only the caller knows what "fit" means for its own content.
+   */
+  const onKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    if (ev.key === '0') {
+      fitToContent();
+      ev.preventDefault();
+      return;
+    }
+    cam.onKeyDown(ev);
   };
 
   const frame = (
-    <div className="relative h-full">
+    <div
+      ref={wrapRef}
+      className="relative outline-none focus-visible:ring-1 focus-visible:ring-accent"
+      style={{ height: expanded ? '100%' : height }}
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      aria-label="Graph viewport. Arrow keys pan, plus and minus zoom, 0 fits, f expands."
+    >
       <svg
         ref={ref}
+        // Measured, not assumed: one unit is one pixel, so there is no letterbox
+        // and a drag moves the graph exactly as far as the pointer moved.
         viewBox={`0 0 ${W} ${H}`}
+        preserveAspectRatio="xMidYMid meet"
         style={{
           width: '100%',
-          // An explicit height, not 100%. A percentage height resolves against a
-          // parent that has none, which silently collapsed the expanded svg to zero.
-          height: expanded ? 'calc(100vh - 96px)' : height,
+          height: '100%',
+          display: 'block',
           touchAction: 'none',
-          cursor: dragRef.current ? 'grabbing' : 'grab',
+          cursor: cam.dragging ? 'grabbing' : 'grab',
         }}
         role="img"
-        aria-label={`Connection graph: ${simNodes.length} entities, ${simLinks.length} relationships. Scroll to zoom, drag to pan. A table view of the same data is available below.`}
+        aria-label={`Connection graph: ${simNodes.length} entities, ${simLinks.length} relationships. Drag to pan, scroll or the on-screen buttons to zoom, drag a node to pull it out of the tangle. A table view of the same data is available below.`}
         data-tick={tick}
-        onWheel={onWheel}
-        onPointerDown={onPointerDown}
+        data-k={cam.view.k.toFixed(3)}
+        {...cam.svgProps}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerLeave={endDrag}
@@ -364,7 +443,7 @@ export default function ForceGraph({
         </marker>
       </defs>
 
-      <g transform={`translate(${view.tx},${view.ty}) scale(${view.k})`}>
+      <g transform={cam.transform}>
       <g>
         {simLinks.map((l, i) => {
           const s = l.source as SimNode;
@@ -397,6 +476,7 @@ export default function ForceGraph({
           if (d.x == null || d.y == null) return null;
           const dim = neighbours && !neighbours.has(d.id);
           const isSel = selected === d.id;
+          const pinned = pins.has(d.id);
           return (
             <g
               key={d.id}
@@ -410,7 +490,16 @@ export default function ForceGraph({
               onMouseLeave={() => setHover(null)}
               onFocus={() => setHover(d.id)}
               onBlur={() => setHover(null)}
-              onClick={() => onSelect?.(isSel ? null : d.id)}
+              onPointerDown={(e) => onNodePointerDown(e, d)}
+              onClick={() => {
+                // A drag is not a click. Without this, pulling a node out of the
+                // tangle would also select it and collapse the view to its ego net.
+                if (suppressClick.current) {
+                  suppressClick.current = false;
+                  return;
+                }
+                onSelect?.(isSel ? null : d.id);
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
@@ -426,6 +515,11 @@ export default function ForceGraph({
                 strokeWidth={isSel ? 2 : 0.8}
                 strokeDasharray={d.n.resolved === false ? '2 2' : undefined}
               />
+              {/* A pinned node carries a ring, not a colour or a dash — hue is
+                  spoken for by family and dashes by identity confidence. */}
+              {pinned && (
+                <circle r={d.r + 3.5} fill="none" stroke="#c9a86c" strokeWidth="1" opacity="0.85" pointerEvents="none" />
+              )}
               {(d.n.sz >= 3 || isSel || hover === d.id) && (
                 <text
                   x={0}
@@ -456,36 +550,18 @@ export default function ForceGraph({
       )}
       </svg>
 
-      {/* Controls, because a scroll wheel is not discoverable and fights the page
-          scroll on a long document. Every action here is also reachable by keyboard. */}
-      <div className="absolute top-2 right-2 flex items-center gap-1">
-        {[
-          { label: '−', title: 'Zoom out', act: () => zoomBy(1 / 1.3) },
-          { label: '+', title: 'Zoom in', act: () => zoomBy(1.3) },
-          { label: 'fit', title: 'Fit the whole graph in the frame', act: fitToContent },
-          {
-            label: expanded ? 'shrink' : 'expand',
-            title: expanded ? 'Back to inline size' : 'Fill the window',
-            act: () => setExpanded((e) => !e),
-          },
-        ].map((b) => (
-          <button
-            key={b.label}
-            onClick={b.act}
-            title={b.title}
-            aria-label={b.title}
-            className="font-mono text-[11px] min-w-[26px] px-1.5 py-0.5 rounded border border-border-light bg-bg/90 text-text-muted hover:text-accent hover:border-accent"
-          >
-            {b.label}
-          </button>
-        ))}
-        <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-border bg-bg/90 text-text-muted tabular-nums ml-0.5">
-          {view.k.toFixed(1)}×
-        </span>
-      </div>
+      <CameraControls cam={cam} onFit={fitToContent} />
 
-      <div className="absolute bottom-2 left-2 font-mono text-[10px] text-text-muted bg-bg/80 px-1.5 py-0.5 rounded">
-        scroll or +/− to zoom · drag to pan · fit to reframe
+      <div className="absolute bottom-2 left-2 max-w-[60%] font-mono text-[10px] leading-relaxed text-text-muted bg-bg/80 px-1.5 py-0.5 rounded">
+        drag to pan · arrows or the pad to move · +/− or scroll to zoom · 0 fits · f maximises · drag a node to pull it out
+        {pins.size > 0 && (
+          <>
+            {' '}·{' '}
+            <button onClick={releasePins} className="text-accent underline underline-offset-2">
+              release {pins.size} pinned
+            </button>
+          </>
+        )}
         {focusHops > 0 && selected && hiddenByFocus > 0 && (
           <span className="text-accent">
             {' '}· {hiddenByFocus} entities outside {focusHops} hop{focusHops === 1 ? '' : 's'} hidden
@@ -495,24 +571,13 @@ export default function ForceGraph({
     </div>
   );
 
-  return expanded ? (
-    // Expanded is a real overlay rather than a bigger box: 224 nodes need the window,
-    // and a graph you have to scroll the page to see the bottom of is not usable.
-    <div className="fixed inset-0 z-50 bg-bg p-4 flex flex-col">
-      <div className="flex items-baseline justify-between mb-2">
-        <p className="font-mono text-[11px] text-text-muted">
-          {simNodes.length} entities · {simLinks.length} relationships · press Escape to close
-        </p>
-        <button
-          onClick={() => setExpanded(false)}
-          className="font-mono text-[11px] px-2 py-0.5 rounded border border-border-light text-text-muted hover:text-accent"
-        >
-          close
-        </button>
-      </div>
-      <div className="flex-1 min-h-0">{frame}</div>
-    </div>
-  ) : (
-    frame
+  return (
+    <ExpandShell
+      expanded={expanded}
+      onClose={() => cam.setExpanded(false)}
+      caption={`${simNodes.length} entities · ${simLinks.length} relationships · filters stay applied`}
+    >
+      {frame}
+    </ExpandShell>
   );
 }

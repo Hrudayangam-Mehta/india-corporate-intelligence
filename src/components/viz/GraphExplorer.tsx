@@ -291,7 +291,10 @@ export default function GraphExplorer({ nodes, edges, height = 620, defaultQuery
           <span>
             {nodes.length} entities · {visibleEdges.length} of {edges.length} relationships shown
           </span>
-          <span className="ml-auto">click a node for its provenance · arrow keys and Enter work</span>
+          <span className="ml-auto">
+            click a node for its provenance · <strong className="text-text-secondary">⤢ maximise</strong> or{' '}
+            <kbd className="px-1 border border-border rounded">f</kbd> for the whole window
+          </span>
         </div>
 
         {/* Focus control. A graph this dense is a texture, not a picture, until you
