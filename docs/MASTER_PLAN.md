@@ -327,7 +327,28 @@ TOOLS        Search · Donations · Watchlist
 | **P9** ✅ | Connection graph made usable; `/capture` capture pathways | The adversarial half of the method |
 | **P10** | `/pmcares` — flow ledger with holes, PMNRF control | Research running |
 | **P11** | Spectrum register, joining the other three | Research running |
-| **P12** | Allocation graph — awards and resource winners as one bipartite network | Needs P3 ✅ |
+| **P12** ✅ | Allocation graph — awards and resource winners as one bipartite network | Shipped |
+
+### The one column that would change the most
+
+Three separate pieces of work now converge on the same missing field, and it is worth
+stating once rather than three times:
+
+| Where it bites | Consequence of the absence |
+|---|---|
+| `/resources` | The coal HHI of 195 and top-5 share of 20.3% are **floors**, not measurements |
+| `/capture` | Shell-layering returns **cannot be tested** — the pathway is neither supported nor excluded |
+| `/allocation` | Every edge is capped at `analytic`; 260 of 294 winners are unresolved nodes |
+
+**A CIN column against each winner** — in documents the ministries already publish —
+would convert an analytic sketch into a documented graph, turn a floor into a
+measurement, and make the shell-layering question answerable. It is one column.
+
+The second such field is **bid count per lot**. Coal publishes reserve price, final
+offer and winner for all 133 blocks and the bid count for none, which is why the
+competition question is unanswerable in the largest register in the country while
+being fully answerable in hydrocarbons, where DGH published block-by-block tables for
+four rounds.
 
 ### What P3 established, which changes the domain
 
@@ -368,6 +389,7 @@ tested* on its two most consequential pathways.
 | 2026-08-11 | `c20ede7` | P7 | `/media` rebuilt on ownership distribution; lean-rating refusal published as the lead | ✅ all four |
 | 2026-08-12 | `7ebbbce` | P3 | `/resources` — coal, minerals and hydrocarbons; nav regrouped into Registers | ✅ all four |
 | 2026-08-12 | `03cb045` | P9 | Connection graph pan/zoom/ego-focus; `/capture` capture pathways | ✅ all four |
+| 2026-08-12 | `5ab3966` | P12 | `/allocation` — four registers joined on winner name, tiered analytic throughout | ✅ all four |
 
 **Measured effect of the P0 statistics change**, recorded because it is the kind of
 thing that gets forgotten:
